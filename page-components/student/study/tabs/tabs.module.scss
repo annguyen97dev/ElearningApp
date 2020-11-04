@@ -1,0 +1,71 @@
+.tabs-list {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	box-shadow: 1px 4px 5px #00000021;
+	z-index: 999;
+	position: relative;
+
+	&__item {
+		width: 50%;
+		text-align: center;
+		padding: 10px;
+		cursor: pointer;
+		background: white;
+		border: none;
+
+		&:focus {
+			border: none;
+			outline: none;
+		}
+
+		&.active {
+			border-bottom: 2px solid #e71b64;
+			p {
+				color: #e71b64;
+				opacity: 1;
+			}
+		}
+
+		p {
+			font-size: 17px;
+			margin-bottom: 0;
+			font-weight: 500;
+			opacity: 0.4;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			svg {
+				margin-right: 5px;
+			}
+		}
+	}
+}
+
+.tab-content {
+	padding: 20px;
+	background-color: white;
+	z-index: 0;
+	position: relative;
+	overflow: auto;
+	/* width */
+	&::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	/* Track */
+	&::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+
+	/* Handle */
+	&::-webkit-scrollbar-thumb {
+		background: #ffc5da;
+	}
+
+	/* Handle on hover */
+	&::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
+}

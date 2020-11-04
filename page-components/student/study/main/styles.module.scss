@@ -1,0 +1,61 @@
+// OFFICIAL STYLE
+
+button {
+	&:focus {
+		border: none;
+		outline: none;
+	}
+}
+
+.study {
+	display: flex;
+	justify-content: space-between;
+	// Study Main
+	.study__main {
+		width: calc(100% - 430px);
+
+		.study__main--header {
+			background-color: white;
+
+			.course {
+				height: 50px;
+				padding: 0 20px;
+				display: flex;
+				justify-content: flex-start;
+				align-items: center;
+				border-bottom: 1px solid #00000026;
+
+				.course__box {
+					background: #e71b64;
+					color: white;
+					padding: 2px 12px;
+					border-radius: 999px;
+					margin-right: 15px;
+					display: flex;
+					align-items: center;
+
+					svg {
+						margin-right: 5px;
+					}
+				}
+
+				.course__title {
+					&--text {
+						margin-bottom: 0;
+						color: #696969;
+					}
+				}
+			}
+		}
+	}
+}
+
+.box-video {
+	margin-bottom: 15px;
+}
+
+@media screen and (max-width: 991px) {
+	.study .study__main {
+		width: 100%;
+	}
+}

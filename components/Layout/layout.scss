@@ -617,6 +617,9 @@
 	.table-mobile {
 		min-width: 800px;
 	}
+	.aside-body {
+		height: calc(100% - 54px);
+	}
 }
 @media screen and (max-width: 500px) {
 	.font-10 {

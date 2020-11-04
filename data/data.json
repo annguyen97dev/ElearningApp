@@ -1,0 +1,150 @@
+{
+    "LvCurrent": [{
+        "ID": "3",
+	    "Name": "hy ne"
+    }],
+    "LvNow": [{
+        "ID": "8",
+	    "Name": "hy ne"
+    }],
+    "StartDay": [{
+        "ID": "28-10-2020",
+	    "Name": "hy ne"
+    }],
+    "EndDay": [{
+        "ID": "30-11-2020",
+	    "Name": "hy ne"
+    }],
+    "ClassComplete": [{
+        "ID": "2",
+	    "Name": "hy ne"
+    }],
+    "ClassCanceled": [{
+        "ID": "0",
+	    "Name": "hy ne"
+    }],
+    "ClassRest": [{
+        "ID": "5",
+	    "Name": "hy ne"
+    }],
+    "MainTitle": [{
+        "ID": "5",
+	    "Name": "Tăng tốc 1 tháng"
+    }],
+    "ClassPlace": [{
+        "ID": "5",
+	    "Name": "Tăng tốc 1 tháng"
+    }],
+    "TeacherList": [{
+        "Job": "Teacher",
+        "Name": "Teacher Cris",
+        "Country": "Philippins",
+        "Exp":"15 Năm"
+    },
+    {
+        "Job": "Teacher",
+        "Name": "Teacher Cris nè",
+        "Country": "Philippins",
+        "Exp":"115 Năm"
+    },
+    {
+        "Job": "Teacher",
+        "Name": "Teacher Cris",
+        "Country": "Philippins",
+        "Exp":"5 Năm"
+    },
+    {
+        "Job": "Teacher",
+        "Name": "Teacher Cris",
+        "Country": "Philippins",
+        "Exp":"5 Năm"
+    },
+    {
+        "Job": "Teacher",
+        "Name": "Teacher Cris",
+        "Country": "Philippins",
+        "Exp":"5 Năm"
+    },
+    {
+        "Job": "Teacher",
+        "Name": "Teacher Cris",
+        "Country": "Philippins",
+        "Exp":"5 Năm"
+    },
+    {
+        "Job": "Teacher",
+        "Name": "Teacher Cris",
+        "Country": "Philippins",
+        "Exp":"5 Năm"
+    },
+    {
+        "Job": "Teacher",
+        "Name": "Teacher Cris",
+        "Country": "Philippins",
+        "Exp":"5 Năm"
+    },
+    {
+        "Job": "Teacher",
+        "Name": "Teacher Cris",
+        "Country": "Philippins",
+        "Exp":"5 Năm"
+    },
+    {
+        "ID":"1",
+        "Job": "Teacher",
+        "Name": "Teacher Cris",
+        "Country": "Philippins",
+        "Exp":"115 Năm"
+        }
+    ],
+    "PackageList": [{
+        "PlanName": "Starter Immediately",
+		"TotalLesson": "30",
+		"BookedLesson": "15",
+		"StartDate": "10/06/2020 10:30 - 20:30",
+		"EndDate": "10/12/2020 10:30 - 20:30",
+		"Status": "1"
+    }],
+    "Overview": [{
+        "ID": "5",
+	    "Avarage": "Nhận xét của giáo viên"
+    }],
+    "Question": [{
+        "title": "Những lợi ích khi bạn học trên hệ thống E-talk ",
+	    "Avarage": "Nhận xét của giáo viên"
+    }],
+    "dataTable": [{
+        "BookingID": "1",
+        "Name": "Phan Tấn Trung",
+        "Package": "English cơ bản",
+        "Course": "English cơ bản",
+        "Date": "10 ngày",
+        "Time": "30 phút",
+        "Remark": "Có tiến bộ",
+        "Homework": "3 Bài",
+        "Action": "Ngoại Khóa"
+    },
+    {
+        "BookingID": "1",
+        "Name": "Phan Tấn Trung",
+        "Package": "English cơ bản",
+        "Course": "English cơ bản",
+        "Date": "10 ngày",
+        "Time": "30 phút",
+        "Remark": "Có tiến bộ",
+        "Homework": "3 Bài",
+        "Action": "Ngoại Khóa"
+    },
+    {
+        "BookingID": "1",
+        "Name": "Phan Tấn Trung",
+        "Package": "English cơ bản",
+        "Course": "English cơ bản",
+        "Date": "10 ngày",
+        "Time": "30 phút",
+        "Remark": "Có tiến bộ",
+        "Homework": "3 Bài",
+        "Action": "Ngoại Khóa"
+    }
+]
+}

@@ -1,0 +1,95 @@
+.box-login {
+	width: 277px;
+	height: auto;
+	margin: 0 auto;
+	padding: 10px 30px;
+	border: 3px solid #efd6ae;
+	text-align: left;
+}
+.fcontrol {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	-o-appearance: none;
+	width: 100%;
+	height: 100%;
+	font-size: 14px;
+	border: solid 1px #ececec;
+	padding: 5px 10px;
+	line-height: 20px;
+	outline: 0;
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+}
+
+.fcontrol:focus {
+	border-color: #000;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+		0 0 8px rgba(25, 134, 218, 0.32);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
+		0 0 8px rgba(25, 134, 218, 0.32);
+}
+.box-login .box-input .f-input {
+	height: 30px;
+}
+.box-login .box-input {
+	margin-bottom: 15px;
+}
+.box-login .box-input .txt-input {
+	margin-bottom: 5px;
+}
+.box-login .box-input .txt-checkbox {
+	font-weight: 600;
+	margin-bottom: 0;
+	margin-left: 10px;
+}
+.jutifly-streen {
+	justify-content: space-between;
+	align-items: center;
+}
+.box-login .box-input .box-forgot a {
+	font-size: 15px;
+	color: #7d7d7b;
+	font-weight: lighter;
+	transition: 0.3s ease;
+}
+.box-login .box-input .box-forgot a:hover {
+	text-decoration: underline;
+}
+.box-form .btn-login {
+	background: rgb(230, 30, 101);
+	background: linear-gradient(
+		0deg,
+		rgba(230, 30, 101, 1) 50%,
+		rgba(252, 56, 126, 1) 50%
+	);
+	width: 243px;
+	text-transform: uppercase;
+	font-size: 17px;
+	color: #fff;
+	height: 45px;
+	border: 0;
+	text-align: center;
+	line-height: 30px;
+	margin-top: 15px;
+}
+.box-form {
+	text-align: center;
+}
+.btn-send {
+	padding: 5px 10px;
+	font-size: 12px;
+	line-height: 1.5;
+	border-radius: 3px;
+	background: #337ab7;
+	color: #fff;
+	transition: 0.3s ease;
+}
+.btn-send:hover {
+	color: #fff;
+	background: #286090;
+}

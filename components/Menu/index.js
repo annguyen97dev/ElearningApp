@@ -386,6 +386,42 @@ const StudentMenu = ({ t }) => {
 			</li>
 			<li className="nav-item with-sub">
 				<a href={true} className="nav-link">
+					<FontAwesomeIcon icon="user" className="far fa-user" />
+					<span>{t('menu-student:account-user')}</span>
+				</a>
+				<ul>
+					<li className="nav-item">
+						<Link
+							href="/student/account-user/account-login"
+							as="/student/account-user/account-login"
+						>
+							<a href={true} className="">
+								<FontAwesomeIcon
+									icon="sign-in-alt"
+									className="fas fa-sign-in-alt"
+								/>{' '}
+								<span>{t('menu-student:account-login')}</span>
+							</a>
+						</Link>
+					</li>
+					<li className="nav-item">
+						<Link
+							href="/student/account-user/account-resgister"
+							as="/student/account-user/account-resgister"
+						>
+							<a href={true} className="">
+								<FontAwesomeIcon
+									icon="registered"
+									className="fas fa-regisrered"
+								/>{' '}
+								<span>{t('menu-student:account-regisrered')}</span>
+							</a>
+						</Link>
+					</li>
+				</ul>
+			</li>
+			<li className="nav-item with-sub">
+				<a href={true} className="nav-link">
 					<FontAwesomeIcon
 						icon="calendar-alt"
 						className="fas fa-calendar-check"

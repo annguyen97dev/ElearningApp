@@ -620,6 +620,9 @@
 	.aside-body {
 		height: calc(100% - 54px);
 	}
+	.table-500 {
+		min-width: 500px;
+	}
 }
 @media screen and (max-width: 500px) {
 	.font-10 {

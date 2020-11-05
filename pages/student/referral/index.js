@@ -101,8 +101,8 @@ const Referral = () => {
 								<li>Người tham gia giới thiệu phải là học viên tại E-Talk</li>
 								<li>Người được giới thiệu phải hoàn toàn mới tại E-Talk.</li>
 								<li>
-									Link dùng để giới thiệu/ chia sẻ: [Mypage.e-talk.vn --> Giới
-									thiệu bạn --> Nội dung]
+									Link dùng để giới thiệu/ chia sẻ: [Mypage.e-talk.vn Giới thiệu
+									bạn Nội dung]
 								</li>
 								<li>
 									Số lượng giới thiệu không giới hạn. Giới thiệu được xem là
@@ -125,7 +125,7 @@ const Referral = () => {
 						<div className="col-12 mg-t-30">
 							<h5 className="mg-b-15">Danh sách đã mời</h5>
 							<div className="table-responsive ">
-								<table className="table">
+								<table className="table table-500">
 									<thead>
 										<tr>
 											<th>STT</th>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Tabs from '~/page-components/student/study/tabs/tabs';
 import Quiz from '~/page-components/student/study/quiz';
 import ReactPlayer from 'react-player';

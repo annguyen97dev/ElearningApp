@@ -1,0 +1,20 @@
+.MuiTableCell-root {
+	b {
+		margin-right: 7px;
+	}
+}
+
+.MuiTableContainer-root {
+	width: 45%;
+}
+
+.map-question-img {
+	width: 45%;
+	margin-bottom: 20px;
+}
+
+@media screen and (max-width: 1600px) {
+	.MuiTableContainer-root {
+		width: 70%;
+	}
+}

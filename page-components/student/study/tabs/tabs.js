@@ -33,6 +33,7 @@ class Tabs extends Component {
 
 	onClickTabItem = (tab) => {
 		this.setState({ activeTab: tab });
+		console.log('check là gì: ', this.state.check);
 	};
 
 	render() {
@@ -64,6 +65,7 @@ class Tabs extends Component {
 				>
 					{children.map((child) => {
 						if (child.props.label !== activeTab) return undefined;
+
 						return child.props.children;
 					})}
 				</div>

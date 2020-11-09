@@ -2,7 +2,6 @@
 
 button {
 	&:focus {
-		border: none;
 		outline: none;
 	}
 }
@@ -13,6 +12,8 @@ button {
 	// Study Main
 	.study__main {
 		width: calc(100% - 430px);
+		position: relative;
+		z-index: 1;
 
 		.study__main--header {
 			background-color: white;

@@ -36,7 +36,7 @@ const Login = () => {
 					</div>
 					<div class="box-input">
 						<label class="txt-input">Mật khẩu</label>
-						<input type="text" class="fcontrol f-input" />
+						<input type="password" class="fcontrol f-input" />
 					</div>
 					<div class="box-input d-flex jutifly-streen">
 						<div class="box-checked">

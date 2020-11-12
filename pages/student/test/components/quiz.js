@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import './styles.module.scss';
 
-const DropQuestion = () => {
+const Quiz = () => {
 	const SetUpListAnswer = [
 		{
 			id: '1',
@@ -262,4 +262,4 @@ const DropQuestion = () => {
 	);
 };
 
-export default DropQuestion;
+export default Quiz;

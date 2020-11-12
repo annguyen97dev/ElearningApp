@@ -2,6 +2,7 @@
 @import '../node_modules/nprogress/nprogress.css';
 body {
 	overflow: hidden;
+	font-size: 16px;
 }
 :root {
 	--swiper-navigation-size: 16px;
@@ -9201,10 +9202,11 @@ input[type='month'].form-control {
 	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.react-datepicker__header__dropdown{
+.react-datepicker__header__dropdown {
 	margin: 5px 0;
 }
 
-.table thead th, .table tbody th{
+.table thead th,
+.table tbody th {
 	font-weight: 600;
 }

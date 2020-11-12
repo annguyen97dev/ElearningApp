@@ -6,6 +6,7 @@ import RadioQuestion from '~/page-components/student/study/quiz/RadioQuestion';
 import CheckboxQuestion from '~/page-components/student/study/quiz/CheckboxQuestion';
 import GroupQuestion from '~/page-components/student/study/quiz/GroupQuestion';
 import MapQuestion from '~/page-components/student/study/quiz/MapQuestion';
+import TypeQuestion from '~/page-components/student/study/quiz/TypeQuestion';
 import DropQuestion from '~/page-components/student/study/quiz/DropQuestion';
 import CountDown from '~/page-components/student/study/quiz/CountDown';
 import Modal from '@material-ui/core/Modal';
@@ -106,6 +107,9 @@ const Quiz = () => {
 			>
 				<div className="modal-quiz">
 					<div className="modal-quiz-header">
+						<p className="modal-quiz-title">
+							<b>Topic:</b> What is a CSS Sprite?
+						</p>
 						<button onClick={handleClose} className="btn-close">
 							{' '}
 							<FontAwesomeIcon icon="times" />
@@ -136,7 +140,9 @@ const Quiz = () => {
 						<CheckboxQuestion />
 						<GroupQuestion />
 						<MapQuestion />
+						<TypeQuestion />
 						<DropQuestion />
+
 						<div className="row-button">
 							<Button
 								variant="contained"

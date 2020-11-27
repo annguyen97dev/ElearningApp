@@ -4,6 +4,14 @@ import { getScheduleLog } from '~/api/teacherAPI';
 import Pagination from 'react-js-pagination';
 import { getLayout } from '~/components/Layout';
 import './index.module.scss';
+import dataHy from '../../../../data/data.json';
+
+console.log('o ngoai', dataHy.ScheduleLog);
+
+function getData() {
+	const andt = dataHy.ScheduleLog;
+	return andt;
+}
 const OperationRow = ({ data }) => {
 	const {
 		OparationTime,
@@ -15,21 +23,21 @@ const OperationRow = ({ data }) => {
 	} = data;
 	return (
 		<tr>
-			<td data-title="Operation time">{OparationTime}</td>
+			<td data-title="Operation time">{data.OparationTime}</td>
 
-			<td data-title="Time (Local)">{ScheduleTimeOfTeacher}</td>
-			<td data-title="Time (VN)">{ScheduleTimeLocal}</td>
+			<td data-title="Time (Local)">{data.ScheduleTimeOfTeacher}</td>
+			<td data-title="Time (VN)">{data.ScheduleTimeLocal}</td>
 			{/* <td className="tx-center">
                 {Previous === 'Close' ? <span className="badge badge-danger">Closed</span> : <span className="badge badge-success">Open</span>}
                 <span className="badge badge-danger">Closed</span>
             </td> */}
 			<td data-title="Operator" className="tx-center">
-				<span className="badge badge-info pd-5 tx-12">{CreatedBy}</span>
+				<span className="badge badge-info pd-5 tx-12">{data.CreatedBy}</span>
 			</td>
 			<td data-title="Action" className="tx-center">
 				{/* {UpdatedAction === 'Close' ? <span className="badge badge-danger">Closed</span> : <span className="badge badge-success">Open</span>} */}
 				{/* <span className="badge badge-success">Open</span> */}
-				{<p className="mg-b-0">{UpdatedAction}</p>}
+				{<p className="mg-b-0">{data.UpdatedAction}</p>}
 			</td>
 		</tr>
 	);
@@ -59,6 +67,9 @@ const ScheduleLog = () => {
 			setIsLoading(false);
 		}
 	};
+
+	const layData = getData();
+	console.log('tu hy', layData);
 
 	const _handlePageChange = (value) => {
 		console.log('Page active is: ', value);
@@ -90,8 +101,8 @@ const ScheduleLog = () => {
 										</tr>
 									</thead>
 									<tbody>
-										{!!data && !!data.length > 0 ? (
-											data.map((item, index) => (
+										{!!layData && !!layData.length > 0 ? (
+											layData.map((item, index) => (
 												<OperationRow key={`${index}`} data={item} />
 											))
 										) : (

@@ -11,6 +11,14 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import dataHy from '../../../data/data.json';
+
+console.log('o ngoai', dataHy.AttendanceRecord);
+
+function getData() {
+	const andt = dataHy.AttendanceRecord;
+	return andt;
+}
 
 const DateTimeFormat = new Intl.DateTimeFormat('vi-VN', {
 	month: '2-digit',
@@ -74,14 +82,14 @@ const AllClassRow = ({ data, showStudentModal }) => {
 
 	return (
 		<tr>
-			<td>Huỳnh Thị Phương Loan</td>
-			<td>Profressional </td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>{data.TeacherName}</td>
+			<td>{data.Package}</td>
+			<td>{data.Course}</td>
+			<td>{data.Date}</td>
+			<td>{data.Time}</td>
+			<td>{data.Remark}</td>
+			<td>{data.Homework}</td>
+			<td>{data.Action}</td>
 		</tr>
 	);
 };
@@ -132,6 +140,9 @@ const AttendanceRecord = () => {
 	const unMountComponents = () => {
 		mdStudentInfo.current = false;
 	};
+
+	const layData = getData();
+	console.log('tu hy', layData);
 
 	useEffect(() => {
 		return unMountComponents;
@@ -329,8 +340,8 @@ const AttendanceRecord = () => {
 											</td>
 										</tr>
 									</>
-								) : !!data && !!data.length > 0 ? (
-									data.map((item) => (
+								) : !!layData && !!layData.length > 0 ? (
+									layData.map((item) => (
 										<AllClassRow
 											key={`${item.BookingID}`}
 											data={item}

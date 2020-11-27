@@ -7,6 +7,15 @@ import Skeleton from 'react-loading-skeleton';
 import { getUpcomingClass, addScheduleLog } from '~/api/teacherAPI';
 import { Popover, OverlayTrigger, Overlay } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import dataHy from '../../../../data/data.json';
+
+console.log('o ngoai', dataHy.UpcommingClass);
+
+function getData() {
+	const andt = dataHy.UpcommingClass;
+	return andt;
+}
+
 const UpcomingRow = ({ data, showStudentModal }) => {
 	const {
 		BookingID,
@@ -48,14 +57,14 @@ const UpcomingRow = ({ data, showStudentModal }) => {
 						<FontAwesomeIcon icon="clock" className="fa fa-clock tx-primary" />{' '}
 						<span className="tx-medium">VN time</span>:
 					</span>
-					<span className="">{ScheduleTimeVN}</span>
+					<span className="">{data.ScheduleTimeVN}</span>
 				</div>
 				<div className="">
 					<span className=" mg-r-5 tx-nowrap wd-80 d-inline-block">
 						<FontAwesomeIcon icon="clock" className="fa fa-clock tx-primary" />{' '}
 						<span className="tx-medium">Your time</span>:
 					</span>
-					<span className="">{ScheduleTimeUTC}</span>
+					<span className="">{data.ScheduleTimeUTC}</span>
 				</div>
 			</td>
 			<td className="clr-lesson">
@@ -65,7 +74,7 @@ const UpcomingRow = ({ data, showStudentModal }) => {
 				</div>
 				<div className="">
 					<span className=" mg-r-5 tx-medium">Lesson:</span>
-					<span className="">{LessionName}</span>
+					<span className="">{data.LessionName}</span>
 				</div>
 			</td>
 			<td className="clr-student">
@@ -77,7 +86,7 @@ const UpcomingRow = ({ data, showStudentModal }) => {
 					}}
 					className="clrm-studentname"
 				>
-					{StudentName}
+					{data.StudentName}
 					<FontAwesomeIcon
 						icon={
 							GenderID === 1 ? 'mars' : GenderID === 2 ? 'venus' : 'genderless'
@@ -171,6 +180,9 @@ const UpcomingClasses = () => {
 	const unMountComponents = () => {
 		mdStudentInfo.current = false;
 	};
+
+	const layData = getData();
+	console.log('tu hy', layData);
 
 	useEffect(() => {
 		return unMountComponents;
@@ -280,8 +292,8 @@ const UpcomingClasses = () => {
 											</td>
 										</tr>
 									</>
-								) : !!data && !!data.length > 0 ? (
-									data.map((item) => (
+								) : !!layData && !!layData.length > 0 ? (
+									layData.map((item) => (
 										<UpcomingRow
 											key={`${item.BookingID}`}
 											data={item}

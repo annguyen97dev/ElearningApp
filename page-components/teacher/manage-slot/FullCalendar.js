@@ -509,13 +509,13 @@ const FullCalendar = ({ data = [] }) => {
 			expandRows: true,
 			slotMinTime: '00:00',
 			slotMaxTime: '24:00',
-			events: data
-				.filter((x) => x.isEmptySlot === false)
-				.map((y) => ({
-					...y,
-					id: randomId(),
-					loading: false,
-				})), //Filter for demo
+			events: data,
+			// .filter((x) => x.isEmptySlot === false)
+			// .map((y) => ({
+			// 	...y,
+			// 	id: randomId(),
+			// 	loading: false,
+			// })), //Filter for demo
 			// event: [],
 			headerToolbar: {
 				start: 'timeGridWeek,dayGridMonth,listWeek', // will normally be on the left. if RTL, will be on the right

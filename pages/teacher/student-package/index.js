@@ -5,6 +5,14 @@ import Skeleton from 'react-loading-skeleton';
 import { getMissingFeedback } from '~/api/teacherAPI';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import dataHy from '../../../data/data.json';
+
+console.log('o ngoai', dataHy.EndOfStudentPackage);
+
+function getData() {
+	const andt = dataHy.EndOfStudentPackage;
+	return andt;
+}
 const MissingFeedbackRow = ({ data }) => {
 	const {
 		BookingID,
@@ -16,12 +24,12 @@ const MissingFeedbackRow = ({ data }) => {
 	} = data;
 	return (
 		<tr>
-			<td>#00954895</td>
-			<td>Trương Văn Lam</td>
-			<td>32 classes</td>
-			<td>15 classes</td>
-			<td>I dont know what it mean...</td>
-			<td>25/10/2020</td>
+			<td>{data.StudentCode}</td>
+			<td>{data.StudentName}</td>
+			<td>{data.TotalNumberOfClass}</td>
+			<td>{data.ClassesWereBooked}</td>
+			<td>{data.FurthestClass}</td>
+			<td>{data.EndDateOfPackage}</td>
 		</tr>
 	);
 };
@@ -49,6 +57,8 @@ const StudentPackage = () => {
 			setIsLoading(false);
 		}
 	};
+	const layData = getData();
+	console.log('tu hy', layData);
 
 	useEffect(() => {
 		loadMissingFeedback();
@@ -137,8 +147,8 @@ const StudentPackage = () => {
 												</td>
 											</tr>
 										</>
-									) : !!data && !!data.length > 0 ? (
-										data.map((item) => (
+									) : !!layData && !!layData.length > 0 ? (
+										layData.map((item) => (
 											<MissingFeedbackRow
 												key={`${item.BookingID}`}
 												data={item}
@@ -146,7 +156,7 @@ const StudentPackage = () => {
 										))
 									) : (
 										<tr className="bg-white-f">
-											<td colSpan={4}>
+											<td colSpan={6}>
 												<div className="empty-error tx-center mg-t-30 bg-white mg-x-auto">
 													<img
 														src="/static/img/no-data.svg"

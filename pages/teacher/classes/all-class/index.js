@@ -11,6 +11,14 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import dataHy from '../../../../data/data.json';
+
+console.log('o ngoai', dataHy.allClass);
+
+function getData() {
+	const andt = dataHy.allClass;
+	return andt;
+}
 
 const DateTimeFormat = new Intl.DateTimeFormat('vi-VN', {
 	month: '2-digit',
@@ -75,16 +83,16 @@ const AllClassRow = ({ data, showStudentModal }) => {
 	return (
 		<tr>
 			<td className="clr-id">
-				<span className="">{BookingID}</span>
+				<span className="">{data.classID}</span>
 			</td>
 			<td className="clr-lesson">
 				<div className="mg-b-5">
 					<span className=" mg-r-5 tx-medium">Course:</span>
-					<span className="">{DocumentName}</span>
+					<span className="">{data.DocumentName}</span>
 				</div>
 				<div className="">
-					<span className=" mg-r-5 tx-medium">Lesson:</span>
-					<span className="">{LessionName}</span>
+					<span className="mg-r-5 tx-medium">Lesson:</span>
+					<span className="">{data.classLesson}</span>
 				</div>
 			</td>
 			<td className="clr-student">
@@ -94,9 +102,9 @@ const AllClassRow = ({ data, showStudentModal }) => {
 						e.preventDefault();
 						showStudentModal(StudentUID);
 					}}
-					className="clrm-studentname "
+					className="clrm-studentname"
 				>
-					{StudentName}
+					{data.classStudent}
 					<FontAwesomeIcon
 						icon={
 							GenderID === 1 ? 'mars' : GenderID === 2 ? 'venus' : 'genderless'
@@ -113,14 +121,14 @@ const AllClassRow = ({ data, showStudentModal }) => {
 						<FontAwesomeIcon icon="clock" className="fa fa-clock tx-primary" />{' '}
 						<span className="tx-medium">VN time</span>:
 					</span>
-					<span className="">{ScheduleTimeVN}</span>
+					<span className="">{data.ScheduleTimeVN}</span>
 				</div>
 				<div className="">
 					<span className=" mg-r-5 tx-nowrap wd-80 d-inline-block">
 						<FontAwesomeIcon icon="clock" className="fa fa-clock tx-primary" />{' '}
 						<span className="tx-medium">Your time</span>:
 					</span>
-					<span className="">{ScheduleTimeUTC}</span>
+					<span className="">{data.ScheduleTimeUTC}</span>
 				</div>
 			</td>
 			<td className="clr-status">
@@ -212,6 +220,9 @@ const AllClasses = () => {
 	const [totalResult, setTotalResult] = useState(0);
 	const [studentId, setStudentId] = useState(null);
 	const mdStudentInfo = useRef(true);
+
+	const layData = getData();
+	console.log('tu hy', layData);
 
 	const showStudentModal = (studentId) => {
 		setStudentId(studentId);
@@ -424,8 +435,8 @@ const AllClasses = () => {
 											</td>
 										</tr>
 									</>
-								) : !!data && !!data.length > 0 ? (
-									data.map((item) => (
+								) : !!layData && !!layData.length > 0 ? (
+									layData.map((item) => (
 										<AllClassRow
 											key={`${item.BookingID}`}
 											data={item}

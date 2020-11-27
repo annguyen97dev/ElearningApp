@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { getStudentLayout } from '~/components/Layout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import './resgister.module.css';
 const Resgister = () => {
 	const [url, setUrl] = useState('');
@@ -17,7 +19,8 @@ const Resgister = () => {
 	};
 
 	const copyShareUrl = copy(refInput.current);
-
+	const [fromDate, setFromDate] = useState('');
+	const [toDate, setToDate] = useState('');
 	// useEffect(() => {
 	// 	setUrl('https://etalk.vn/student/referral/code=325454');
 	// 	return () => {
@@ -41,10 +44,16 @@ const Resgister = () => {
 								/>
 							</div>
 							<div class="box-input">
-								<input
-									type="date"
-									placeholder="Ngày sinh *"
-									class="fcontrol f-input"
+								<DatePicker
+									dateFormat="dd/MM/yyyy"
+									className="fcontrol"
+									placeholderText={`Ngày Sinh *`}
+									selected={fromDate}
+									onChange={(date) => setFromDate(date)}
+									selectsStart
+									isClearable={!!fromDate ? true : false}
+									startDate={fromDate}
+									endDate={toDate}
 								/>
 							</div>
 						</div>
@@ -97,25 +106,49 @@ const Resgister = () => {
 								</h4>
 								<div class="radio-item">
 									<label>
-										<input type="radio" class="f-radio" />
+										<input
+											type="radio"
+											id="gg"
+											name="res"
+											value="gg"
+											class="f-radio"
+										/>
 										Tìm kiếm trên Google
 									</label>
 								</div>
 								<div class="radio-item">
 									<label>
-										<input type="radio" class="f-radio" />
+										<input
+											type="radio"
+											id="fb"
+											name="res"
+											value="fb"
+											class="f-radio"
+										/>
 										Fanpage Facebook E-talk
 									</label>
 								</div>
 								<div class="radio-item">
 									<label>
-										<input type="radio" class="f-radio" />
+										<input
+											type="radio"
+											id="fr"
+											name="res"
+											value="fr"
+											class="f-radio"
+										/>
 										Bạn bè giới thiệu
 									</label>
 								</div>
 								<div class="radio-item">
 									<label>
-										<input type="radio" class="f-radio" />
+										<input
+											type="radio"
+											id="other"
+											name="res"
+											value="other"
+											class="f-radio"
+										/>
 										Khác (Tờ rơi, Forum, Banner…)
 									</label>
 								</div>

@@ -11,6 +11,15 @@ import LessonCard from '~/components/common/LessonCard';
 import StudentInformationModal from '~components/common/Modal/StudentInformationModal';
 import Pagination from 'react-js-pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import data from '../../../data/data.json';
+
+const fakeUpcomming = {
+	StudentName: 'Trương Văn Lam',
+	ScheduleTimeVN: '29/07/2020 14:00 - 14:25',
+	LessionName: 'Lession 3',
+	FinishTypeString: 'As shedule',
+};
+console.log(fakeUpcomming);
 
 const initialState = [
 	{
@@ -165,7 +174,10 @@ const UpComingList = ({ itemShow }) => {
 																/>{' '}
 																<span className="tx-medium">VN time</span>:
 															</span>
-															<span className="">{ls.ScheduleTimeVN}</span>
+															<span className="">
+																{fakeUpcomming.ScheduleTimeVN}
+															</span>
+															console.log(fakeUpcomming.ScheduleTimeVN);
 														</div>
 														<div className="">
 															<span className=" mg-r-5 tx-nowrap wd-80 d-inline-block">
@@ -175,17 +187,23 @@ const UpComingList = ({ itemShow }) => {
 																/>{' '}
 																<span className="tx-medium">Your time</span>:
 															</span>
-															<span className="">{ls.ScheduleTimeUTC}</span>
+															<span className="">
+																{fakeUpcomming.ScheduleTimeUTC}
+															</span>
 														</div>
 													</td>
 													<td className="clr-lesson">
 														<div className="mg-b-5">
 															<span className=" mg-r-5 tx-medium">Course:</span>
-															<span className="">{ls.DocumentName}</span>
+															<span className="">
+																{fakeUpcomming.DocumentName}
+															</span>
 														</div>
 														<div className="">
 															<span className=" mg-r-5 tx-medium">Lesson:</span>
-															<span className="">{ls.LessionName}</span>
+															<span className="">
+																{fakeUpcomming.LessionName}
+															</span>
 														</div>
 													</td>
 													<td className="lg-valign-middle">

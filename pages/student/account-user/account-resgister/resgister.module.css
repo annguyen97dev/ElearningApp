@@ -14,6 +14,30 @@
 	line-height: 34px;
 	text-align: left;
 }
+.react-datepicker__input-container:before {
+	display: none;
+}
+.fcontrol {
+	display: block;
+	width: 100%;
+	height: calc(1.5em + 0.9375rem + 2px);
+	padding: 0.46875rem 0.625rem;
+	font-size: 0.875rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #596882;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: solid 1px #ececec;
+	border-radius: 0.125rem;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.resgister-bottom
+	.resgister-landcaps
+	.box-input
+	.react-datepicker__input-container {
+	height: 38px;
+}
 .resgister-bottom {
 	background: #fdfbe7;
 	padding: 20px;
@@ -50,15 +74,20 @@
 	text-align: left;
 	padding: 0 20px;
 }
+.resgister-bottom .resgister-landcaps .box-radio .radio-item {
+	width: 230px;
+	margin: 0 auto;
+}
 .resgister-bottom .resgister-landcaps .box-radio .radio-item label {
 	display: flex;
 	align-items: center;
+	font-size: 14px;
 }
 .resgister-bottom .resgister-landcaps .box-radio .radio-item label .f-radio {
 	margin-right: 10px;
 }
 .resgister-bottom .resgister-landcaps .box-radio .title-radio {
-	font-size: 14px;
+	font-size: 15px;
 	margin-bottom: 15px;
 	font-weight: normal;
 }

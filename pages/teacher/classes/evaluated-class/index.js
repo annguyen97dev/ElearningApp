@@ -8,6 +8,15 @@ import { getAllClass, addScheduleLog } from '~/api/teacherAPI';
 import { Popover, OverlayTrigger, Overlay } from 'react-bootstrap';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import dataHy from '../../../../data/data.json';
+
+console.log('o ngoai', dataHy.evaluationClass);
+
+function getData() {
+	const andt = dataHy.evaluationClass;
+	return andt;
+}
+
 const FinishedRow = ({ data, showStudentModal }) => {
 	const {
 		BookingID,
@@ -42,24 +51,24 @@ const FinishedRow = ({ data, showStudentModal }) => {
 						<FontAwesomeIcon icon="clock" className="fa fa-clock tx-primary" />{' '}
 						<span className="tx-medium">VN time</span>:
 					</span>
-					<span className="">{ScheduleTimeVN}</span>
+					<span className="">{data.ScheduleTimeVN}</span>
 				</div>
 				<div className="">
 					<span className=" mg-r-5 tx-nowrap wd-80 d-inline-block">
 						<FontAwesomeIcon icon="clock" className="fa fa-clock tx-primary" />{' '}
 						<span className="tx-medium">Your time</span>:
 					</span>
-					<span className="">{ScheduleTimeUTC}</span>
+					<span className="">{data.ScheduleTimeUTC}</span>
 				</div>
 			</td>
 			<td className="clr-lesson">
 				<div className="mg-b-5">
 					<span className=" mg-r-5 tx-medium">Course:</span>
-					<span className="">{DocumentName}</span>
+					<span className="">{data.DocumentName}</span>
 				</div>
 				<div className="">
 					<span className=" mg-r-5 tx-medium">Lesson:</span>
-					<span className="">{LessionName}</span>
+					<span className="">{data.LessionName}</span>
 				</div>
 			</td>
 			<td className="clr-student">
@@ -87,8 +96,8 @@ const FinishedRow = ({ data, showStudentModal }) => {
 				<span className={`badge badge-secondary pd-5 tx-12`}>
 					{StatusString && StatusString.toString().toUpperCase()}
 				</span>
-				{/* {status === 1 && <span className="badge badge-warning pd-5">BOOKED</span>}
-                {status === 2 && <span className="badge badge-success pd-5">FINISHED</span>} */}
+				{/* {<span className="badge badge-warning pd-5">BOOKED</span>} */}
+				{<span className="badge badge-success pd-5">FINISHED</span>}
 			</td>
 			<td className="clr-actions tx-center">
 				<Link
@@ -121,6 +130,9 @@ const EvaluatedClasses = () => {
 		setStudentId(studentId);
 		$(mdStudentInfo.current).modal('show');
 	};
+
+	const layData = getData();
+	console.log('tu hy', layData);
 
 	const unMountComponents = () => {
 		mdStudentInfo.current = false;
@@ -227,8 +239,8 @@ const EvaluatedClasses = () => {
 											</td>
 										</tr>
 									</>
-								) : !!data && !!data.length > 0 ? (
-									data.map((item) => (
+								) : !!layData && !!layData.length > 0 ? (
+									layData.map((item) => (
 										<FinishedRow
 											key={`${item.BookingID}`}
 											data={item}

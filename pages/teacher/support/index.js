@@ -304,7 +304,7 @@ const TicketSupport = () => {
 													/>
 												</div>
 											</div>
-											<div className="flex-grow-0 tx-right flex-shrink-0 wd-100p wd-sm-auto tx-left mg-t-10 mg-sm-t-0">
+											<div className="flex-grow-0 tx-right flex-shrink-0 m-g-l-20 wd-100p wd-sm-auto tx-left mg-t-10 mg-sm-t-0">
 												<button
 													type="button"
 													className="btn btn-primary wd-100p wd-sm-auto"

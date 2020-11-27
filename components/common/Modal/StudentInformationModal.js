@@ -1,6 +1,13 @@
 import React from 'react';
 import { getStudentByUID } from '~/api/teacherAPI';
 import Skeleton from 'react-loading-skeleton';
+import dataInfo from '../../../data/data.json';
+
+console.log('o trong', dataInfo.InfoModalStudent);
+function getData() {
+	const andt = dataInfo.InfoModalStudent;
+	return andt;
+}
 const initialState = {
 	stImageUrl: '../assets/img/default-avatar.png',
 	stPhone: '',
@@ -29,7 +36,7 @@ const StudentInformationModal = React.forwardRef(({ studentId }, ref) => {
 			return;
 		}
 		setState({
-			...res.Data,
+			...res.data,
 			stImageUrl: res.Data.Avatar,
 			stName: res.Data.FullName,
 			stSex: res.Data.Gender,
@@ -42,6 +49,9 @@ const StudentInformationModal = React.forwardRef(({ studentId }, ref) => {
 		});
 		setIsloading(false);
 	};
+
+	const hotData = getData();
+	console.log('tu by data Infomodal', hotData);
 
 	React.useEffect(() => {
 		loadStudentInfo();
@@ -71,14 +81,10 @@ const StudentInformationModal = React.forwardRef(({ studentId }, ref) => {
 						<div className="modal-body">
 							<div className="d-flex">
 								<div className="flex-shrink-0 mg-r-15">
-									{!isLoading ? (
-										<img
-											src={state.stImageUrl}
-											className="avatar-xxl avatar-xl rounded object-fit"
-										/>
-									) : (
-										<Skeleton circle={true} height={100} width={100} />
-									)}
+									<img
+										src={dataInfo.InfoModalStudent[0].stImageUrl}
+										className="avatar-xxl avatar-xl rounded object-fit"
+									/>
 								</div>
 								<div className="flex-grow-1">
 									<div className="d-flex mg-b-15">
@@ -86,7 +92,7 @@ const StudentInformationModal = React.forwardRef(({ studentId }, ref) => {
 											<span>Full name:</span>
 										</div>
 										<div className="col">
-											<span>{!isLoading ? state.stName : <Skeleton />}</span>
+											<span>{dataInfo.InfoModalStudent[0].stName}</span>
 										</div>
 									</div>
 									<div className="d-flex mg-b-15">
@@ -95,32 +101,23 @@ const StudentInformationModal = React.forwardRef(({ studentId }, ref) => {
 										</div>
 										<div className="col">
 											{/* <span className="valign-middle mg-r-5 tx-primary"><i className="fa fa-mars" /></span> */}
-											{!isLoading ? (
-												<>
-													{state.stSex === 1 && (
-														<span className="valign-middle mg-r-5 tx-primary">
-															<i className="fa fa-mars" />
-														</span>
-													)}
-													{state.stSex === 2 && (
-														<span className="valign-middle mg-r-5 tx-primary">
-															<i className="fa fa-venus" />
-														</span>
-													)}
-													{state.stSex === 3 && (
-														<span className="valign-middle mg-r-5 tx-primary">
-															<i className="fa fa-genderless" />
-														</span>
-													)}
-													<span>
-														{state.stSex === 1 && 'Male'}
-														{state.stSex === 2 && 'Female'}
-														{state.stSex === 3 && 'Genderless'}
-													</span>
-												</>
-											) : (
-												<Skeleton />
+
+											{dataInfo.InfoModalStudent[0].stSex === 1 && (
+												<span className="valign-middle mg-r-5 tx-primary">
+													<i className="fa fa-mars" />
+												</span>
 											)}
+											{dataInfo.InfoModalStudent[0].stSex === 2 && (
+												<span className="valign-middle mg-r-5 tx-primary">
+													<i className="fa fa-venus" />
+												</span>
+											)}
+											{dataInfo.InfoModalStudent[0].stSex === 3 && (
+												<span className="valign-middle mg-r-5 tx-primary">
+													<i className="fa fa-genderless" />
+												</span>
+											)}
+											<span>{dataInfo.InfoModalStudent[0].stSex}</span>
 										</div>
 									</div>
 									<div className="d-flex mg-b-15">
@@ -128,7 +125,7 @@ const StudentInformationModal = React.forwardRef(({ studentId }, ref) => {
 											<span>Phone:</span>
 										</div>
 										<div className="col">
-											<span>{!isLoading ? state.stPhone : <Skeleton />}</span>
+											<span>{dataInfo.InfoModalStudent[0].stPhone}</span>
 										</div>
 									</div>
 									<div className="d-flex mg-b-15">
@@ -136,7 +133,7 @@ const StudentInformationModal = React.forwardRef(({ studentId }, ref) => {
 											<span>Email:</span>
 										</div>
 										<div className="col">
-											<span>{!isLoading ? state.stEmail : <Skeleton />}</span>
+											<span>{dataInfo.InfoModalStudent[0].stEmail}</span>
 										</div>
 									</div>
 									{/* <div className="d-flex mg-b-15">
@@ -153,9 +150,7 @@ const StudentInformationModal = React.forwardRef(({ studentId }, ref) => {
 											<span>Timezone:</span>
 										</div>
 										<div className="col">
-											<span>
-												{!isLoading ? state.stTimeZone : <Skeleton />}
-											</span>
+											<span>{dataInfo.InfoModalStudent[0].stTimeZone}</span>
 										</div>
 									</div>
 								</div>
@@ -166,9 +161,7 @@ const StudentInformationModal = React.forwardRef(({ studentId }, ref) => {
 										<i className="fas fa-info-circle mg-r-5"></i> Student
 										description:
 									</label>
-									<p>
-										{!isLoading ? state.stDescription : <Skeleton count={3} />}
-									</p>
+									<p>{dataInfo.InfoModalStudent[0].stDescription}</p>
 								</div>
 							</div>
 						</div>

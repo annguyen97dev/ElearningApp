@@ -5,6 +5,14 @@ import Skeleton from 'react-loading-skeleton';
 import { getMissingFeedback } from '~/api/teacherAPI';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import dataHy from '../../../../data/data.json';
+
+console.log('o ngoai', dataHy.MissingEvaluationClasses);
+
+function getData() {
+	const andt = dataHy.MissingEvaluationClasses;
+	return andt;
+}
 const MissingFeedbackRow = ({ data }) => {
 	const {
 		BookingID,
@@ -22,32 +30,32 @@ const MissingFeedbackRow = ({ data }) => {
 						<FontAwesomeIcon icon="clock" className="fa fa-clock tx-primary" />{' '}
 						<span className="tx-medium">VN time</span>:
 					</span>
-					<span className="">{ScheduleTimeVN}</span>
+					<span className="">{data.ScheduleTimeVN}</span>
 				</div>
 				<div className="">
 					<span className=" mg-r-5 tx-nowrap wd-80 d-inline-block">
 						<FontAwesomeIcon icon="clock" className="fa fa-clock tx-primary" />{' '}
 						<span className="tx-medium">Your time</span>:
 					</span>
-					<span className="">{ScheduleTimeUTC}</span>
+					<span className="">{data.ScheduleTimeUTC}</span>
 				</div>
 			</td>
 			<td className="clr-lesson">
 				<div className="mg-b-5">
 					<span className=" mg-r-5 tx-medium">Course:</span>
-					<span className="">{DocumentName}</span>
+					<span className="">{data.DocumentName}</span>
 				</div>
 				<div className="">
 					<span className=" mg-r-5 tx-medium">Lesson:</span>
-					<span className="">{LessionName}</span>
+					<span className="">{data.LessionName}</span>
 				</div>
 			</td>
 			<td className="clr-feedbackStatus">
 				<div className="mg-b-5">
-					{EvaluationStatus === 1 ? (
+					{data.EvaluationStatus === 1 ? (
 						<span className="tx-danger">Not feedback</span>
 					) : (
-						EvaluationStatus === 2 && (
+						data.EvaluationStatus === 2 && (
 							<span className="tx-success">Feedbacked</span>
 						)
 					)}
@@ -91,6 +99,9 @@ const MissingFeedbackClasses = () => {
 			setIsLoading(false);
 		}
 	};
+
+	const layData = getData();
+	console.log('tu hy', layData);
 
 	useEffect(() => {
 		loadMissingFeedback();
@@ -159,8 +170,8 @@ const MissingFeedbackClasses = () => {
 												</td>
 											</tr>
 										</>
-									) : !!data && !!data.length > 0 ? (
-										data.map((item) => (
+									) : !!layData && !!layData.length > 0 ? (
+										layData.map((item) => (
 											<MissingFeedbackRow
 												key={`${item.BookingID}`}
 												data={item}

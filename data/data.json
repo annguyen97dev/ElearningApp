@@ -153,6 +153,23 @@
         "StudentName": "Trương Văn Lam",
         "DocumentName": "SOLUTION 6 - Grade 6"
     }],
+    "TicketSupport": [
+        {
+            "SupportTitle": "Ticker Hỗ trợ học Tiếng Anh"
+        },
+        {
+            "SupportTitle": "Ticker Hỗ trợ học Tiếng Mỹ"
+        },
+        {
+            "SupportTitle": "Ticker Hỗ trợ học Tiếng Pháp"
+        },
+        {
+            "SupportTitle": "Ticker Hỗ trợ học Tiếng Nhật"
+        },
+        {
+            "SupportTitle": "Ticker Hỗ trợ học Tiếng Hàn"
+        }
+    ],
     "allClass": [{
         "classID": "1",
         "classLesson": "Lession 4",

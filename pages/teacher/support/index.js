@@ -14,6 +14,16 @@ import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+
+import dataHy from '../../../data/data.json';
+
+console.log('o giua', dataHy.TicketSupport);
+
+function getData() {
+	const andt = dataHy.TicketSupport;
+	return andt;
+}
+
 const TicketSupport = () => {
 	const [state, setState] = useState([]);
 	const [filterState, setFilterState] = useState([]);
@@ -41,6 +51,9 @@ const TicketSupport = () => {
 	// 	setIsLoading(false);
 
 	// }
+
+	const layData = getData();
+	console.log('tu hy', layData);
 
 	const pushHistoryState = (id) => {
 		if (typeof window === undefined) return;
@@ -161,7 +174,7 @@ const TicketSupport = () => {
 			<h1 className="main-title-page">Ticket support</h1>
 			<div className="sup">
 				<div className="d-flex flex-wrap flex-xl-nowrap row--lg">
-					<div className="wd-100p mg-xl-b-0 mg-b-30 wd-xl-300 pd-xl-x-15 d-sm-flex d-xl-block flex-shrink-0">
+					<div className="wd-100p mg-xl-b-0 mg-b-30 wd-xl-300 pd-xl-x-15 d-sm-flex d-xl-block flex-shrink-0 w-res-100">
 						<div className="card card-custom w-100">
 							<div className="sub-menu card-body">
 								<p
@@ -340,8 +353,8 @@ const TicketSupport = () => {
 																<Skeleton />
 															</td>
 														</tr>
-													) : !!state && state.length > 0 ? (
-														state.map((item) => (
+													) : !!layData && layData.length > 0 ? (
+														layData.map((item) => (
 															<tr key={`${item.ID}`}>
 																<td>
 																	{' '}

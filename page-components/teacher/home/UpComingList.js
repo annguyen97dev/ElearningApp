@@ -11,23 +11,14 @@ import LessonCard from '~/components/common/LessonCard';
 import StudentInformationModal from '~components/common/Modal/StudentInformationModal';
 import Pagination from 'react-js-pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import data from '../../../data/data.json';
 
-const fakeUpcomming = {
-	StudentName: 'Trương Văn Lam',
-	ScheduleTimeVN: '29/07/2020 14:00 - 14:25',
-	LessionName: 'Lession 3',
-	FinishTypeString: 'As shedule',
-};
-console.log(fakeUpcomming);
-
-const initialState = [
+const fakeUpcomming = [
 	{
 		BookingID: 3,
 		TeacherUID: 1,
 		TeacherName: 'Trương Công Thức',
 		StudentUID: 3,
-		StudentName: 'Trương Văn Lam',
+		StudentName: 'Tứ Hỷ',
 		ScheduleTimeVN: '29/07/2020 14:00 - 14:25',
 		ScheduleTimeUTC: '29/07/2020 10:00 - 14:25',
 		DocumentName: 'SOLUTION 6 - Grade 6',
@@ -46,7 +37,61 @@ const initialState = [
 		TeacherUID: 1,
 		TeacherName: 'Trương Công Thức',
 		StudentUID: 4,
-		StudentName: 'Trương Văn Lam',
+		StudentName: 'Kha Lê',
+		ScheduleTimeVN: '26/06/2020 14:00 - 14:25',
+		ScheduleTimeUTC: '26/06/2020 12:00 - 14:25',
+		DocumentName: 'SOLUTION 6 - Grade 6',
+		LessionName: 'Lession 4',
+		LessionMaterial:
+			'https://drive.google.com/file/d/1_84xFBVfdeITWS9IakzeGedPnO4xafM3/view',
+		SkypeID: 'live:123123',
+		SpecialRequest: ' want the tutor to proactively correct my mistakes',
+		Status: 2,
+		StatusString: 'Finished',
+		FinishType: 0,
+	},
+	{
+		BookingID: 4,
+		TeacherUID: 1,
+		TeacherName: 'Trương Công Thức',
+		StudentUID: 4,
+		StudentName: 'An Nguyễn',
+		ScheduleTimeVN: '26/06/2020 14:00 - 14:25',
+		ScheduleTimeUTC: '26/06/2020 12:00 - 14:25',
+		DocumentName: 'SOLUTION 6 - Grade 6',
+		LessionName: 'Lession 4',
+		LessionMaterial:
+			'https://drive.google.com/file/d/1_84xFBVfdeITWS9IakzeGedPnO4xafM3/view',
+		SkypeID: 'live:123123',
+		SpecialRequest: ' want the tutor to proactively correct my mistakes',
+		Status: 2,
+		StatusString: 'Finished',
+		FinishType: 0,
+	},
+	{
+		BookingID: 4,
+		TeacherUID: 1,
+		TeacherName: 'Trương Công Thức',
+		StudentUID: 4,
+		StudentName: 'Nhựt Anh',
+		ScheduleTimeVN: '26/06/2020 14:00 - 14:25',
+		ScheduleTimeUTC: '26/06/2020 12:00 - 14:25',
+		DocumentName: 'SOLUTION 6 - Grade 6',
+		LessionName: 'Lession 4',
+		LessionMaterial:
+			'https://drive.google.com/file/d/1_84xFBVfdeITWS9IakzeGedPnO4xafM3/view',
+		SkypeID: 'live:123123',
+		SpecialRequest: ' want the tutor to proactively correct my mistakes',
+		Status: 2,
+		StatusString: 'Finished',
+		FinishType: 0,
+	},
+	{
+		BookingID: 4,
+		TeacherUID: 1,
+		TeacherName: 'Trương Công Thức',
+		StudentUID: 4,
+		StudentName: 'Hùng Nguyễn',
 		ScheduleTimeVN: '26/06/2020 14:00 - 14:25',
 		ScheduleTimeUTC: '26/06/2020 12:00 - 14:25',
 		DocumentName: 'SOLUTION 6 - Grade 6',
@@ -160,8 +205,8 @@ const UpComingList = ({ itemShow }) => {
 											<Skeleton count={1} />
 										</td>
 									</tr>
-								) : !!state && state.length > 0 ? (
-									[...state].map(
+								) : !!fakeUpcomming && fakeUpcomming.length > 0 ? (
+									[...fakeUpcomming].map(
 										(ls, index) =>
 											index < itemShow.value && (
 												<tr key={`${index}`}>
@@ -174,10 +219,7 @@ const UpComingList = ({ itemShow }) => {
 																/>{' '}
 																<span className="tx-medium">VN time</span>:
 															</span>
-															<span className="">
-																{fakeUpcomming.ScheduleTimeVN}
-															</span>
-															console.log(fakeUpcomming.ScheduleTimeVN);
+															<span className="">{ls.ScheduleTimeVN}</span>
 														</div>
 														<div className="">
 															<span className=" mg-r-5 tx-nowrap wd-80 d-inline-block">
@@ -187,23 +229,17 @@ const UpComingList = ({ itemShow }) => {
 																/>{' '}
 																<span className="tx-medium">Your time</span>:
 															</span>
-															<span className="">
-																{fakeUpcomming.ScheduleTimeUTC}
-															</span>
+															<span className="">{ls.ScheduleTimeUTC}</span>
 														</div>
 													</td>
 													<td className="clr-lesson">
 														<div className="mg-b-5">
 															<span className=" mg-r-5 tx-medium">Course:</span>
-															<span className="">
-																{fakeUpcomming.DocumentName}
-															</span>
+															<span className="">{ls.DocumentName}</span>
 														</div>
 														<div className="">
 															<span className=" mg-r-5 tx-medium">Lesson:</span>
-															<span className="">
-																{fakeUpcomming.LessionName}
-															</span>
+															<span className="">{ls.LessionName}</span>
 														</div>
 													</td>
 													<td className="lg-valign-middle">

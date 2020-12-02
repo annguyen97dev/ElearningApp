@@ -52,13 +52,11 @@ const MissingFeedbackRow = ({ data }) => {
 			</td>
 			<td className="clr-feedbackStatus">
 				<div className="mg-b-5">
-					{data.EvaluationStatus === 1 ? (
+					{/* {data.EvaluationStatus === 1 ? (
 						<span className="tx-danger">Not feedback</span>
-					) : (
-						data.EvaluationStatus === 2 && (
-							<span className="tx-success">Feedbacked</span>
-						)
-					)}
+					) : ( */}
+
+					<span className="tx-success">{data.EvaluationStatus}</span>
 				</div>
 			</td>
 			<td className="clr-actions">

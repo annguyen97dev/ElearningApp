@@ -160,7 +160,7 @@ const LessonCard = ({
 						{!!rating && lessonStatus === 'Finished' && (
 							<div className="course-rate mg-t-15">
 								<h6 className="mg-b-3">Rating lesson:</h6>
-								<div className="rating-wrap ">
+								<div className="rating-wrap">
 									<div className="rating justify-content-end">
 										<i className="fas fa-star-half-alt" />
 										<i className="fas fa-star" />

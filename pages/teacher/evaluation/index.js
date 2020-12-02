@@ -6,6 +6,7 @@ import Skeleton from 'react-loading-skeleton';
 import Pagination from 'react-js-pagination';
 import { getLayout } from '~/components/Layout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 const feedbackDemo = [
 	{
 		id: randomId(),

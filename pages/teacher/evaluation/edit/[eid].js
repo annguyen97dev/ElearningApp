@@ -15,6 +15,14 @@ import { getLayout } from '~/components/Layout';
 import { useRouter } from 'next/router';
 import Skeleton from 'react-loading-skeleton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import dataHy from '../../../../data/data.json';
+
+console.log('o tren', dataHy.EvaluateClass);
+
+function getData() {
+	const andt = dataHy.EvaluateClass;
+	return andt;
+}
 
 const initialState = {
 	isLoading: true,
@@ -110,6 +118,9 @@ const EvaluateClass = () => {
 		}
 		updateState('isLoading', false);
 	};
+
+	const layData = getData();
+	console.log('tu hy', layData);
 
 	const getFinishedOpts = async () => {
 		updateState('isLoading', true);
@@ -241,9 +252,9 @@ const EvaluateClass = () => {
 													<span className="">
 														{state.isLoading ? (
 															<Skeleton />
-														) : !!state.lessonInfo &&
-														  !!state.lessonInfo.DocumentName ? (
-															state.lessonInfo.DocumentName
+														) : !!dataHy.EvaluateClass[0] &&
+														  !!dataHy.EvaluateClass[0].DocumentName ? (
+															dataHy.EvaluateClass[0].DocumentName
 														) : (
 															''
 														)}
@@ -262,9 +273,9 @@ const EvaluateClass = () => {
 													<span className="st-tengv">
 														{state.isLoading ? (
 															<Skeleton />
-														) : !!state.lessonInfo &&
-														  !!state.lessonInfo.Material ? (
-															state.lessonInfo.Material
+														) : !!dataHy.EvaluateClass[0] &&
+														  !!dataHy.EvaluateClass[0].Material ? (
+															dataHy.EvaluateClass[0].Material
 														) : (
 															''
 														)}
@@ -283,9 +294,9 @@ const EvaluateClass = () => {
 													<span className="">
 														{state.isLoading ? (
 															<Skeleton />
-														) : !!state.lessonInfo &&
-														  !!state.lessonInfo.ScheduleDate ? (
-															state.lessonInfo.ScheduleDate
+														) : !!dataHy.EvaluateClass[0] &&
+														  !!dataHy.EvaluateClass[0].ScheduleDate ? (
+															dataHy.EvaluateClass[0].ScheduleDate
 														) : (
 															''
 														)}
@@ -303,9 +314,9 @@ const EvaluateClass = () => {
 													</span>
 													<a
 														href={
-															!!state.lessonInfo &&
-															!!state.lessonInfo.MaterialLink
-																? state.lessonInfo.MaterialLink
+															!!dataHy.EvaluateClass[0] &&
+															!!dataHy.EvaluateClass[0].MaterialLink
+																? dataHy.EvaluateClass[0].MaterialLink
 																: ''
 														}
 														target="_blank"
@@ -314,9 +325,9 @@ const EvaluateClass = () => {
 													>
 														{state.isLoading ? (
 															<Skeleton />
-														) : !!state.lessonInfo &&
-														  !!state.lessonInfo.Material ? (
-															state.lessonInfo.Material
+														) : !!dataHy.EvaluateClass[0] &&
+														  !!dataHy.EvaluateClass[0].Material ? (
+															dataHy.EvaluateClass[0].Material
 														) : (
 															''
 														)}
@@ -383,9 +394,9 @@ const EvaluateClass = () => {
 												<span className="">
 													{state.isLoading ? (
 														<Skeleton />
-													) : !!state.lessonInfo &&
-													  !!state.lessonInfo.StudentName ? (
-														state.lessonInfo.StudentName
+													) : !!dataHy.EvaluateClass[0] &&
+													  !!dataHy.EvaluateClass[0].StudentName ? (
+														dataHy.EvaluateClass[0].StudentName
 													) : (
 														''
 													)}
@@ -401,14 +412,15 @@ const EvaluateClass = () => {
 												<span className="tx-primary">
 													{state.isLoading ? (
 														<Skeleton />
-													) : (!!state.lessonInfo &&
-													  !!state.lessonInfo.StudentRating
-															? state.lessonInfo.StudentRating
+													) : (!!dataHy.EvaluateClass[0] &&
+													  !!dataHy.EvaluateClass[0].StudentRating
+															? dataHy.EvaluateClass[0].StudentRating
 															: 0) === 0 ? (
 														<span className="tx-black">No rating</span>
 													) : (
 														[...Array(5)].map((el, index) =>
-															5 - index <= state.lessonInfo.StudentRating ? (
+															5 - index <=
+															dataHy.EvaluateClass[0].StudentRating ? (
 																<FontAwesomeIcon
 																	icon="star"
 																	key={`${index}`}
@@ -447,9 +459,9 @@ const EvaluateClass = () => {
 										<span className="word-break">
 											{state.isLoading ? (
 												<Skeleton count={2} />
-											) : !!state.lessonInfo &&
-											  !!state.lessonInfo.StudentNote ? (
-												state.lessonInfo.StudentNote
+											) : !!dataHy.EvaluateClass[0] &&
+											  !!dataHy.EvaluateClass[0].StudentNote ? (
+												dataHy.EvaluateClass[0].StudentNote
 											) : (
 												<span className="tx-danger">
 													Student haven't feedback yet.

@@ -221,7 +221,7 @@ const FullCalendar = ({ data = [] }) => {
 				position: toast.POSITION.TOP_RIGHT,
 				autoClose: 2000,
 			});
-			console.log('Loi  khi goi api');
+			console.log('Loi khi goi api');
 		}
 	};
 

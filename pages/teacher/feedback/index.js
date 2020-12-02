@@ -7,6 +7,15 @@ import Pagination from 'react-js-pagination';
 import { getLayout } from '~/components/Layout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
+import dataHy from '../../../data/data.json';
+
+console.log('o ngoai', dataHy.StudentFeedback);
+
+function getData() {
+	const andt = dataHy.StudentFeedback;
+	return andt;
+}
+
 const feedbackDemo = [
 	{
 		id: randomId(),
@@ -413,7 +422,8 @@ const StudentFeedback = () => {
 	const [pageNumber, setPageNumber] = React.useState(1);
 	const [pageSize, setPageSize] = React.useState(null);
 	const [totalResult, setTotalResult] = React.useState(null);
-
+	const layData = getData();
+	console.log('tu hy', layData);
 	const fetchFeedback = async (page = 1) => {
 		setIsLoading(true);
 		try {
@@ -475,8 +485,8 @@ const StudentFeedback = () => {
 						</>
 					) : (
 						<>
-							{!!feedbacks && feedbacks.length > 0 ? (
-								[...feedbacks].map((fb, index) => (
+							{!!layData && layData.length > 0 ? (
+								[...layData].map((fb, index) => (
 									<FeedbackRow
 										key={`${index + randomId()}`}
 										data={{

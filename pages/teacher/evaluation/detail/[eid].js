@@ -23,6 +23,15 @@ import { getLayout } from '~/components/Layout';
 import { useRouter } from 'next/router';
 import Skeleton from 'react-loading-skeleton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import dataHy from '../../../../data/data.json';
+
+console.log('o tren', dataHy.EvaluationDetail);
+
+function getData() {
+	const andt = dataHy.EvaluationDetail;
+	return andt;
+}
+
 const initialState = {
 	isLoading: true,
 	lessonInfo: null,
@@ -119,6 +128,9 @@ const EvaluationDetail = () => {
 		updateState('isLoading', false);
 	};
 
+	const layData = getData();
+	console.log('tu hy', layData);
+
 	const updateFeedback = async () => {
 		updateState('submitLoading', true);
 		try {
@@ -178,8 +190,9 @@ const EvaluationDetail = () => {
 														Course:{' '}
 													</span>
 													<span className="">
-														{!!state && !!state.DocumentName
-															? state.DocumentName
+														{!!dataHy.EvaluationDetail[0] &&
+														!!dataHy.EvaluationDetail[0].DocumentName
+															? dataHy.EvaluationDetail[0].DocumentName
 															: ''}
 													</span>
 												</p>
@@ -194,7 +207,10 @@ const EvaluationDetail = () => {
 														Lesson:
 													</span>
 													<span className="st-tengv">
-														{!!state && !!state.Material ? state.Material : ''}
+														{!!dataHy.EvaluationDetail[0] &&
+														!!dataHy.EvaluationDetail[0].Material
+															? dataHy.EvaluationDetail[0].Material
+															: ''}
 													</span>
 												</p>
 											</div>
@@ -208,8 +224,9 @@ const EvaluationDetail = () => {
 														Time:
 													</span>
 													<span className="">
-														{!!state && !!state.ScheduleDate
-															? state.ScheduleDate
+														{!!dataHy.EvaluationDetail[0] &&
+														!!dataHy.EvaluationDetail[0].ScheduleDate
+															? dataHy.EvaluationDetail[0].ScheduleDate
 															: ''}
 													</span>
 												</p>
@@ -226,15 +243,17 @@ const EvaluationDetail = () => {
 													<span>
 														<a
 															href={
-																!!state && !!state.MaterialLink
-																	? state.MaterialLink
+																!!dataHy.EvaluationDetail[0] &&
+																!!dataHy.EvaluationDetail[0].MaterialLink
+																	? dataHy.EvaluationDetail[0].MaterialLink
 																	: ''
 															}
 															target="_blank"
 															rel="noreferrer"
 														>
-															{!!state && !!state.Material
-																? state.Material
+															{!!dataHy.EvaluationDetail[0] &&
+															!!dataHy.EvaluationDetail[0].Material
+																? dataHy.EvaluationDetail[0].Material
 																: ''}
 														</a>
 													</span>
@@ -250,8 +269,9 @@ const EvaluationDetail = () => {
 														Finished type:
 													</span>
 													<span className="">
-														{!!state && !!state.finishedType
-															? state.finishedType
+														{!!dataHy.EvaluationDetail[0] &&
+														!!dataHy.EvaluationDetail[0].finishedType
+															? dataHy.EvaluationDetail[0].finishedType
 															: ''}
 													</span>
 												</div>
@@ -276,8 +296,9 @@ const EvaluationDetail = () => {
 													Name:{' '}
 												</span>
 												<span className="">
-													{!!state && !!state.StudentName
-														? state.StudentName
+													{!!dataHy.EvaluationDetail[0] &&
+													!!dataHy.EvaluationDetail[0].StudentName
+														? dataHy.EvaluationDetail[0].StudentName
 														: ''}
 												</span>
 											</p>
@@ -292,13 +313,15 @@ const EvaluationDetail = () => {
 													Feedback:{' '}
 												</span>
 												<span className="rating-style">
-													{(!!state && !!state.StudentRating
-														? state.StudentRating
+													{(!!dataHy.EvaluationDetail[0] &&
+													!!dataHy.EvaluationDetail[0].StudentRating
+														? dataHy.EvaluationDetail[0].StudentRating
 														: 0) === 0 ? (
 														<span className="tx-black">No rating</span>
 													) : (
 														[...Array(5)].map((el, index) =>
-															5 - index <= state.StudentRating ? (
+															5 - index <=
+															dataHy.EvaluationDetail[0].StudentRating ? (
 																<FontAwesomeIcon
 																	icon={['fas', 'star']}
 																	key={`${index}`}
@@ -324,8 +347,9 @@ const EvaluationDetail = () => {
 											Student Feedback
 										</h5>
 										<span className="word-break">
-											{!!state && !!state.StudentNote ? (
-												state.StudentNote
+											{!!dataHy.EvaluationDetail &&
+											!!dataHy.EvaluationDetail[0].StudentNote ? (
+												dataHy.EvaluationDetail[0].StudentNote
 											) : (
 												<span className="tx-danger">
 													Student haven't feedback yet.

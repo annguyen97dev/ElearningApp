@@ -38,7 +38,6 @@ const Layout = ({
 		</>
 	);
 };
-
 export const getLayout = (page) => <Layout>{page}</Layout>;
 
 export const getStudentLayout = (page) => (

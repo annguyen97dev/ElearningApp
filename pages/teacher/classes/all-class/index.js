@@ -460,7 +460,7 @@ const AllClasses = () => {
 						<Pagination
 							innerClass="pagination mg-t-15"
 							activePage={pageNumber}
-							itemsCountPerPage={pageSize}
+							itemsCountPerPage={pageSize}`
 							totalItemsCount={totalResult}
 							pageRangeDisplayed={5}
 							onChange={(page) => setPageNumber(page)}

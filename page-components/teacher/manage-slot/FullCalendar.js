@@ -524,7 +524,7 @@ const FullCalendar = ({ data = [] }) => {
 			},
 			titleFormat: { year: 'numeric', month: 'short' },
 			navLinks: true, // can click day/week names to navigate views
-			editable: false,
+			editable: true,
 			stickyHeaderDates: 'auto',
 			selectable: true,
 			nowIndicator: true,
@@ -684,6 +684,21 @@ const FullCalendar = ({ data = [] }) => {
 			}
 			window.location.href = `skype:${eventData?.bookInfo?.SkypeID ?? ''}?chat`;
 		});
+
+		// function calendar() {
+		// 	// Caching calendar for later use
+		// 	const FullCalendar = $('#calendar');
+
+		// 	// Build calendar with default view of mobile query
+		// 	FullCalendar({ defaultView: 'timeGridWeek' });
+
+		// 	// Register media query watch handlers
+		// 	enquire.register('screen and (max-width: 1023px)', {
+		// 		match: () => {
+		// 			calendar('changeView', 'timeGridDay');
+		// 		},
+		// 	});
+		// }
 
 		$('body').on(
 			'click',

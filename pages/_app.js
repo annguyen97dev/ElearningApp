@@ -38,7 +38,7 @@ class MyApp extends App {
 			},
 		};
 	}
-
+	
 	cacheURL = [];
 	handleLoadStyle = (url) => {
 		if (this.cacheURL.includes(url)) return;

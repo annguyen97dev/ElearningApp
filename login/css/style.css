@@ -252,11 +252,21 @@ a {
 	top: 0;
 	left: 0;
 	transform: none;
-	margin: 100px auto;
+}
+.box-register-flex {
+	margin: 75px auto;
 	width: 1170px;
 	max-width: 100%;
 	display: flex;
 	flex-wrap: wrap;
+}
+.main-title-form {
+	margin-top: 100px;
+	font-weight: 600;
+	font-size: 30px;
+	line-height: 1.4;
+	margin-bottom: 14px;
+	text-transform: capitalize;
 }
 .box-form.cus .box-resgister {
 	width: 65%;

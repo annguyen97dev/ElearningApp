@@ -2,7 +2,8 @@ import React, { useState, useEffect, useReducer } from 'react';
 import ReactDOM from 'react-dom';
 import { getFaqAPI } from '~/api/studentAPI';
 import { getStudentLayout } from '~/components/Layout';
-const Faq = () => {
+import { i18n, withTranslation } from '~/i18n';
+const Faq = ({ t }) => {
 	const [state, setState] = useState([]);
 	const [loading, setLoading] = useState(false);
 
@@ -22,7 +23,7 @@ const Faq = () => {
 	return (
 		<>
 			<div className="faq-container">
-				<h1 className="main-title-page">CÁC CÂU HỎI THƯỜNG GẶP</h1>
+				<h1 className="main-title-page">{t('faqs')}</h1>
 				<div className="tx-center">
 					<img
 						src="/static/img/question.svg"
@@ -88,5 +89,12 @@ const Faq = () => {
 		</>
 	);
 };
+// Faq.getLayout = getStudentLayout;
+// export default Faq;
+
 Faq.getLayout = getStudentLayout;
-export default Faq;
+Faq.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+
+export default withTranslation('common')(Faq);

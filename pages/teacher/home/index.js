@@ -233,7 +233,7 @@ const Home = ({ t }) => {
 								<div className="align-items-center d-flex justify-content-between pd-b-15">
 									<div className="d-flex align-items-center">
 										<div className="">
-											<h5 className="mg-b-0">Upcoming lessons</h5>
+											<h5 className="mg-b-0">{t('upcoming-lessons')}</h5>
 										</div>
 									</div>
 									<div className="wd-150">

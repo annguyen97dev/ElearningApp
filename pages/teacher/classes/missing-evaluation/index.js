@@ -6,7 +6,7 @@ import { getMissingFeedback } from '~/api/teacherAPI';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import dataHy from '../../../../data/data.json';
-
+import { i18n, withTranslation } from '~/i18n';
 console.log('o ngoai', dataHy.MissingEvaluationClasses);
 
 function getData() {
@@ -74,7 +74,7 @@ const MissingFeedbackRow = ({ data }) => {
 	);
 };
 
-const MissingFeedbackClasses = () => {
+const MissingFeedbackClasses = ({ t }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [pageNumber, setPageNumber] = useState(1);
 	const [data, setData] = useState(null);
@@ -107,7 +107,7 @@ const MissingFeedbackClasses = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Missing evaluation classes</h1>
+			<h1 className="main-title-page">{t('missing-evaluation-classes')}</h1>
 			<div className="card">
 				<div className="card-body">
 					<>
@@ -115,10 +115,12 @@ const MissingFeedbackClasses = () => {
 							<table className="table table-classrooms table-borderless responsive-table table-hover">
 								<thead className="">
 									<tr className="">
-										<th className="clr-time">Schedule</th>
-										<th className="clr-lesson">Lesson</th>
-										<th className="clr-feedbackStatus">Student feedback </th>
-										<th className="clr-actions">Actions</th>
+										<th className="clr-time">{t('schedule')}</th>
+										<th className="clr-lesson">{t('lesson')}</th>
+										<th className="clr-feedbackStatus">
+											{t('student-feedback')}{' '}
+										</th>
+										<th className="clr-actions">{t('actions')}</th>
 									</tr>
 								</thead>
 								{/*1 item*/}
@@ -215,6 +217,11 @@ const MissingFeedbackClasses = () => {
 	);
 };
 
-MissingFeedbackClasses.getLayout = getLayout;
+// MissingFeedbackClasses.getLayout = getLayout;
+// export default MissingFeedbackClasses;
 
-export default MissingFeedbackClasses;
+MissingFeedbackClasses.getLayout = getLayout;
+MissingFeedbackClasses.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(MissingFeedbackClasses);

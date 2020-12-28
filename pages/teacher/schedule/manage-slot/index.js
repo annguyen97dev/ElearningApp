@@ -6,8 +6,8 @@ import { ToastContainer } from 'react-toastify';
 import { getTeacherInfo } from '~/api/teacherAPI';
 import './index.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-const ManageSlot = () => {
+import { i18n, withTranslation } from '~/i18n';
+const ManageSlot = ({ t }) => {
 	const [timeZone, setTimeZone] = React.useState('');
 	const getProfile = async () => {
 		const res = await getTeacherInfo();
@@ -21,7 +21,9 @@ const ManageSlot = () => {
 	return (
 		<>
 			<div className="d-md-flex justify-content-between align-items-center flex-wrap mg-b-30">
-				<h1 className="main-title-page mg-b-15-f mg-md-b-0-f">Manage slot </h1>
+				<h1 className="main-title-page mg-b-15-f mg-md-b-0-f">
+					{t('manage-slot')}
+				</h1>
 				<span className="pd-y-10 d-inline-block tx-dark pd-y-10 d-inline-block tx-dark bg-white rounded pd-x-10">
 					<FontAwesomeIcon
 						icon="globe-europe"
@@ -46,7 +48,7 @@ const ManageSlot = () => {
 								className="custom-control-label"
 								htmlFor="student-toggle-checkbox"
 							>
-								Only show student booking hours
+								{t('only-show-student-booking-hours')}
 							</label>
 						</div>
 						<BookingCalendar />
@@ -69,6 +71,12 @@ const ManageSlot = () => {
 	);
 };
 
-ManageSlot.getLayout = getLayout;
+// ManageSlot.getLayout = getLayout;
 
-export default ManageSlot;
+// export default ManageSlot;
+
+ManageSlot.getLayout = getLayout;
+ManageSlot.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(ManageSlot);

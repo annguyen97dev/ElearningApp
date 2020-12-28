@@ -6,7 +6,7 @@ import { getMissingFeedback } from '~/api/teacherAPI';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import dataHy from '../../../data/data.json';
-
+import { i18n, withTranslation } from '~/i18n';
 console.log('o ngoai', dataHy.EndOfStudentPackage);
 
 function getData() {
@@ -34,7 +34,7 @@ const MissingFeedbackRow = ({ data }) => {
 	);
 };
 
-const StudentPackage = () => {
+const StudentPackage = ({ t }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [pageNumber, setPageNumber] = useState(1);
 	const [data, setData] = useState(null);
@@ -66,7 +66,7 @@ const StudentPackage = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">End of student's package</h1>
+			<h1 className="main-title-page">{t('end-of-student-package')}</h1>
 			<div className="card">
 				<div className="card-body">
 					<>
@@ -74,12 +74,12 @@ const StudentPackage = () => {
 							<table className="table table-classrooms table-borderless responsive-table table-hover">
 								<thead className="">
 									<tr className="">
-										<th className="">Student code</th>
-										<th className="">Student name</th>
-										<th className="">Total number of class </th>
-										<th className="">Classes were booked</th>
-										<th className="">Furthest class</th>
-										<th className="">End date of package</th>
+										<th className="">{t('student-code')}</th>
+										<th className="">{t('student-name')}</th>
+										<th className="">{t('total-number-of-class')}</th>
+										<th className="">{t('classes-were-booked')}</th>
+										<th className="">{t('furthest-class')}</th>
+										<th className="">{t('end-date-of-package')}</th>
 									</tr>
 								</thead>
 								{/*1 item*/}
@@ -194,6 +194,11 @@ const StudentPackage = () => {
 	);
 };
 
-StudentPackage.getLayout = getLayout;
+// StudentPackage.getLayout = getLayout;
+// export default StudentPackage;
 
-export default StudentPackage;
+StudentPackage.getLayout = getLayout;
+StudentPackage.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(StudentPackage);

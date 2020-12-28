@@ -2,7 +2,6 @@ import React from 'react';
 import { getStudentByUID } from '~/api/teacherAPI';
 import Skeleton from 'react-loading-skeleton';
 import dataInfo from '../../../data/data.json';
-
 console.log('o trong', dataInfo.InfoModalStudent);
 function getData() {
 	const andt = dataInfo.InfoModalStudent;

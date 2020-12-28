@@ -83,7 +83,6 @@ const Header = ({ t, isStudent }) => {
 					</span>
 				</div>
 				<div className="navbar-right justify-content">
-					
 					<Select
 						isSearchable={false}
 						options={LangOptions}

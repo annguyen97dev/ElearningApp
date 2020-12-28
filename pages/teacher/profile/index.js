@@ -8,12 +8,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getLayout } from '~/components/Layout';
 import { Provider as ProfileProvider } from '~/context/ProfileContext';
 import { ToastContainer } from 'react-toastify';
-const ProfileInfor = () => {
+import { i18n, withTranslation } from '~/i18n';
+const ProfileInfor = ({ t }) => {
 	const [activePage, setActivePage] = useState('profile');
 
 	return (
 		<>
-			<h1 className="main-title-page">My profile</h1>
+			<h1 className="main-title-page">{t('my-profile')}</h1>
 			<ProfileProvider>
 				<div className="card">
 					<div className="card-body">
@@ -31,7 +32,7 @@ const ProfileInfor = () => {
 											icon={['far', 'id-card']}
 											className="far fa-id-card"
 										/>{' '}
-										Basic Information
+										{t('basic-information')}
 									</a>
 								</li>
 								<li className="tab-item">
@@ -46,7 +47,7 @@ const ProfileInfor = () => {
 											icon={['fab', 'youtube']}
 											className="fab fa-youtube"
 										/>{' '}
-										Introduce video
+										{t('introduce-video')}
 									</a>
 								</li>
 								<li className="tab-item">
@@ -61,7 +62,7 @@ const ProfileInfor = () => {
 											icon="certificate"
 											className="fas fa-certificate"
 										/>{' '}
-										Experience & Certificate
+										{t('experience-certificate')}
 									</a>
 								</li>
 							</ul>
@@ -107,6 +108,11 @@ const ProfileInfor = () => {
 	);
 };
 
-ProfileInfor.getLayout = getLayout;
+// ProfileInfor.getLayout = getLayout;
+// export default ProfileInfor;
 
-export default ProfileInfor;
+ProfileInfor.getLayout = getLayout;
+ProfileInfor.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(ProfileInfor);

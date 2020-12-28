@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import dataHy from '../../../../data/data.json';
-
+import { i18n, withTranslation } from '~/i18n';
 console.log('o ngoai', dataHy.allClass);
 
 function getData() {
@@ -207,7 +207,7 @@ const AllClassRow = ({ data, showStudentModal }) => {
 	);
 };
 
-const AllClasses = () => {
+const AllClasses = ({ t }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [filterStatusAllClass, setFilterStatusAllClass] = useState(
 		statusOptions[0],
@@ -278,7 +278,7 @@ const AllClasses = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">All classes</h1>
+			<h1 className="main-title-page">{t('all-class')}</h1>
 			<div className="d-flex align-items-center justify-content-between mg-b-15 flex-wrap">
 				<div className="wd-150 order-1 mg-t-15 mg-md-t-0">
 					<Select
@@ -341,7 +341,8 @@ const AllClasses = () => {
 							className="btn btn-primary "
 							onClick={_onFilterDate}
 						>
-							<FontAwesomeIcon icon="filter" className="fa fa-filter" /> Filter
+							<FontAwesomeIcon icon="filter" className="fa fa-filter" />{' '}
+							{t('filter')}
 						</button>
 					</div>
 				</div>
@@ -354,12 +355,12 @@ const AllClasses = () => {
 							<thead>
 								<tr>
 									<th className="clr-id">ID</th>
-									<th className="clr-lesson">Lesson</th>
-									<th className="clr-student">Student </th>
-									<th className="clr-time">Schedule </th>
-									<th className="clr-status">Status</th>
+									<th className="clr-lesson">{t('lesson')}</th>
+									<th className="clr-student">{t('student')}</th>
+									<th className="clr-time">{t('schedule')} </th>
+									<th className="clr-status">{t('status')}</th>
 									{/* <th className="clr-finishType">Finish Type</th> */}
-									<th className="clr-actions">Actions</th>
+									<th className="clr-actions">{t('actions')}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -460,7 +461,7 @@ const AllClasses = () => {
 						<Pagination
 							innerClass="pagination mg-t-15"
 							activePage={pageNumber}
-							itemsCountPerPage={pageSize}`
+							itemsCountPerPage={pageSize}
 							totalItemsCount={totalResult}
 							pageRangeDisplayed={5}
 							onChange={(page) => setPageNumber(page)}
@@ -477,6 +478,12 @@ const AllClasses = () => {
 	);
 };
 
-AllClasses.getLayout = getLayout;
+// AllClasses.getLayout = getLayout;
 
-export default AllClasses;
+// export default AllClasses;
+
+AllClasses.getLayout = getLayout;
+AllClasses.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(AllClasses);

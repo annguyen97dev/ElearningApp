@@ -8,7 +8,7 @@ import { getUpcomingClass, addScheduleLog } from '~/api/teacherAPI';
 import { Popover, OverlayTrigger, Overlay } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import dataHy from '../../../../data/data.json';
-
+import { i18n, withTranslation } from '~/i18n';
 console.log('o ngoai', dataHy.UpcommingClass);
 
 function getData() {
@@ -163,7 +163,7 @@ const UpcomingRow = ({ data, showStudentModal }) => {
 	);
 };
 
-const UpcomingClasses = () => {
+const UpcomingClasses = ({ t }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [pageNumber, setPageNumber] = useState(1);
 	const [data, setData] = useState(null);
@@ -212,19 +212,19 @@ const UpcomingClasses = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Upcoming classes</h1>
+			<h1 className="main-title-page">{t('upcoming-lessons')}</h1>
 			<div className="card">
 				<div className="card-body">
 					<div className="table-responsive">
 						<table className="table table-classrooms table-borderless responsive-table table-hover">
 							<thead className="">
 								<tr className="">
-									<th className="clr-time">Schedule</th>
-									<th className="clr-lesson">Lesson</th>
-									<th className="clr-student">Student</th>
-									<th className="clr-student">Note</th>
-									<th className="clr-status">Status</th>
-									<th className="clr-action">Actions</th>
+									<th className="clr-time">{t('schedule')}</th>
+									<th className="clr-lesson">{t('lesson')}</th>
+									<th className="clr-student">{t('student')}</th>
+									<th className="clr-student">{t('notes')}</th>
+									<th className="clr-status">{t('status')}</th>
+									<th className="clr-action">{t('actions')}</th>
 								</tr>
 							</thead>
 							{/*1 item*/}
@@ -340,6 +340,11 @@ const UpcomingClasses = () => {
 	);
 };
 
-UpcomingClasses.getLayout = getLayout;
+// UpcomingClasses.getLayout = getLayout;
+// export default UpcomingClasses;
 
-export default UpcomingClasses;
+UpcomingClasses.getLayout = getLayout;
+UpcomingClasses.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(UpcomingClasses);

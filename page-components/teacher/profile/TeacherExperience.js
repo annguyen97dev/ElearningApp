@@ -11,6 +11,7 @@ import {
 	updateTeacherExperience,
 } from '~/api/teacherAPI';
 import { toast } from 'react-toastify';
+import { i18n, withTranslation } from '~/i18n';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	getTesolCertificateOptions,
@@ -127,7 +128,7 @@ const RenderExpRow = ({ exp, handleStateChange, deleteRow }) => {
 	);
 };
 
-const TeacherExperience = (props) => {
+const TeacherExperience = ({ props, t }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const [submitLoading, setSubmitLoading] = useState(false);
 
@@ -327,10 +328,10 @@ const TeacherExperience = (props) => {
 									icon="user-clock"
 									className="fa fa-user-clock mg-r-5"
 								/>{' '}
-								Experience
+								{t('experience')}
 							</h5>
 							<div className="form-groupselect-checkbox mg-b-30 mg-t-15">
-								<p className="mg-b-5">- Teacher experience:</p>
+								<p className="mg-b-5">- {t('teacher-experience')}:</p>
 								<div className="input-float">
 									<Select
 										key={(option) => `${option.id}`}
@@ -354,7 +355,9 @@ const TeacherExperience = (props) => {
 							</div>
 						</div>
 						<div className="teacher__content-block mg-b-30">
-							<p className="mg-b-5">- Fill in your teaching experience:</p>
+							<p className="mg-b-5">
+								- {t('fill-in-your-teaching-experience')}:
+							</p>
 							<div className="experience__list" id="js-exp-list">
 								{!!state.experienceLists &&
 									state.experienceLists.length > 0 &&
@@ -373,8 +376,8 @@ const TeacherExperience = (props) => {
 								id="js-add-row"
 								onClick={_addExpRow}
 							>
-								<FontAwesomeIcon icon="plus" className="fa fa-plus" /> Add
-								experience
+								<FontAwesomeIcon icon="plus" className="fa fa-plus" />{' '}
+								{t('add-experience')}
 							</button>
 						</div>
 						<hr className="mg-b-30 mg-t-0" style={{ borderStyle: 'dashed' }} />
@@ -384,7 +387,7 @@ const TeacherExperience = (props) => {
 									className="fas fa-certificate mg-r-5"
 									icon="certificate"
 								/>{' '}
-								Certificate
+								{t('certificate')}
 							</h5>
 							<div className="row teacher__certificate pd-y-15">
 								<div className="form-group col-12 col-md-6">
@@ -495,4 +498,9 @@ const TeacherExperience = (props) => {
 	);
 };
 
-export default memo(TeacherExperience);
+// export default memo(TeacherExperience);
+
+TeacherExperience.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(TeacherExperience);

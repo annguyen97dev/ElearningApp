@@ -16,7 +16,7 @@ import { useRouter } from 'next/router';
 import Skeleton from 'react-loading-skeleton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import dataHy from '../../../../data/data.json';
-
+import { i18n, withTranslation } from '~/i18n';
 console.log('o tren', dataHy.EvaluateClass);
 
 function getData() {
@@ -91,7 +91,7 @@ const StatelessTextarea = (props) => {
 	);
 };
 
-const EvaluateClass = () => {
+const EvaluateClass = ({ t }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const selectRef = useRef(true);
 	const [submitLoading, setSubmitLoading] = useState(false);
@@ -229,7 +229,7 @@ const EvaluateClass = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Evaluate class</h1>
+			<h1 className="main-title-page">{t('evaluate-class')}</h1>
 			<div className="row ">
 				<div className="col-xl-4 col-lg-12 mg-b-30">
 					<div className="card lesson-sidebar">
@@ -238,7 +238,7 @@ const EvaluateClass = () => {
 								<div className="col-sm-12 mg-b-15">
 									{/* <!--thông tin buổi học--> */}
 									<div className="">
-										<h5 className="mg-b-15">Lesson information</h5>
+										<h5 className="mg-b-15">{t('lesson-information')}</h5>
 										<div className="infomation__wrap">
 											<div className="st-time">
 												<p className="st-teacher-text d-flex justify-content-between">
@@ -247,7 +247,7 @@ const EvaluateClass = () => {
 															icon="book-open"
 															className="fa fa-book-open tx-primary st-icon wd-20 mg-r-5"
 														/>
-														Course:{' '}
+														{t('course')}:{' '}
 													</span>
 													<span className="">
 														{state.isLoading ? (
@@ -268,7 +268,7 @@ const EvaluateClass = () => {
 															icon="book-reader"
 															className="fa fa-book-reader tx-primary graduate st-icon wd-20 mg-r-5"
 														/>
-														Lesson:
+														{t('lesson')}:
 													</span>
 													<span className="st-tengv">
 														{state.isLoading ? (
@@ -289,7 +289,7 @@ const EvaluateClass = () => {
 															icon="clock"
 															className="fa fa-clock tx-primary clock st-icon wd-20 mg-r-5"
 														/>
-														Time:
+														{t('time')}:
 													</span>
 													<span className="">
 														{state.isLoading ? (
@@ -310,7 +310,7 @@ const EvaluateClass = () => {
 															icon="book"
 															className="fa fa-book tx-primary open st-icon wd-20 mg-r-5"
 														/>
-														Material:
+														{t('material')}:
 													</span>
 													<a
 														href={
@@ -341,7 +341,7 @@ const EvaluateClass = () => {
 															icon="lightbulb"
 															className="fas fa-lightbulb tx-primary open st-icon wd-20 mg-r-5"
 														/>
-														Finished type:
+														{t('finished-type')}:
 													</span>
 													<div className="flex-grow-1">
 														{state.isLoading ? (
@@ -380,7 +380,7 @@ const EvaluateClass = () => {
 									{/* <!--thang danh gia--> */}
 									<div className="infomation__wrap">
 										<h5 className="mg-b-15 mg-md-t-15 mg-t-15 mg-md-t-0-f">
-											Student Information
+											{t('student-information')}
 										</h5>
 										<div className="st-time">
 											<p className="st-teacher-text d-flex justify-content-between">
@@ -389,7 +389,7 @@ const EvaluateClass = () => {
 														icon="user-graduate"
 														className="fa fa-user-graduate  tx-primary st-icon wd-20 mg-r-5"
 													/>
-													Name:{' '}
+													{t('name')}:{' '}
 												</span>
 												<span className="">
 													{state.isLoading ? (
@@ -407,7 +407,7 @@ const EvaluateClass = () => {
 											<p className="st-teacher-text d-flex justify-content-between">
 												<span className="">
 													<FontAwesomeIcon className="fa fa-thumbs-up tx-primary st-icon wd-20 mg-r-5" />
-													Feedback:{' '}
+													{t('feebback')}:{' '}
 												</span>
 												<span className="tx-primary">
 													{state.isLoading ? (
@@ -448,7 +448,7 @@ const EvaluateClass = () => {
 								<div className="col-sm-12">
 									<div>
 										<h5 className="mg-b-15 mg-md-t-15 mg-t-15 mg-md-t-0-f">
-											Student Feedback
+											{t('student-feedback')}
 										</h5>
 										{/* <div className="st-time">
                         <p className="st-teacher-text d-flex justify-content-between mg-b-5">
@@ -477,7 +477,7 @@ const EvaluateClass = () => {
 				<div className="col-xl-8 col-lg-12">
 					<div className="card mg-b-30">
 						<div className="card-header">
-							<h5 className="mg-b-0">General Feedback to Student</h5>
+							<h5 className="mg-b-0">{t('general-feedback-to-student')}</h5>
 						</div>
 						<div className="card-body pd-t-10">
 							<div>
@@ -566,7 +566,7 @@ const EvaluateClass = () => {
 						<div className="col-12 col-sm-6 mg-b-30">
 							<div className="card">
 								<div className="card-header">
-									<h5 className="mg-b-0">Grammar</h5>
+									<h5 className="mg-b-0">{t('grammar')}</h5>
 								</div>
 								<div className="card-body">
 									<div className="st-danhgianguphap ">
@@ -592,7 +592,7 @@ const EvaluateClass = () => {
 						<div className="col-12 col-sm-6 mg-b-30">
 							<div className="card">
 								<div className="card-header">
-									<h5 className="mg-b-0">Vocabulary</h5>
+									<h5 className="mg-b-0">{t('vocabulary')}</h5>
 								</div>
 								<div className="card-body">
 									<div className="st-danhgianguphap ">
@@ -620,7 +620,7 @@ const EvaluateClass = () => {
 						<div className="col-12 col-sm-6 mg-b-30">
 							<div className="card">
 								<div className="card-header">
-									<h5 className="mg-b-0">Speaking</h5>
+									<h5 className="mg-b-0">{t('speaking')}</h5>
 								</div>
 								<div className="card-body">
 									<div className="st-danhgianguphap ">
@@ -646,7 +646,7 @@ const EvaluateClass = () => {
 						<div className="col-12 col-sm-6 mg-b-30">
 							<div className="card h-100">
 								<div className="card-header">
-									<h5 className="mg-b-0">Pronunciation</h5>
+									<h5 className="mg-b-0">{t('pronunciation')}</h5>
 								</div>
 								<div className="card-body">
 									<div className="st-danhgianguphap ">
@@ -720,6 +720,11 @@ const EvaluateClass = () => {
 	);
 };
 
-EvaluateClass.getLayout = getLayout;
+// EvaluateClass.getLayout = getLayout;
+// export default EvaluateClass;
 
-export default EvaluateClass;
+EvaluateClass.getLayout = getLayout;
+EvaluateClass.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(EvaluateClass);

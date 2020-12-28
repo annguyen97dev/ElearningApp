@@ -4,7 +4,7 @@ import Skeleton from 'react-loading-skeleton';
 import { getPaymentHistoryAPI } from '~/api/studentAPI';
 import { getStudentLayout } from '~/components/Layout';
 import dayjs from 'dayjs';
-
+import { i18n, withTranslation } from '~/i18n';
 const fakeData = [
 	{
 		PlanName: 'Tiếng Anh giao tiếp cơ bản trong 10 ngày',
@@ -32,7 +32,7 @@ const fakeData = [
 	},
 ];
 
-const Package = () => {
+const Package = ({ t }) => {
 	const [state, setState] = useState([]);
 	const [loading, setLoading] = useState(false);
 
@@ -70,7 +70,7 @@ const Package = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Gói đã đăng ký</h1>
+			<h1 className="main-title-page">{t('registered-package')}</h1>
 			<div className="card">
 				<div className="card-body">
 					{/*
@@ -144,12 +144,12 @@ const Package = () => {
 							<table className="table tx-center tx-nowrap table-mobile">
 								<thead className="">
 									<tr>
-										<th className="mw-200 tx-left">Khóa học</th>
-										<th>Số buổi học</th>
-										<th>Số buổi cộng thêm </th>
-										<th>Bắt đầu</th>
-										<th>Kết thúc</th>
-										<th>Trạng Thái</th>
+										<th className="mw-200 tx-left">{t('course')}</th>
+										<th>{t('number-of-sessions')}</th>
+										<th>{t('number-of-extra-sessions')} </th>
+										<th>{t('start')}</th>
+										<th>{t('end')}</th>
+										<th>{t('status')}</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -300,6 +300,12 @@ const Package = () => {
 	);
 };
 
-Package.getLayout = getStudentLayout;
+// Package.getLayout = getStudentLayout;
 
-export default Package;
+// export default Package;
+Package.getLayout = getStudentLayout;
+Package.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+
+export default withTranslation('common')(Package);

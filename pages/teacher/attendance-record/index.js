@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import dataHy from '../../../data/data.json';
-
+import { i18n, withTranslation } from '~/i18n';
 console.log('o ngoai', dataHy.AttendanceRecord);
 
 function getData() {
@@ -118,7 +118,7 @@ const SearchBox = ({ submitSearch }) => {
 	);
 };
 
-const AttendanceRecord = () => {
+const AttendanceRecord = ({ t }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [filterStatusAllClass, setFilterStatusAllClass] = useState(
 		statusOptions[0],
@@ -248,14 +248,14 @@ const AttendanceRecord = () => {
 						<table className="table table-classrooms table-borderless responsive-table table-hover">
 							<thead>
 								<tr>
-									<th className="clr-id">Teacher name</th>
-									<th className="clr-lesson">Package</th>
-									<th className="clr-student">Course</th>
-									<th className="clr-time">Date</th>
-									<th className="clr-status">Time</th>
-									<th className="clr-status">Remark</th>
-									<th className="clr-status">Homework</th>
-									<th className="clr-actions">Actions</th>
+									<th className="clr-id">{t('teacher-name')}</th>
+									<th className="clr-lesson">{t('package')}</th>
+									<th className="clr-student">{t('course')}</th>
+									<th className="clr-time">{t('date')}</th>
+									<th className="clr-status">{t('time')}</th>
+									<th className="clr-status">{t('remark')}</th>
+									<th className="clr-status">{t('homework')}</th>
+									<th className="clr-actions">{t('actions')}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -382,6 +382,11 @@ const AttendanceRecord = () => {
 	);
 };
 
-AttendanceRecord.getLayout = getLayout;
+// AttendanceRecord.getLayout = getLayout;
+// export default AttendanceRecord;
 
-export default AttendanceRecord;
+AttendanceRecord.getLayout = getLayout;
+AttendanceRecord.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(AttendanceRecord);

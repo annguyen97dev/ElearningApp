@@ -1,19 +1,19 @@
 import React from 'react';
 import { getStudentLayout } from '~/components/Layout';
-
-const DayOff = () => {
+import { i18n, withTranslation } from '~/i18n';
+const DayOff = ({ t }) => {
 	return (
 		<>
-			<h1 className="main-title-page">Ngày nghỉ</h1>
+			<h1 className="main-title-page">{t('holiday')}</h1>
 			<div className="card">
 				<div className="card-body">
 					<div className="table-responsive">
 						<table className="table">
 							<thead>
 								<tr>
-									<th>Tiêu đề</th>
-									<th>Ngày bắt đầu</th>
-									<th>Ngày kết thúc</th>
+									<th>{t('title-eva')}</th>
+									<th>{t('start-day')}</th>
+									<th>{t('end-day')}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -51,6 +51,13 @@ const DayOff = () => {
 	);
 };
 
-DayOff.getLayout = getStudentLayout;
+// DayOff.getLayout = getStudentLayout;
 
-export default DayOff;
+// export default DayOff;
+
+DayOff.getLayout = getStudentLayout;
+DayOff.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+
+export default withTranslation('common')(DayOff);

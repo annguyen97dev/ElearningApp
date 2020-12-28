@@ -24,7 +24,7 @@ import { useRouter } from 'next/router';
 import Skeleton from 'react-loading-skeleton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import dataHy from '../../../../data/data.json';
-
+import { i18n, withTranslation } from '~/i18n';
 console.log('o tren', dataHy.EvaluationDetail);
 
 function getData() {
@@ -86,7 +86,7 @@ const StatelessTextarea = memo((props) => {
 	);
 });
 
-const EvaluationDetail = () => {
+const EvaluationDetail = ({ t }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const router = useRouter();
 	const { eid: BookingID } = router?.query ?? 0;
@@ -169,7 +169,7 @@ const EvaluationDetail = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Evaluation detail</h1>
+			<h1 className="main-title-page">{t('evaluation-detail')}</h1>
 			<div className="row">
 				<div className="col-xl-4 col-lg-5 mg-b-30">
 					<div className="card lesson-sidebar">
@@ -178,7 +178,7 @@ const EvaluationDetail = () => {
 								<div className="col-sm-12 mg-b-15">
 									{/* <!--thông tin buổi học--> */}
 									<div className="">
-										<h5 className="mg-b-15">Lesson information</h5>
+										<h5 className="mg-b-15">{t('lesson-information')}</h5>
 										<div className="infomation__wrap">
 											<div className="st-time">
 												<p className="st-teacher-text d-flex justify-content-between">
@@ -187,7 +187,7 @@ const EvaluationDetail = () => {
 															icon="book-open"
 															className="fa fa-book-open tx-primary st-icon wd-20 mg-r-5"
 														/>
-														Course:{' '}
+														{t('course')}:{' '}
 													</span>
 													<span className="">
 														{!!dataHy.EvaluationDetail[0] &&
@@ -204,7 +204,7 @@ const EvaluationDetail = () => {
 															icon="book-reader"
 															className="fa fa-book-reader tx-primary graduate st-icon wd-20 mg-r-5"
 														/>
-														Lesson:
+														{t('lesson')}:
 													</span>
 													<span className="st-tengv">
 														{!!dataHy.EvaluationDetail[0] &&
@@ -221,7 +221,7 @@ const EvaluationDetail = () => {
 															icon="clock"
 															className="fa fa-clock tx-primary clock st-icon wd-20 mg-r-5"
 														/>
-														Time:
+														{t('time')}:
 													</span>
 													<span className="">
 														{!!dataHy.EvaluationDetail[0] &&
@@ -238,7 +238,7 @@ const EvaluationDetail = () => {
 															icon="book"
 															className="fa fa-book tx-primary open st-icon wd-20 mg-r-5"
 														/>
-														Material:
+														{t('material')}:
 													</span>
 													<span>
 														<a
@@ -266,7 +266,7 @@ const EvaluationDetail = () => {
 															icon="lightbulb"
 															className="fas fa-lightbulb tx-primary open st-icon wd-20 mg-r-5"
 														/>
-														Finished type:
+														{t('finished-type')}:
 													</span>
 													<span className="">
 														{!!dataHy.EvaluationDetail[0] &&
@@ -284,7 +284,7 @@ const EvaluationDetail = () => {
 									{/* <!--thang danh gia--> */}
 									<div className="infomation__wrap">
 										<h5 className="mg-b-15 mg-md-t-15 mg-t-15 mg-md-t-0-f">
-											Student Information
+											{t('student-information')}
 										</h5>
 										<div className="st-time">
 											<p className="st-teacher-text d-flex justify-content-between">
@@ -293,7 +293,7 @@ const EvaluationDetail = () => {
 														icon="user-graduate"
 														className="fa fa-user-graduate  tx-primary st-icon wd-20 mg-r-5"
 													/>
-													Name:{' '}
+													{t('name')}:{' '}
 												</span>
 												<span className="">
 													{!!dataHy.EvaluationDetail[0] &&
@@ -310,7 +310,7 @@ const EvaluationDetail = () => {
 														icon="thumbs-up"
 														className="fa fa-thumbs-up tx-primary st-icon wd-20 mg-r-5"
 													/>
-													Feedback:{' '}
+													{t('feebback')}:{' '}
 												</span>
 												<span className="rating-style">
 													{(!!dataHy.EvaluationDetail[0] &&
@@ -344,7 +344,7 @@ const EvaluationDetail = () => {
 								<div className="col-sm-12">
 									<div>
 										<h5 className="mg-b-15 mg-md-t-15 mg-t-15 mg-md-t-0-f">
-											Student Feedback
+											{t('student-feedback')}
 										</h5>
 										<span className="word-break">
 											{!!dataHy.EvaluationDetail &&
@@ -367,7 +367,7 @@ const EvaluationDetail = () => {
 						<div className="col-12">
 							<div className="card mg-b-30">
 								<div className="card-header">
-									<h5 className="mg-b-0">General Feedback to Student</h5>
+									<h5 className="mg-b-0">{t('general-feedback-to-student')}</h5>
 								</div>
 								<div className="card-body">
 									{state.editMode ? (
@@ -395,7 +395,7 @@ const EvaluationDetail = () => {
 													</>
 												))}
 
-												<span>Rating:</span>
+												<span>{t('raiting')}:</span>
 											</div>
 
 											<StatelessTextarea
@@ -412,7 +412,7 @@ const EvaluationDetail = () => {
 													className="valign-center tx-medium"
 													style={{ lineHeight: 1 }}
 												>
-													Rating:
+													{t('raiting')}:
 												</span>
 												<span className="mg-l-10 rating-style">
 													{!!state && !!state.teacherRating ? (
@@ -464,7 +464,7 @@ const EvaluationDetail = () => {
 						<div className="col-12">
 							<div className="card  mg-b-30">
 								<div className="card-header">
-									<h5 className="mg-b-0">Grammar</h5>
+									<h5 className="mg-b-0">{t('grammar')}</h5>
 								</div>
 								<div className="card-body">
 									<div className="st-danhgianguphap ">
@@ -493,7 +493,7 @@ const EvaluationDetail = () => {
 						<div className="col-12">
 							<div className="card  mg-b-30">
 								<div className="card-header">
-									<h5 className="mg-b-0">Vocabulary</h5>
+									<h5 className="mg-b-0">{t('vocabulary')}</h5>
 								</div>
 								<div className="card-body">
 									<div className="st-danhgianguphap ">
@@ -525,7 +525,7 @@ const EvaluationDetail = () => {
 						<div className="col-12">
 							<div className="card  mg-b-30">
 								<div className="card-header">
-									<h5 className="mg-b-0">Pronounce</h5>
+									<h5 className="mg-b-0">{t('pronounce')}</h5>
 								</div>
 								<div className="card-body">
 									<div className="st-danhgianguphap ">
@@ -555,7 +555,9 @@ const EvaluationDetail = () => {
 						<div className="col-12">
 							<div className="card  mg-b-30">
 								<div className="card-header">
-									<h5 className="mg-b-0">Sentence Development And Speak</h5>
+									<h5 className="mg-b-0">
+										{t('sentence-development-and-speak')}
+									</h5>
 								</div>
 								<div className="card-body">
 									<div className="st-danhgianguphap ">
@@ -649,6 +651,11 @@ const EvaluationDetail = () => {
 	);
 };
 
-EvaluationDetail.getLayout = getLayout;
+// EvaluationDetail.getLayout = getLayout;
+// export default EvaluationDetail;
 
-export default EvaluationDetail;
+EvaluationDetail.getLayout = getLayout;
+EvaluationDetail.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(EvaluationDetail);

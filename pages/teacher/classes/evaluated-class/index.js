@@ -9,7 +9,7 @@ import { Popover, OverlayTrigger, Overlay } from 'react-bootstrap';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import dataHy from '../../../../data/data.json';
-
+import { i18n, withTranslation } from '~/i18n';
 console.log('o ngoai', dataHy.evaluationClass);
 
 function getData() {
@@ -117,7 +117,7 @@ const FinishedRow = ({ data, showStudentModal }) => {
 	);
 };
 
-const EvaluatedClasses = () => {
+const EvaluatedClasses = ({ t }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [pageNumber, setPageNumber] = useState(1);
 	const [data, setData] = useState(null);
@@ -167,18 +167,18 @@ const EvaluatedClasses = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Evaluated classes</h1>
+			<h1 className="main-title-page">{t('evaluated-classes')}</h1>
 			<div className="card">
 				<div className="card-body">
 					<div className="table-responsive">
 						<table className="table table-classrooms table-borderless responsive-table table-hover">
 							<thead className="">
 								<tr className="">
-									<th className="clr-time">Schedule</th>
-									<th className="clr-lesson">Lesson</th>
-									<th className="clr-student">Student</th>
-									<th className="clr-status tx-center">Finished Type</th>
-									<th className="clr-action tx-center">Actions</th>
+									<th className="clr-time">{t('schedule')}</th>
+									<th className="clr-lesson">{t('lesson')}</th>
+									<th className="clr-student">{t('student')}</th>
+									<th className="clr-status tx-center">{t('finished-type')}</th>
+									<th className="clr-action tx-center">{t('actions')}</th>
 								</tr>
 							</thead>
 							{/*1 item*/}
@@ -287,6 +287,11 @@ const EvaluatedClasses = () => {
 	);
 };
 
-EvaluatedClasses.getLayout = getLayout;
+// EvaluatedClasses.getLayout = getLayout;
+// export default EvaluatedClasses;
 
-export default EvaluatedClasses;
+EvaluatedClasses.getLayout = getLayout;
+EvaluatedClasses.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(EvaluatedClasses);

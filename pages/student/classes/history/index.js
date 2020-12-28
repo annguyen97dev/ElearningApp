@@ -9,7 +9,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
-
+import { i18n, withTranslation } from '~/i18n';
 const fakeData = [
 	{
 		BookingID: randomId(),
@@ -129,7 +129,7 @@ const LessonItem = ({
 	);
 };
 
-const EvaluationLists = () => {
+const EvaluationLists = ({ t }) => {
 	const [data, setData] = useState({});
 	const [fromDate, setFromDate] = useState(null);
 	const [toDate, setToDate] = useState(null);
@@ -189,7 +189,7 @@ const EvaluationLists = () => {
 		console.log('render'),
 		(
 			<>
-				<h1 className="main-title-page">Lịch sử buổi đã học</h1>
+				<h1 className="main-title-page">{t('study-history')}</h1>
 				<div className="card">
 					<div className="card-body">
 						<form
@@ -246,11 +246,11 @@ const EvaluationLists = () => {
 							<table className="table">
 								<thead className="">
 									<tr>
-										<th>Thời gian</th>
-										<th>Khóa học</th>
-										<th>Bài học</th>
-										<th>Giáo viên</th>
-										<th>Trạng thái</th>
+										<th>{t('thoi-gian')}</th>
+										<th>{t('course')}</th>
+										<th>{t('lesson')}</th>
+										<th>{t('teacher')}</th>
+										<th>{t('status')}</th>
 										<th></th>
 									</tr>
 								</thead>
@@ -401,6 +401,13 @@ const EvaluationLists = () => {
 	);
 };
 
-EvaluationLists.getLayout = getStudentLayout;
+// EvaluationLists.getLayout = getStudentLayout;
 
-export default EvaluationLists;
+// export default EvaluationLists;
+
+EvaluationLists.getLayout = getStudentLayout;
+EvaluationLists.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+
+export default withTranslation('common')(EvaluationLists);

@@ -6,8 +6,8 @@ import { ToastContainer } from 'react-toastify';
 import { getTeacherInfo } from '~/api/teacherAPI';
 import './calendar.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-const CalendarView = () => {
+import { i18n, withTranslation } from '~/i18n';
+const CalendarView = ({ t }) => {
 	const [timeZone, setTimeZone] = React.useState('');
 	const getProfile = async () => {
 		const res = await getTeacherInfo();
@@ -22,7 +22,7 @@ const CalendarView = () => {
 		<>
 			<div className="d-md-flex justify-content-between align-items-center flex-wrap mg-b-30">
 				<h1 className="main-title-page mg-b-15-f mg-md-b-0-f">
-					Booked schedule{' '}
+					{t('booked-schedule')}{' '}
 				</h1>
 				<span className="pd-y-10 d-inline-block tx-dark pd-y-10 d-inline-block tx-dark bg-white rounded pd-x-10">
 					<FontAwesomeIcon
@@ -55,6 +55,13 @@ const CalendarView = () => {
 	);
 };
 
-CalendarView.getLayout = getStudentLayout;
+// CalendarView.getLayout = getStudentLayout;
 
-export default CalendarView;
+// export default CalendarView;
+
+CalendarView.getLayout = getStudentLayout;
+CalendarView.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+
+export default withTranslation('common')(CalendarView);

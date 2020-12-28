@@ -633,12 +633,12 @@ const Menu = ({ t, isStudent }) => {
 										href={
 											isStudent
 												? '/student/profile/password'
-												: '/teacher/profile/passưord'
+												: '/teacher/profile/password'
 										}
 										as={
 											isStudent
 												? '/student/profile/password'
-												: '/teacher/profile/passưord'
+												: '/teacher/profile/password'
 										}
 									>
 										<a href={true} className="nav-link">

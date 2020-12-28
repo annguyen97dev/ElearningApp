@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getLayout } from '~/components/Layout';
 import './index.module.scss';
 import { ToastContainer } from 'react-toastify';
+import { i18n, withTranslation } from '~/i18n';
 const cardOptions = [
 	{
 		id: 1,
@@ -33,7 +34,7 @@ const Schema = Yup.object().shape({
 	paypalAccount: Yup.string(),
 });
 
-const PaymentInfo = () => {
+const PaymentInfo = ({ t }) => {
 	const [bank, setBank] = useState('');
 	const [cardName, setCardName] = useState('');
 	const [cardNumber, setCardNumber] = useState('');
@@ -116,7 +117,7 @@ const PaymentInfo = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Payment information</h1>
+			<h1 className="main-title-page">{t('payment-information')}</h1>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className="card">
 					{/* <div className="card-header align-items-center d-flex justify-content-between pd-x-20-f">
@@ -138,7 +139,7 @@ const PaymentInfo = () => {
 						<div className="row ">
 							<div className="form-group col-sm-4 mg-sm-t-10 mg-b-0 mg-sm-b-30">
 								<p className="mg-b-0">
-									Bank Name: <span class="tx-danger">(*)</span>
+									{t('bank-name')}: <span class="tx-danger">(*)</span>
 								</p>
 							</div>
 							<div className="form-group col-sm-8 col-lg-6">
@@ -165,7 +166,7 @@ const PaymentInfo = () => {
 						<div className="row ">
 							<div className="form-group col-sm-4 mg-sm-t-10 mg-b-0 mg-sm-b-30">
 								<p className="mg-b-0">
-									Bank Account Name: <span class="tx-danger">(*)</span>
+									{t('bank-account-name')}: <span class="tx-danger">(*)</span>
 								</p>
 							</div>
 							<div className="form-group col-sm-8 col-lg-6">
@@ -191,7 +192,7 @@ const PaymentInfo = () => {
 						<div className="row ">
 							<div className="form-group col-sm-4 mg-sm-t-10 mg-b-0 mg-sm-b-30">
 								<p className="mg-b-0">
-									Card number: <span class="tx-danger">(*)</span>
+									{t('card-number')}: <span class="tx-danger">(*)</span>
 								</p>
 							</div>
 							<div className="form-group col-sm-8 col-lg-6">
@@ -216,7 +217,7 @@ const PaymentInfo = () => {
 						</div>
 						<div className="row ">
 							<div className="form-group col-sm-4 mg-sm-t-10 mg-b-0 mg-sm-b-30">
-								<p className="mg-b-0">Bank Address:</p>
+								<p className="mg-b-0">{t('bank-address')}:</p>
 							</div>
 							<div className="form-group col-sm-8 col-lg-6">
 								<div className="input-wrapped">
@@ -240,7 +241,7 @@ const PaymentInfo = () => {
 
 						<div className="row ">
 							<div className="form-group col-sm-4 mg-sm-t-10 mg-b-0 mg-sm-b-30">
-								<p className="mg-b-0">Bank SWIFT code:</p>
+								<p className="mg-b-0">{t('bank-SWIFT-code')}:</p>
 							</div>
 							<div className="form-group col-sm-8 col-lg-6">
 								<div className="input-wrapped">
@@ -264,7 +265,7 @@ const PaymentInfo = () => {
 
 						<div className="row ">
 							<div className="form-group col-sm-4 mg-sm-t-10 mg-b-0 mg-sm-b-30">
-								<p className="mg-b-0">PAYPAL account:</p>
+								<p className="mg-b-0">{t('paypal-account')}:</p>
 							</div>
 							<div className="form-group col-sm-8 col-lg-6">
 								<div className="input-wrapped">
@@ -330,6 +331,11 @@ const PaymentInfo = () => {
 	);
 };
 
-PaymentInfo.getLayout = getLayout;
+// PaymentInfo.getLayout = getLayout;
+// export default PaymentInfo;
 
-export default PaymentInfo;
+PaymentInfo.getLayout = getLayout;
+PaymentInfo.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(PaymentInfo);

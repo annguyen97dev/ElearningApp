@@ -16,7 +16,7 @@ import * as Yup from 'yup';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
-
+import { i18n, withTranslation } from '~/i18n';
 import { toast } from 'react-toastify';
 import 'react-toastify/scss/main.scss';
 import { toastInit, convertDDMMYYYYtoMMDDYYYY } from '~/utils';
@@ -107,7 +107,7 @@ const convertTargetStringToNum = (listString, map) => {
 	return z;
 };
 
-const StudentProfile = () => {
+const StudentProfile = ({ t }) => {
 	const [profile, setProfile] = useState({});
 	const [loadingProfile, setLoadingProfile] = useState(true);
 	const [loadingUpdateProfile, setLoadingUpdateProfile] = useState(false);
@@ -237,7 +237,7 @@ const StudentProfile = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Profile</h1>
+			<h1 className="main-title-page">{t('profile')}</h1>
 			<div className="card">
 				<div className="card-body">
 					<form
@@ -250,7 +250,7 @@ const StudentProfile = () => {
 								<div className="col-12">
 									<div className="form-row align-items-center ">
 										<div className="form-group col-sm-3 col-label-fixed">
-											<p className="mg-b-0 tx-medium ">Ảnh đại diện: </p>
+											<p className="mg-b-0 tx-medium ">{t('avarta')}: </p>
 										</div>
 										<div className="form-group col-sm-9">
 											<div className="student-avatar">
@@ -297,7 +297,7 @@ const StudentProfile = () => {
 								<div className="col-md-6">
 									<div className="form-row align-items-center">
 										<div className="form-group col-sm-3 col-label-fixed">
-											<p className="mg-b-0 tx-medium">Mã học viên:</p>
+											<p className="mg-b-0 tx-medium">{t('student-code')}:</p>
 										</div>
 										<div className="form-group col-sm-9">
 											<input
@@ -314,7 +314,7 @@ const StudentProfile = () => {
 									</div>
 									<div className="form-row align-items-center">
 										<div className="form-group col-sm-3 col-label-fixed">
-											<p className="mg-b-0 tx-medium">Điện thoại:</p>
+											<p className="mg-b-0 tx-medium">{t('phone')}:</p>
 										</div>
 										<div className="form-group col-sm-9">
 											<input
@@ -335,7 +335,7 @@ const StudentProfile = () => {
 									</div>
 									<div className="form-row align-items-center">
 										<div className="form-group col-sm-3 col-label-fixed">
-											<p className="mg-b-0 tx-medium">Ngày sinh:</p>
+											<p className="mg-b-0 tx-medium">{t('date-of-birth')}:</p>
 										</div>
 										<div className="form-group col-sm-9">
 											<Controller
@@ -374,7 +374,7 @@ const StudentProfile = () => {
 									</div>
 									<div className="form-row align-items-center">
 										<div className="form-group col-sm-3 col-label-fixed">
-											<p className="mg-b-0 tx-medium">Ngôn ngữ:</p>
+											<p className="mg-b-0 tx-medium">{t('language')}:</p>
 										</div>
 										<div className="form-group col-sm-9">
 											{!!listLanguage && listLanguage.length > 0 && (
@@ -401,7 +401,9 @@ const StudentProfile = () => {
 								<div className="col-md-6">
 									<div className="form-row align-items-center">
 										<div className="form-group col-sm-3 col-label-fixed">
-											<p className="mg-b-0 tx-medium">Họ và tên:</p>
+											<p className="mg-b-0 tx-medium">
+												{t('first-and-last-name')}:
+											</p>
 										</div>
 										<div className="form-group col-sm-9">
 											<input
@@ -443,7 +445,7 @@ const StudentProfile = () => {
 									</div>
 									<div className="form-row align-items-center">
 										<div className="form-group col-sm-3 col-label-fixed">
-											<p className="mg-b-0 tx-medium">Giới tính:</p>
+											<p className="mg-b-0 tx-medium">{t('sex')}:</p>
 										</div>
 										<div className="form-group col-sm-9">
 											<select
@@ -460,7 +462,7 @@ const StudentProfile = () => {
 									</div>
 									<div className="form-row align-items-center">
 										<div className="form-group col-sm-3 col-label-fixed">
-											<p className="mg-b-0 tx-medium">Múi giờ:</p>
+											<p className="mg-b-0 tx-medium">{t('time-zone')}:</p>
 										</div>
 										<div className="form-group col-sm-9">
 											{!!listTimeZone && listTimeZone.length > 0 && (
@@ -487,7 +489,7 @@ const StudentProfile = () => {
 								<div className="col-12">
 									<div className="form-row  align-items-center ">
 										<div className="form-group col-sm-3 col-label-fixed">
-											<p className="mg-b-0 tx-medium ">Địa chỉ:</p>
+											<p className="mg-b-0 tx-medium ">{t('address')}:</p>
 										</div>
 										<div className="form-group col-sm-9">
 											<input
@@ -510,7 +512,7 @@ const StudentProfile = () => {
 									<div className="form-row  align-items-center ">
 										<div className="form-group col-sm-3 col-label-fixed">
 											<p className="mg-b-0 tx-medium ">
-												Mục tiêu học Tiếng Anh:
+												{t('english-learning-objectives')}:
 											</p>
 										</div>
 										<div className="form-group col-sm-9 select-checkbox">
@@ -572,7 +574,7 @@ const StudentProfile = () => {
 								<div className="col-12">
 									<div className="form-row  align-items-center ">
 										<div className="form-group col-sm-3 col-label-fixed">
-											<p className="mg-b-0 tx-medium ">Sở thích:</p>
+											<p className="mg-b-0 tx-medium ">{t('interests')}:</p>
 										</div>
 										<div className="form-group col-sm-9">
 											<input
@@ -595,7 +597,7 @@ const StudentProfile = () => {
 									<div className="form-row  align-items-center ">
 										<div className="form-group col-sm-3 col-label-fixed">
 											<p className="mg-b-0 tx-medium ">
-												Yêu cầu với giáo viên:
+												{t('ask-with-the-teacher')}:
 											</p>
 										</div>
 										<div className="form-group col-sm-9">
@@ -647,6 +649,13 @@ const StudentProfile = () => {
 	);
 };
 
-StudentProfile.getLayout = getStudentLayout;
+// StudentProfile.getLayout = getStudentLayout;
 
-export default StudentProfile;
+// export default StudentProfile;
+
+StudentProfile.getLayout = getStudentLayout;
+StudentProfile.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+
+export default withTranslation('common')(StudentProfile);

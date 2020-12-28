@@ -11,7 +11,7 @@ import LessonCard from '~/components/common/LessonCard';
 import StudentInformationModal from '~components/common/Modal/StudentInformationModal';
 import Pagination from 'react-js-pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { i18n, withTranslation } from '~/i18n';
 const fakeUpcomming = [
 	{
 		BookingID: 3,
@@ -109,7 +109,7 @@ const fakeUpcomming = [
 let totalResult = 0;
 let pageSize = 0;
 
-const UpComingList = ({ itemShow }) => {
+const UpComingList = ({ itemShow, t }) => {
 	const [state, setState] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [cancelData, setCancelData] = useState(null);
@@ -180,10 +180,10 @@ const UpComingList = ({ itemShow }) => {
 						<table className="table table-borderless responsive-table">
 							<thead>
 								<tr className="tx-gray-600 tx-normal">
-									<th>Time</th>
-									<th>Lesson</th>
-									<th>Student</th>
-									<th className="tx-right">Action</th>
+									<th>{t('thoi-gian')}</th>
+									<th>{t('lesson')}</th>
+									<th>{t('student')}</th>
+									<th className="tx-right">{t('actions')}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -363,4 +363,10 @@ const UpComingList = ({ itemShow }) => {
 	);
 };
 
-export default UpComingList;
+// export default UpComingList;
+
+UpComingList.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+
+export default withTranslation('common')(UpComingList);

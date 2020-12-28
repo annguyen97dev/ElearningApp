@@ -21,6 +21,7 @@ import { getStudentLayout } from '~/components/Layout';
 import dayjs from 'dayjs';
 import Swiper from 'swiper';
 import Link from 'next/link';
+import { i18n, withTranslation } from '~/i18n';
 const genderArr = [
 	{
 		label: 'Tất cả giới tính',
@@ -101,7 +102,7 @@ const reducer = (prevState, { type, payload }) => {
 
 const pad = (n) => ('' + n >= 10 ? n : '0' + n);
 
-const BookingLesson = () => {
+const BookingLesson = ({ t }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const [teachersList, setTeacherList] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -423,7 +424,7 @@ const BookingLesson = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Booking schedule</h1>
+			<h1 className="main-title-page">{t('booking-schedule')}</h1>
 			<div className="media-body-wrap pd-15 shadow">
 				<div
 					className="form-row"
@@ -454,7 +455,8 @@ const BookingLesson = () => {
 							className="submit-search btn btn-primary btn-block"
 							onClick={(e) => onSearch(e, 1)}
 						>
-							<i className="fa fa-search mg-r-5"></i>Tìm kiếm
+							<i className="fa fa-search mg-r-5"></i>
+							{t('search')}
 						</a>
 					</div>
 				</div>
@@ -462,7 +464,7 @@ const BookingLesson = () => {
 				<div className="filter-group pd-t-5 mg-t-15 bd-t" id="list-tutor">
 					<div className="filter-row row">
 						<div className="left col-12">
-							<h5>Danh sách giáo viên</h5>
+							<h5>{t('list-of-teachers')}</h5>
 						</div>
 						{/*  <div className="right col-md-10" style={{ alignItems: 'center', display: 'inline-flex' }}>
             <div className="custom-control custom-checkbox">
@@ -592,7 +594,9 @@ const BookingLesson = () => {
 										className="wd-300 mg-x-auto"
 										alt="teacher"
 									/>
-									<h6 className="tx-danger  mg-t-30">No teacher found.</h6>
+									<h6 className="tx-danger  mg-t-30">
+										{t('no-teacher-found')}
+									</h6>
 								</div>
 							)}
 						</div>
@@ -620,5 +624,12 @@ const BookingLesson = () => {
 		</>
 	);
 };
+// BookingLesson.getLayout = getStudentLayout;
+// export default BookingLesson;
+
 BookingLesson.getLayout = getStudentLayout;
-export default BookingLesson;
+BookingLesson.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+
+export default withTranslation('common')(BookingLesson);

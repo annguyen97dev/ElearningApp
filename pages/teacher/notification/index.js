@@ -5,6 +5,7 @@ import { getFormattedDate, randomId } from '~/utils';
 import { getLayout } from '~/components/Layout';
 import Skeleton from 'react-loading-skeleton';
 import Link from 'next/link';
+import { i18n, withTranslation } from '~/i18n';
 const fakeData = [
 	{
 		CreatedBy: 'Admin',
@@ -130,7 +131,7 @@ const BlogItem = ({
 	);
 };
 
-const Discount = () => {
+const Discount = ({ t }) => {
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(0);
 	const [totalResult, setTotalResult] = useState(0);
@@ -166,7 +167,7 @@ const Discount = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Thông báo</h1>
+			<h1 className="main-title-page">{t('notification')}</h1>
 			<div className="blog__wrapper">
 				<div className="row row-sm mg-b-25 blog-list">
 					{loading ? (
@@ -228,5 +229,11 @@ const Discount = () => {
 	);
 };
 
+// Discount.getLayout = getLayout;
+// export default Discount;
+
 Discount.getLayout = getLayout;
-export default Discount;
+Discount.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(Discount);

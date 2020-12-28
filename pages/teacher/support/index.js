@@ -14,7 +14,7 @@ import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-
+import { i18n, withTranslation } from '~/i18n';
 import dataHy from '../../../data/data.json';
 
 console.log('o giua', dataHy.TicketSupport);
@@ -24,7 +24,7 @@ function getData() {
 	return andt;
 }
 
-const TicketSupport = () => {
+const TicketSupport = ({ t }) => {
 	const [state, setState] = useState([]);
 	const [filterState, setFilterState] = useState([]);
 	const [overView, setOverView] = useState(null);
@@ -171,7 +171,7 @@ const TicketSupport = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Ticket support</h1>
+			<h1 className="main-title-page">{t('ticket-support')}</h1>
 			<div className="sup">
 				<div className="d-flex flex-wrap flex-xl-nowrap row--lg">
 					<div className="wd-100p mg-xl-b-0 mg-b-30 wd-xl-300 pd-xl-x-15 d-sm-flex d-xl-block flex-shrink-0 w-res-100">
@@ -187,7 +187,7 @@ const TicketSupport = () => {
 										className="link"
 										onClick={() => _handlefilter(0)}
 									>
-										Total Tickets
+										{t('total-tickets')}
 									</a>
 									<span className="badge-number">{overView?.All ?? 0}</span>
 								</p>
@@ -202,7 +202,7 @@ const TicketSupport = () => {
 										className="link"
 										onClick={() => _handlefilter(1)}
 									>
-										Newly created
+										{t('newly-created')}
 									</a>
 									<span className="badge-number">{overView?.News ?? 0}</span>
 								</p>
@@ -216,7 +216,7 @@ const TicketSupport = () => {
 										className="link"
 										onClick={() => _handlefilter(2)}
 									>
-										Processing
+										{t('processing')}
 									</a>
 									<span className="badge-number">
 										{overView?.Processing ?? 0}
@@ -232,7 +232,7 @@ const TicketSupport = () => {
 										className="link"
 										onClick={() => _handlefilter(3)}
 									>
-										Ticket Closed
+										{t('ticket-closed')}
 									</a>
 									<span className="badge-number">
 										{overView?.Answered ?? 0}
@@ -248,7 +248,7 @@ const TicketSupport = () => {
 										className="link"
 										onClick={() => _handlefilter(4)}
 									>
-										Ticket Canceled
+										{t('ticket-canceled')}
 									</a>
 									<span className="badge-number">
 										{overView?.Cancelled ?? 0}
@@ -262,7 +262,7 @@ const TicketSupport = () => {
 									id="contactsub"
 								>
 									<FontAwesomeIcon className="fa fa-plus mg-r-10" icon="plus" />
-									New Ticket
+									{t('new-ticket')}
 								</button>
 							</div>
 						</div>
@@ -327,7 +327,7 @@ const TicketSupport = () => {
 														icon="search"
 														className="fa fa-search"
 													/>{' '}
-													Search
+													{t('search')}
 												</button>
 											</div>
 										</div>
@@ -335,9 +335,9 @@ const TicketSupport = () => {
 											<table className="table table-borderless table-hover">
 												<thead className="">
 													<tr>
-														<th>Ticket title</th>
-														<th>Sending date</th>
-														<th className="tx-center">Status</th>
+														<th>{t('ticket-title')}</th>
+														<th>{t('sending-date')}</th>
+														<th className="tx-center">{t('status')}</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -440,6 +440,11 @@ const TicketSupport = () => {
 	);
 };
 
-TicketSupport.getLayout = getLayout;
+// TicketSupport.getLayout = getLayout;
+// export default TicketSupport;
 
-export default TicketSupport;
+TicketSupport.getLayout = getLayout;
+TicketSupport.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(TicketSupport);

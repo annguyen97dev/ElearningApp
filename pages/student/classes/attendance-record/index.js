@@ -11,9 +11,9 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import dataHy from "../../../../data/data.json";
-
-console.log("o ngoai", dataHy.dataTable);
+import dataHy from '../../../../data/data.json';
+import { i18n, withTranslation } from '~/i18n';
+console.log('o ngoai', dataHy.dataTable);
 
 function getData() {
 	const andt = dataHy.dataTable;
@@ -118,7 +118,7 @@ const SearchBox = ({ submitSearch }) => {
 	);
 };
 
-const AttendanceRecord = () => {
+const AttendanceRecord = ({ t }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [filterStatusAllClass, setFilterStatusAllClass] = useState(
 		statusOptions[0],
@@ -133,7 +133,7 @@ const AttendanceRecord = () => {
 	const mdStudentInfo = useRef(true);
 
 	const layData = getData();
-	console.log("ng an",  layData);
+	console.log('ng an', layData);
 	// const andeptrai =  dataHy.dataTable;
 
 	const showStudentModal = (studentId) => {
@@ -190,7 +190,7 @@ const AttendanceRecord = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Attendance record</h1>
+			<h1 className="main-title-page">{t('attendance-record')}</h1>
 			<div className="d-flex align-items-center justify-content-between mg-b-15 flex-wrap">
 				{/* <div className="wd-sm-250 mg-b-15 mg-md-b-0">
 					<div className="search-form">
@@ -234,7 +234,7 @@ const AttendanceRecord = () => {
 					<div className="flex-grow-0 tx-right flex-shrink-0 mg-t-30 mg-xs-t-0">
 						<button
 							type="button"
-							className="btn btn-primary "
+							className="btn btn-primary"
 							onClick={_onFilterDate}
 						>
 							<FontAwesomeIcon icon="search" className="fa fa-search" /> Search
@@ -249,14 +249,14 @@ const AttendanceRecord = () => {
 						<table className="table table-classrooms table-borderless responsive-table table-hover">
 							<thead>
 								<tr>
-									<th className="clr-id text-left">Teacher name</th>
-									<th className="clr-lesson text-left">Package</th>
-									<th className="clr-student text-left">Course</th>
-									<th className="clr-time text-left">Date</th>
-									<th className="clr-status text-left">Time</th>
-									<th className="clr-status text-left">Remark</th>
-									<th className="clr-status text-left">Homework</th>
-									<th className="clr-actions text-left">Actions</th>
+									<th className="clr-id text-left">{t('teacher-name')}</th>
+									<th className="clr-lesson text-left">{t('package')}</th>
+									<th className="clr-student text-left">{t('course')}</th>
+									<th className="clr-time text-left">{t('date')}</th>
+									<th className="clr-status text-left">{t('time')}</th>
+									<th className="clr-status text-left">{t('remark')}</th>
+									<th className="clr-status text-left">{t('homework')}</th>
+									<th className="clr-actions text-left">{t('actions')}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -343,7 +343,6 @@ const AttendanceRecord = () => {
 									</>
 								) : !!layData && !!layData.length > 0 ? (
 									layData.map((item) => (
-										
 										<AllClassRow
 											key={`${item.BookingID}`}
 											data={item}
@@ -384,6 +383,12 @@ const AttendanceRecord = () => {
 	);
 };
 
-AttendanceRecord.getLayout = getStudentLayout;
+// AttendanceRecord.getLayout = getStudentLayout;
 
-export default AttendanceRecord;
+// export default AttendanceRecord;
+AttendanceRecord.getLayout = getStudentLayout;
+AttendanceRecord.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+
+export default withTranslation('common')(AttendanceRecord);

@@ -4,7 +4,7 @@ import { getListEventsOfWeek } from '~/api/teacherAPI';
 import FullCalendar from './FullCalendar';
 import dayjs from 'dayjs';
 import lottie from '~/node_modules/lottie-web/build/player/lottie.min.js';
-
+import { i18n, withTranslation } from '~/i18n';
 const customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
 
@@ -28,7 +28,7 @@ const dayNamesShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const hotTime = [5, 6, 7, 8, 9, 13, 14, 15, 16];
 
-const BookingCalendar = () => {
+const BookingCalendar = ({ t }) => {
 	const [eventSource, setEventSource] = useState(null);
 	const [activeDate, setActiveDate] = useState(new Date());
 	const [isLoading, setIsLoading] = useState(true);
@@ -101,15 +101,22 @@ const BookingCalendar = () => {
 			</div>
 			<div className="notice pd-20 bg-secondary rounded-5 mg-t-20">
 				<h5 className="mg-b-15">
-					<i className="fas fa-file"></i> Notes:
+					<i className="fas fa-file"></i> {t('notes')}:
 				</h5>
 				<ul className="mg-b-0">
-					<li>Each Class is 25 minutes.</li>
-					<li>To open a slot, simply select the time Slot and click on it.</li>
-					<li>To close a Slot, simple select the time Slot and click on it.</li>
+					<li>{t('each-slot-is-25-minutes')}.</li>
 					<li>
-						To cancel a Booked Class, select the Booked Slot and click `Cancel
-						the Class`.
+						{t('to-open-a-slot-simply-select-the-time-slot-and-click-on-it')}
+					</li>
+					<li>
+						{t(
+							'to-close-a-slot-simple-select-the-time-slot-and-click-close-button',
+						)}
+					</li>
+					<li>
+						{t(
+							'to-cancel-a-booked-class-select-the-booked-slot-and-click-cancel-the-class',
+						)}
 					</li>
 				</ul>
 			</div>
@@ -117,4 +124,8 @@ const BookingCalendar = () => {
 	);
 };
 
-export default BookingCalendar;
+// export default BookingCalendar;
+BookingCalendar.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(BookingCalendar);

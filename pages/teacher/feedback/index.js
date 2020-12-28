@@ -8,7 +8,7 @@ import { getLayout } from '~/components/Layout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import dataHy from '../../../data/data.json';
-
+import { i18n, withTranslation } from '~/i18n';
 console.log('o ngoai', dataHy.StudentFeedback);
 
 function getData() {
@@ -179,7 +179,7 @@ const FeedbackRow = ({
 	);
 };
 
-const RenderSummary = ({ handFilterValue }) => {
+const RenderSummary = ({ handFilterValue, t }) => {
 	const [overview, setOverview] = React.useState({});
 	const [isLoading, setIsLoading] = React.useState(true);
 
@@ -415,7 +415,7 @@ const RenderSummary = ({ handFilterValue }) => {
 	);
 };
 
-const StudentFeedback = () => {
+const StudentFeedback = ({ t }) => {
 	const [filterValue, setFilterValue] = React.useState('');
 	const [feedbacks, setFeedbacks] = React.useState(null);
 	const [isLoading, setIsLoading] = React.useState(true);
@@ -473,7 +473,7 @@ const StudentFeedback = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Student feedback</h1>
+			<h1 className="main-title-page">{t('student-feedback')}</h1>
 			<div className="mg-t-30 feedback-container">
 				<RenderSummary handFilterValue={setFilterValue} />
 				<div className="fb-list">
@@ -543,6 +543,11 @@ const StudentFeedback = () => {
 	);
 };
 
-StudentFeedback.getLayout = getLayout;
+// StudentFeedback.getLayout = getLayout;
+// export default StudentFeedback;
 
-export default StudentFeedback;
+StudentFeedback.getLayout = getLayout;
+StudentFeedback.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(StudentFeedback);

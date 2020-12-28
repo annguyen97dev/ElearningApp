@@ -16,7 +16,7 @@ import * as Yup from 'yup';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from 'react-select';
-
+import { i18n, withTranslation } from '~/i18n';
 import { toast } from 'react-toastify';
 import 'react-toastify/scss/main.scss';
 import { toastInit, convertDDMMYYYYtoMMDDYYYY } from '~/utils';
@@ -35,7 +35,7 @@ import { getStudentLayout } from '~/components/Layout';
 import './index.module.scss';
 import dayjs from 'dayjs';
 
-const PasswordForm = () => {
+const PasswordForm = ({ t }) => {
 	const [oldPassword, setOldPassword] = useState('');
 	const [newPassword, setNewPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
@@ -88,7 +88,7 @@ const PasswordForm = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Change password</h1>
+			<h1 className="main-title-page">{t('change-password')}</h1>
 			<div className="card">
 				<div className="card-body">
 					<form
@@ -105,7 +105,9 @@ const PasswordForm = () => {
 								<div className="col-12">
 									<div className="form-row align-items-center ">
 										<div className="form-group col-sm-3">
-											<p className="mg-b-0 tx-medium">Mật khẩu hiện tại</p>
+											<p className="mg-b-0 tx-medium">
+												{t('current-password')}
+											</p>
 										</div>
 										<div className="form-group col-sm-9 col-password">
 											<input
@@ -122,7 +124,7 @@ const PasswordForm = () => {
 								<div className="col-12">
 									<div className="form-row align-items-center ">
 										<div className="form-group col-sm-3">
-											<p className="mg-b-0 tx-medium">Mật khẩu mới</p>
+											<p className="mg-b-0 tx-medium">{t('new-password')}</p>
 										</div>
 										<div className="form-group col-sm-9 col-password">
 											<input
@@ -139,7 +141,9 @@ const PasswordForm = () => {
 								<div className="col-12">
 									<div className="form-row align-items-center ">
 										<div className="form-group col-sm-3">
-											<p className="mg-b-0 tx-medium">Xác nhận mật khẩu</p>
+											<p className="mg-b-0 tx-medium">
+												{t('confirm-password')}
+											</p>
 										</div>
 										<div className="form-group col-sm-9 col-password">
 											<input
@@ -167,7 +171,7 @@ const PasswordForm = () => {
 													className="custom-control-label"
 													htmlFor="displaypassword"
 												>
-													Hiển thị mật khẩu
+													{t('display-password')}
 												</label>
 											</div>
 										</div>
@@ -204,6 +208,12 @@ const PasswordForm = () => {
 	);
 };
 
-PasswordForm.getLayout = getStudentLayout;
+// PasswordForm.getLayout = getStudentLayout;
 
-export default PasswordForm;
+// export default PasswordForm;
+
+PasswordForm.getLayout = getStudentLayout;
+PasswordForm.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(PasswordForm);

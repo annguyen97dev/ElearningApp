@@ -11,8 +11,9 @@ import Select, { components } from 'react-select';
 import { appSettings } from '~/config';
 import { getStudentLayout } from '~/components/Layout';
 import { randomId } from '~/utils';
-import data from "../../../../data/data.json";
-console.log(data)
+import { i18n, withTranslation } from '~/i18n';
+import data from '../../../../data/data.json';
+console.log(data);
 const fakeData = [
 	{
 		ElearnBookingID: randomId(),
@@ -99,7 +100,7 @@ const FeedbackOption = (props) => {
 	);
 };
 
-const Feedback = () => {
+const Feedback = ({ t }) => {
 	const [overview, setOverview] = useState({});
 	const [loading, setLoading] = useState(false);
 	const [loadingListEvaluation, setLoadingListEvaluation] = useState(false);
@@ -172,7 +173,7 @@ const Feedback = () => {
 			{!loading && (
 				<>
 					<div className="d-sm-flex align-items-center justify-content-between mg-b-30">
-						<h1 className="main-title-page mg-b-0-f">Nhận xét giáo viên</h1>
+						<h1 className="main-title-page mg-b-0-f">{t('teacher-comment')}</h1>
 						{overview && Object.keys(overview).length > 0 && (
 							<div className="form-group d-inline-block wd-200 w-full mg-b-0-f mg-t-15 mg-sm-t-0-f">
 								<Select
@@ -328,6 +329,13 @@ const Feedback = () => {
 	);
 };
 
-Feedback.getLayout = getStudentLayout;
+// Feedback.getLayout = getStudentLayout;
 
-export default Feedback;
+// export default Feedback;
+
+Feedback.getLayout = getStudentLayout;
+Feedback.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+
+export default withTranslation('common')(Feedback);

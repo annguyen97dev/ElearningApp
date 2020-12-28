@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { i18n, withTranslation } from '~/i18n';
 const fakeData = [
 	{
 		package: 'Gói học regular',
@@ -63,7 +63,7 @@ const fakeData = [
 	},
 ];
 
-const PaymentHistory = () => {
+const PaymentHistory = ({ t }) => {
 	const [state, setState] = useState([]);
 	const [loading, setLoading] = useState(false);
 
@@ -201,7 +201,7 @@ const PaymentHistory = () => {
 								onClick={_onFilterDate}
 							>
 								<FontAwesomeIcon icon="search" className="fa fa-search" />{' '}
-								Search
+								{t('search')}
 							</button>
 						</div>
 					</div>
@@ -210,17 +210,17 @@ const PaymentHistory = () => {
 							<table className="table tx-center">
 								<thead className="">
 									<tr>
-										<th className="">Package</th>
-										<th className="mw-200">Course</th>
-										<th>Total number of class</th>
-										<th>Payer</th>
-										<th>Registered phone number</th>
-										<th>Payment date</th>
-										<th>Amount (thousand dongs)</th>
-										<th>Transaction type</th>
-										<th>Status</th>
-										<th>Approver</th>
-										<th>Reason (cancellation)</th>
+										<th className="">{t('package')}</th>
+										<th className="mw-200">{t('course')}</th>
+										<th>{t('total-number-of-class')}</th>
+										<th>{t('payer')}</th>
+										<th>{t('registered-phone-number')}</th>
+										<th>{t('payment-date')}</th>
+										<th>{t('amount-thousand-dongs')}</th>
+										<th>{t('transaction-type')}</th>
+										<th>{t('status')}</th>
+										<th>{t('approver')}</th>
+										<th>{t('reason-cancellation')}</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -287,6 +287,11 @@ const PaymentHistory = () => {
 	);
 };
 
-PaymentHistory.getLayout = getStudentLayout;
+// PaymentHistory.getLayout = getStudentLayout;
+// export default PaymentHistory;
 
-export default PaymentHistory;
+PaymentHistory.getLayout = getStudentLayout;
+PaymentHistory.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(PaymentHistory);

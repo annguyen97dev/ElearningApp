@@ -5,7 +5,7 @@ import Pagination from 'react-js-pagination';
 import { getLayout } from '~/components/Layout';
 import './index.module.scss';
 import dataHy from '../../../../data/data.json';
-
+import { i18n, Link, withTranslation } from '~/i18n';
 console.log('o ngoai', dataHy.ScheduleLog);
 
 function getData() {
@@ -43,7 +43,7 @@ const OperationRow = ({ data }) => {
 	);
 };
 
-const ScheduleLog = () => {
+const ScheduleLog = ({ t }) => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [pageNumber, setPageNumber] = useState(1);
 	const [data, setData] = useState(null);
@@ -81,7 +81,7 @@ const ScheduleLog = () => {
 	}, [pageNumber]);
 	return (
 		<>
-			<h1 className="main-title-page">Schedule log</h1>
+			<h1 className="main-title-page">{t('schedule-log')}</h1>
 			{isLoading ? (
 				<div>Loading...</div>
 			) : (
@@ -92,12 +92,12 @@ const ScheduleLog = () => {
 								<table className="table responsive-table-vertical table-schedule-log table-hover">
 									<thead className="">
 										<tr>
-											<th>Operation time</th>
-											<th>Schedule time (Your time)</th>
-											<th>Schedule time (VN)</th>
-											<th className="tx-center">Operator</th>
+											<th>{t('operation-time')}</th>
+											<th>{t('schedule-time-your-time')}</th>
+											<th>{t('schedule-time-vn')}</th>
+											<th className="tx-center">{t('operator')}</th>
 											{/* <th className="tx-center">Action</th> */}
-											<th className="tx-center">Action</th>
+											<th className="tx-center">{t('actions')}</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -139,6 +139,12 @@ const ScheduleLog = () => {
 	);
 };
 
-ScheduleLog.getLayout = getLayout;
+// ScheduleLog.getLayout = getLayout;
 
-export default ScheduleLog;
+// export default ScheduleLog;
+
+ScheduleLog.getLayout = getLayout;
+ScheduleLog.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(ScheduleLog);

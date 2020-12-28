@@ -12,6 +12,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './table.module.scss';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+import { i18n, withTranslation } from '~/i18n';
 const fakeData = [
 	{
 		BookingID: 2,
@@ -113,7 +114,7 @@ const checkCancelTime = (startDate) => {
 	return Math.round(diffTime / oneMinutes) > 30 ? true : false;
 };
 
-const TableView = () => {
+const TableView = ({ t }) => {
 	const [schedules, setSchedules] = useState(1);
 	const [isLoading, setIsLoading] = useState(true);
 	const [pageNumber, setPageNumber] = useState(1);
@@ -146,7 +147,7 @@ const TableView = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page color-black">Booked schedule</h1>
+			<h1 className="main-title-page color-black">{t('booked-schedule')}</h1>
 			<div className="card">
 				<div className="card-body bg-white-radius">
 					<div
@@ -196,15 +197,15 @@ const TableView = () => {
 						<table className="table table-borderless responsive-table">
 							<thead>
 								<tr>
-									<th>Giáo viên</th>
-									<th>Gói học</th>
-									<th>Khóa học</th>
-									<th>Giáo trình</th>
-									<th>Thời lượng</th>
-									<th>Ngày</th>
-									<th>Giờ</th>
-									<th>Lớp học</th>
-									<th>Trạng thái</th>
+									<th>{t('teacher')}</th>
+									<th>{t('school-package')}</th>
+									<th>{t('course')}</th>
+									<th>{t('curriculum')}</th>
+									<th>{t('time')}</th>
+									<th>{t('day')}</th>
+									<th>{t('hour')}</th>
+									<th>{t('class')}</th>
+									<th>{t('status')}</th>
 								</tr>
 							</thead>
 							<PerfectScrollbar component="tbody">
@@ -290,6 +291,13 @@ const TableView = () => {
 	);
 };
 
-TableView.getLayout = getStudentLayout;
+// TableView.getLayout = getStudentLayout;
 
-export default TableView;
+// export default TableView;
+
+TableView.getLayout = getStudentLayout;
+TableView.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+
+export default withTranslation('common')(TableView);

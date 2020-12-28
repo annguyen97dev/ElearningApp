@@ -9,7 +9,7 @@ import { randomId } from '~/utils';
 import { getTeacherIntroduce, updateTeacherIntroduce } from '~/api/teacherAPI';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import { i18n, withTranslation } from '~/i18n';
 const initialState = {
 	isLoading: true,
 	showGuideModal: false,
@@ -34,7 +34,7 @@ const reducer = (prevState, { type, payload }) => {
 	}
 };
 
-function TeacherIntroduce(props) {
+function TeacherIntroduce({ props, t }) {
 	const [state, dispatch] = useReducer(reducer, initialState);
 	const [submitLoading, setSubmitLoading] = useState(false);
 
@@ -105,12 +105,9 @@ function TeacherIntroduce(props) {
 							icon="info-circle"
 							className="fas fa-info-circle mg-r-5"
 						/>
-						Summary
+						{t('summary')}
 					</h5>
-					<p className="tx-gray-500">
-						This summary will place at the top of your resume page,so that the
-						student can see it when they visit your profile.
-					</p>
+					<p className="tx-gray-500">{t('intro-1')}</p>
 					<div className="introduce-content">
 						<textarea
 							name="introduce"
@@ -128,12 +125,9 @@ function TeacherIntroduce(props) {
 							icon={['fab', 'youtube']}
 							className="fab fa-youtube mg-r-5"
 						/>
-						Video introduce
+						{t('introduce-video')}
 					</h5>
-					<p className="tx-gray-500">
-						Impress your students right off the bat with a video introduction
-						rather than a verbal one.{' '}
-					</p>
+					<p className="tx-gray-500">{t('intro-2')} </p>
 					<div className="introduce-content">
 						<div className="input-group mg-t-15 mg-b-15">
 							<div className="input-group-prepend">
@@ -259,4 +253,9 @@ function TeacherIntroduce(props) {
 	);
 }
 
-export default TeacherIntroduce;
+// export default TeacherIntroduce;
+
+TeacherIntroduce.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(TeacherIntroduce);

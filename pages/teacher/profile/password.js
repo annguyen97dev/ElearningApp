@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getLayout } from '~/components/Layout';
 import { ToastContainer } from 'react-toastify';
+import { i18n, withTranslation } from '~/i18n';
 const Schema = Yup.object().shape({
 	oldPassword: Yup.string().required('Old password is not empty'),
 	newPassword: Yup.string().required('New password is not empty'),
@@ -17,7 +18,7 @@ const Schema = Yup.object().shape({
 	),
 });
 
-const ChangePassword = () => {
+const ChangePassword = ({ t }) => {
 	const [oldPassword, setOldPassword] = useState('');
 	const [newPassword, setNewPassword] = useState('');
 	const [reNewPassword, setReNewPassword] = useState('');
@@ -54,7 +55,7 @@ const ChangePassword = () => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Change password</h1>
+			<h1 className="main-title-page">{t('change-password')}</h1>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className="card">
 					{/* <div className="card-header align-items-center d-flex justify-content-between pd-x-20-f">
@@ -87,7 +88,7 @@ const ChangePassword = () => {
 						)}
 						<div className="row ">
 							<div className="form-group col-sm-4 mg-sm-t-10">
-								<p className="mg-b-0">Old password:</p>
+								<p className="mg-b-0">{t('old-password')}:</p>
 							</div>
 							<div className="form-group col-sm-8 col-lg-6">
 								<div className="input-wrapped">
@@ -110,7 +111,7 @@ const ChangePassword = () => {
 						</div>
 						<div className="row ">
 							<div className="form-group col-sm-4 mg-sm-t-10">
-								<p className="mg-b-0">New password:</p>
+								<p className="mg-b-0">{t('new-password')}:</p>
 							</div>
 							<div className="form-group col-sm-8 col-lg-6">
 								<div className="input-wrapped">
@@ -133,7 +134,7 @@ const ChangePassword = () => {
 						</div>
 						<div className="row ">
 							<div className="form-group col-sm-4 mg-sm-t-10">
-								<p className="mg-b-0">Renew password:</p>
+								<p className="mg-b-0">{t('renew-password')}:</p>
 							</div>
 							<div className="form-group col-sm-8 col-lg-6">
 								<div className="input-wrapped">
@@ -199,6 +200,11 @@ const ChangePassword = () => {
 	);
 };
 
-ChangePassword.getLayout = getLayout;
+// ChangePassword.getLayout = getLayout;
+// export default ChangePassword;
 
-export default ChangePassword;
+ChangePassword.getLayout = getLayout;
+ChangePassword.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(ChangePassword);

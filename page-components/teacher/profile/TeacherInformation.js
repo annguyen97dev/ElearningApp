@@ -27,6 +27,7 @@ import {
 	getListLevelPurpose,
 } from '~/api/optionAPI';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { i18n, withTranslation } from '~/i18n';
 const Schema = Yup.object().shape({
 	fullName: Yup.string().required('Full name is required'),
 	skypeId: Yup.string().required('Skype id is required'),
@@ -144,7 +145,7 @@ const ProfileAvatar = (props) => {
 	);
 };
 
-function TeacherInformation() {
+function TeacherInformation({ t }) {
 	const [state, dispatch] = useReducer(reducer, optionState);
 	const [submitLoading, setSubmitLoading] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
@@ -355,7 +356,7 @@ function TeacherInformation() {
 					<div className="teacher-info mg-l-0-f mg-t-30">
 						<h5 className="mg-b-20">
 							<FontAwesomeIcon icon="user" className="fas fa-user mg-r-5" />
-							Basic Information
+							{t('basic-information')}
 						</h5>
 						<div className="row group-float-label">
 							<div className="form-group col-12 col-sm-6">
@@ -581,7 +582,7 @@ function TeacherInformation() {
 								icon="user-graduate"
 								className="fas fa-user-graduate mg-r-5"
 							/>
-							Education Attainment
+							{t('education-attainment')}
 						</h5>
 						<div className="row group-float-label">
 							<div className="form-group col-12 col-sm-6">
@@ -719,4 +720,9 @@ function TeacherInformation() {
 	);
 }
 
-export default TeacherInformation;
+// export default TeacherInformation;
+
+TeacherInformation.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(TeacherInformation);

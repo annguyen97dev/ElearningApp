@@ -149,6 +149,7 @@ const Package = () => {
 										<th>Bắt đầu</th>
 										<th>Kết thúc</th>
 										<th>Trạng Thái</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>

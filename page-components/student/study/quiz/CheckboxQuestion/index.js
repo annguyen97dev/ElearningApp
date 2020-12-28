@@ -24,7 +24,7 @@ const CheckboxQuestion = () => {
 		<div className="quiz-section">
 			<p className="quiz-section-title">
 				Câu 1: Checkbox can be provided with a label thanks to the
-				FormControlLabel component.
+				FormControlLabel component. (Checkbox);
 			</p>
 			<FormControl component="fieldset">
 				<FormGroup aria-label="position" className={classes.groupAnswer}>

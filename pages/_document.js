@@ -11,6 +11,7 @@ class MyDocument extends Document {
 					<meta name="theme-color" content="#1F4069" />
 					<link rel="manifest" href="static/manifest.json" />
 					<link rel="icon" href="/static/logo.png" />
+
 					<link
 						rel="stylesheet"
 						href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
@@ -24,8 +25,11 @@ class MyDocument extends Document {
 						href="/static/lib/flag-icon-css/css/flag-icon.min.css"
 						rel="stylesheet"
 					/>
-					<script src="/static/lib/jquery/dist/jquery.min.js"></script>
+
+					{/* <script src="/static/lib/jquery/dist/jquery.min.js"></script> */}
+					<script src="/static/js/jquery.js"></script>
 					<script src="/static/js/bootstrap.bundle.min.js"></script>
+					{/* <script src="/static/js/highlight.js"></script> */}
 					<script src="/static/lib/feather-icons/dist/feather.min.js"></script>
 					<script src="/static/lib/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
 				</Head>

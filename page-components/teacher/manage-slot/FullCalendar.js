@@ -1,5 +1,5 @@
 import lottie from '~/node_modules/lottie-web/build/player/lottie.min.js';
-import React, { useState, useEffect, useReducer, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
 	getListEventsOfWeek,
 	setEventAvailable,
@@ -7,9 +7,6 @@ import {
 	addScheduleLog,
 } from '~/api/teacherAPI';
 import { cancelLesson } from '~/api/optionAPI';
-import ActiveSlotModal from './ActiveSlotModal';
-import CloseSlotModal from './CloseSlotModal';
-import CancelSlotModal from './CancelSlotModal';
 import { appSettings } from '~/config';
 import { toast } from 'react-toastify';
 import { Modal, Button } from 'react-bootstrap';
@@ -21,6 +18,8 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { getDifferentMinBetweenTime, convertDDMMYYYYtoMMDDYYYY } from '~/utils';
 import { randomId } from '~/utils';
 import dayjs from 'dayjs';
+import './teacherBooking.module.scss';
+
 // import '@fortawesome/fontawesome-free';
 const customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
@@ -44,12 +43,12 @@ const reducer = (prevState, { type, payload }) => {
 //Add hourse Prototype
 const dayNamesShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-// const hotTime = [5, 6, 7, 8, 9, 13, 14, 15, 16];
+const hotTime = [5, 6, 7, 8, 9, 13, 14, 15, 16];
 
-// const date = new Date();
-// const d = date.getDate();
-// const m = date.getMonth() + 1;
-// const y = date.getFullYear();
+const date = new Date();
+const d = date.getDate();
+const m = date.getMonth() + 1;
+const y = date.getFullYear();
 
 const formatDateString = (dateStr) => {
 	return dayjs(dateStr).format('DD/MM/YYYY');
@@ -58,151 +57,20 @@ const formatDateString = (dateStr) => {
 const initEvents = [];
 
 let calendar;
+let idCurrentItem = null;
+let status = null;
 
 const FullCalendar = ({ data = [] }) => {
-	const [eventSource, setEventSource] = useState([]);
+	const [modalShow, setModalShow] = React.useState(false);
+	const [modalDelShow, setModalDelShow] = React.useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-	const [showErrorBook, setShowErrorBook] = useState(false);
-	const [showActiveModal, setShowActiveModal] = useState(false);
-	const [showCancelModal, setShowCancelModal] = useState(false);
-	const [modalData, setModalData] = useState(null);
+
 	const loadingRef = useRef(true);
-	const [cancelLoading, setCancelLoading] = useState(false);
-
-	const fetchEventByDate = async (date) => {
-		setIsLoading(true);
-		try {
-			const res = await getListEventsOfWeek({
-				Date: dayjs(date).format('DD/MM/YYYY'),
-			}); // @string date dd/mm/yyyy
-			if (res.Code === 1 && res.Data.length > 0) {
-				const newEvents = res.Data.filter(
-					(item) => item.isEmptySlot === false,
-				).map((event) => {
-					return {
-						...event,
-						id: event.BookingID,
-						title: event.title || '',
-						start: dayjs(event.Start, 'YYYY-MM-DDTHH:mm').toDate(),
-						end: dayjs(event.End, 'YYYY-MM-DDTHH:mm').toDate(),
-						eventType: event.eventType,
-						bookStatus: event.bookStatus,
-						bookInfo: event.bookInfo,
-						available: event.available,
-						isEmptySlot: event.isEmptySlot,
-						loading: false,
-					};
-				});
-				const sources = calendar.getEventSources();
-				if (sources.length > 0) {
-					sources[0].remove();
-					calendar.addEventSource(newEvents);
-				}
-			}
-		} catch (error) {
-			console.log('Goi API khong thanh cong');
-		}
-		setIsLoading(false);
-	};
-
-	const triggerNextCalendar = () => {
-		//setIsLoading(true);
-		//setTimeout(() => setIsLoading(false), 3000);
-		if (!calendar) return;
-		try {
-			const currentDate = calendar.getDate();
-			console.log(currentDate);
-			fetchEventByDate(currentDate);
-			calendar.next();
-		} catch (error) {}
-	};
-
-	const triggerPrevCalendar = () => {
-		if (!calendar) return;
-		try {
-			const currentDate = calendar.getDate();
-			console.log(currentDate);
-			fetchEventByDate(currentDate);
-			calendar.prev();
-		} catch (error) {}
-	};
-
-	const triggerTodayCalendar = () => {
-		if (!calendar) return;
-		try {
-			const currentDate = calendar.getDate();
-			console.log(currentDate);
-			fetchEventByDate(currentDate);
-		} catch (error) {}
-	};
-
-	const closeAvailableEvent = (newProps, eventsArray) => {
-		const newSources = [...eventsArray].map((event) =>
-			event.StudyTimeID === newProps.StudyTimeID &&
-			event.Start === newProps.Start
-				? {
-						...event,
-						available: false,
-						bookStatus: false,
-						isEmptySlot: true,
-				  }
-				: event,
-		);
-		setEventSource(newSources);
-	};
-
-	const cancelBookedEvent = (newProps) => {
-		const { StudyTimeID, Start } = newProps;
-		const newSources = [...eventSource].map((event) =>
-			event.StudyTimeID === StudyTimeID && event.Start === Start
-				? {
-						...event,
-						available: false,
-						bookStatus: false,
-						isEmptySlot: true,
-						bookInfo: null,
-				  }
-				: event,
-		);
-		setEventSource(newSources);
-	};
+	const getText = useRef(null);
+	const [eventCal, setEventCal] = useState([]);
 
 	const onViewChange = (view, el) => {
 		console.log({ view, el });
-	};
-
-	const _openSlot = async () => {
-		console.log(modalData);
-		try {
-			calendar.addEvent(
-				{
-					id: randomId(),
-					BookingID: 0,
-					End: modalData.end,
-					OpenDayID: 0,
-					Start: modalData.start,
-					StudyTimeID: 1,
-					TeacherEnd: modalData.start,
-					TeacherStart: modalData.end,
-					TeacherUID: 20,
-					available: true,
-					bookInfo: null,
-					bookStatus: false,
-					eventType: 0,
-					isEmptySlot: false,
-					title: null,
-					start: modalData.start,
-					end: modalData.end,
-					loading: true,
-				},
-				true,
-			);
-			setShowActiveModal(false);
-		} catch (error) {
-			console.log('Error openSlot !', error);
-			alert('Open slot failed !!');
-		}
-		// setIsLoading(false);
 	};
 
 	const afterEventAdded = async (eventInfo) => {
@@ -225,112 +93,27 @@ const FullCalendar = ({ data = [] }) => {
 		}
 	};
 
-	const _closeSlot = async (event) => {
+	const afterEventRemoved = async (eventInfo) => {
 		try {
-			event.preventDefault();
-			const closeBtn = event.target;
-			const eventId = JSON.parse(closeBtn.getAttribute('data-schedule'));
-			const eventInstance = calendar.getEventById(eventId);
 			const res = await setEventClose({
-				OpenDayID: eventInstance.extendedProps.OpenDayID,
+				OpenDayID: data.OpenDayID,
 			});
-			if (res.Code === 1) {
-				eventInstance.remove();
-			} else {
+			if (/*res.Code !== 1*/ false) {
+				eventInfo.revert();
 				toast.error('Close slot failed', {
 					position: toast.POSITION.TOP_RIGHT,
 					autoClose: 2000,
 				});
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
-	const showCancelReasonModal = (event) => {
-		try {
-			event.preventDefault();
-			const cancelBtn = event.target;
-			const eventId = cancelBtn.dataset.schedule;
-			setModalData({
-				...modalData,
-				eventId,
-			});
-			setShowCancelModal(true);
-		} catch (error) {
-			console.log(error);
-		}
-		// setIsLoading(true);
-		// try {
-		// 	const res = await cancelLesson({
-		// 		BookingID: data.BookingID,
-		// 		ReasonCancleOfTeacher: data.reason,
-		// 	});
-		// 	if (res.Code === 1) {
-		// 		cancelBookedEvent(data);
-		// 		toast.success('You have canceled a lesson successfully', {
-		// 			position: toast.POSITION.TOP_CENTER,
-		// 			autoClose: 2000,
-		// 		});
-		// 	} else {
-		// 		toast.error(res?.Message ?? 'Cancel slot failed', {
-		// 			position: toast.POSITION.TOP_CENTER,
-		// 			autoClose: 2000,
-		// 		});
-		// 	}
-		// } catch (error) {
-		// 	console.log('Error openSlot !', error);
-		// }
-		// setIsLoading(false);
-	};
-
-	const _cancelSlot = async (reason = '') => {
-		setCancelLoading(true);
-		try {
-			const eventId = modalData.eventId;
-			const eventInstance = calendar.getEventById(eventId);
-			const res = await cancelLesson({
-				BookingID: eventInstance.extendedProps.BookingID,
-				ReasonCancleOfTeacher: reason,
-			});
-			if (res.Code === 1) {
-				eventInstance && eventInstance.remove();
-				toast.success('You have canceled a lesson successfully', {
-					position: toast.POSITION.TOP_CENTER,
-					autoClose: 2000,
-				});
-				setShowCancelModal(false);
 			} else {
-				toast.error(res?.Message ?? 'Cancel slot failed', {
-					position: toast.POSITION.TOP_CENTER,
-					autoClose: 2000,
-				});
 			}
 		} catch (error) {
-			console.log(error);
+			console.log('Error openSlot !', error);
 		}
-		setCancelLoading(false);
 	};
 
-	const onSubmit = (e) => {
-		e.preventDefault();
-	};
-
-	const emptyCellSelect = (selection) => {
-		setModalData({
-			start: selection.startStr,
-			end: selection.endStr,
-		});
-		setShowActiveModal(true);
-	};
-
-	let $toggleCheckbox;
 	const initCalendar = () => {
 		//const createEventSlots
 		const calendarEl = document.getElementById('js-book-calendar');
-
-		const $closeModal = $('#md-close-slot');
-		const $cancelModal = $('#md-cancel-slot');
 
 		const eventDidMount = (args) => {
 			//    console.log("eventDidMount", args);
@@ -363,160 +146,52 @@ const FullCalendar = ({ data = [] }) => {
 				// 	trigger: 'hover',
 				// });
 			}
+		};
 
-			const diff = getDifferentMinBetweenTime(
-				new Date(),
-				new Date(event.start),
-			);
-			const popWhitelist = $.fn.tooltip.Constructor.Default.whiteList; //White list data attribute;
-			popWhitelist.a.push('data-skype');
-			popWhitelist.a.push('data-schedule');
-			popWhitelist.a.push('disabled');
-			const cancelable = diff > 60 ? true : false;
-			!!el &&
-				[...el.classList].includes('booked-slot') &&
-				$(el)
-					.popover({
-						html: true,
-						container: 'body',
-						trigger: 'focus',
-						title: event.extendedProps.bookInfo?.timeZone ?? 'GTM + 7',
-						content: `  
-								<p class="mg-b-5 tx-light"><span class="mg-r-5">Student UID:</span><span class="tx-medium">${
-									event.extendedProps.bookInfo?.studentUID ?? 'example UID 1232'
-								}</span></p>
-								<p class="mg-b-5 tx-light"><span class="mg-r-5">Student:</span><span class="tx-medium">${
-									event.extendedProps.bookInfo?.name ?? ''
-								}</span></p>
-								<p class="mg-b-5 tx-light"><span class="mg-r-5">Packgage:</span><span class="tx-medium">${
-									event.extendedProps.bookInfo?.package ??
-									'Example package name'
-								}</span></p>
-                <p class="mg-b-5 tx-light"><span class="mg-r-5">Course:</span><span class="tx-medium">${
-									event.extendedProps.bookInfo?.DocumentName ?? ''
-								}</span></p>
-                <p class="mg-b-5 tx-light"><span class="mg-r-5">Lesson:</span><span class="tx-medium">${
-									event.extendedProps.bookInfo?.LessonName ?? ''
-								}</span></p>
-                <p class="mg-b-5 tx-light"><span class="mg-r-5">Your time:</span><span class="tx-medium">${dayjs(
-									event.extendedProps?.TeacherStart ?? new Date(),
-								).format('DD/MM/YYYY hh:mm A')}</span></p>
-                <p class="mg-b-5 tx-light"><span class="mg-r-5">VN time:</span><span class="tx-medium">${dayjs(
-									event.start,
-								).format('DD/MM/YYYY hh:mm A')}</span></p>
-								${
-									!args.isPast &&
-									`
-								<p class="mg-b-0 tx-light"><span class="mg-r-5">Skype ID:</span><span class="tx-medium">${
-									event.extendedProps.bookInfo?.skypeID ?? 'example.skypeid'
-								}</span></p>
-                <div class="action mg-t-15">
-                    <a href="#" data-schedule='${JSON.stringify(
-											data,
-										)}' class="btn btn-sm btn-info btn-block tx-white-f mg-b-10 join-class-skype" target="_blank" rel="noreferrer"><i class="fab fa-skype"></i> Join class</a>
-                    ${
-											cancelable
-												? `<a href="#" class="btn btn-sm btn-danger btn-block cancel-schedule" data-schedule="${event.id}">Cancel lesson</a>`
-												: `<a href="#" class="btn btn-sm btn-block btn-disabled">Cancel lesson</a>`
-										}
-                    ${
-											cancelable
-												? ''
-												: '<p class="mg-b-0 tx-danger mg-t-10">Sorry, you cannot cancel the class</p>'
-										}
-                </div>
-								`
-								}
-							
+		// Create Id
+		function createId() {
+			let number = Math.floor(Math.random() * 1000 + 1);
+			let id = 'id-' + number;
+			return id;
+		}
 
-                `,
-					})
-					.on('click', function () {
-						$(this).popover('show');
-					});
+		const selectTimeTeach = ({ start, end, date, view }) => {
+			let id = createId();
 
-			$(document).on('click', function (event) {
-				let $el = $(el);
-				if (
-					!$(event.target).closest($el).length &&
-					!$(event.target).closest('.popover').length
-				) {
-					$el.popover('hide');
+			setEventCal([
+				{
+					id: id,
+					start: start,
+					end: end,
+					rendering: 'background',
+					block: true,
+					title: null,
+				},
+			]);
+			setModalShow(true);
+			status = 'add-new';
+		};
+
+		const changeRange = (id, start, end) => {
+			let getEvent = calendar.getEventSources();
+
+			getEvent.forEach((item) => {
+				if (item.internalEventSource.sourceId === id) {
+					item.internalEventSource.meta[0].start = start;
+					item.internalEventSource.meta[0].end = end;
 				}
 			});
 
-			!!$toggleCheckbox && showStudentToggle();
-			const events = calendar.getEvents();
-			const dayHeaders = document.querySelectorAll('.fc-col-header-cell');
-			// console.log({dayHeaders});
-			if (dayHeaders.length > 0)
-				for (let i = 0; i < dayHeaders.length; i++) {
-					//  console.log(dayHeaders[i]);
-					if ('data-date' in dayHeaders[i].dataset) continue;
-					const date = dayHeaders[i].getAttribute('data-date');
-					const dateHD = new Date(date);
-					let bookedSlot = 0;
-					let totalSlot = 0;
-					events.map((event) => {
-						const eventDate = new Date(event.extendedProps.Start.split('T')[0]);
-						if (eventDate.getTime() === dateHD.getTime()) {
-							(event.extendedProps.available === true ||
-								event.extendedProps.bookStatus === true) &&
-								totalSlot++;
-							event.extendedProps.bookStatus === true && bookedSlot++;
-						}
-					});
-					// console.log(dayHeaders[i]);
-					// console.log({bookedSlot, totalSlot});
-					dayHeaders[i].querySelector('.booked').textContent = bookedSlot;
-					dayHeaders[i].querySelector('.total').textContent = totalSlot;
-				}
-		};
-
-		const eventClick = (args) => {
-			const element = args.el;
-			const { start, end, id, extendedProps } = args.event;
-			if (extendedProps.available) return;
-			if (
-				!!$toggleCheckbox &&
-				$toggleCheckbox.prop('checked') === true &&
-				![...element.classList].includes('booked-slot')
-			) {
-				toast.warning(
-					'Please uncheck "Only show student booking hours" before open or booking slot !!',
-					{
-						position: toast.POSITION.TOP_CENTER,
-						autoClose: 5000,
-					},
-				);
-				return;
-			}
-			if (
-				[...element.classList].includes('fc-event-past') ||
-				![...element.classList].includes('empty-slot')
-			)
-				return;
-			const diff = getDifferentMinBetweenTime(new Date(), start);
-			if (diff < 60) {
-				setShowErrorBook(true);
-				return;
-			}
+			console.log('after change: ', getEvent);
 		};
 
 		calendar = new Calendar(calendarEl, {
 			plugins: [dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin],
 			height: 550,
 			expandRows: true,
-			slotMinTime: '00:00',
-			slotMaxTime: '24:00',
-			events: data
-				.filter((x) => x.isEmptySlot === false)
-				.map((y) => ({
-					...y,
-					id: randomId(),
-					loading: false,
-				})), //Filter for demo
-			// event: [],
+			slotMinTime: '06:00',
+			slotMaxTime: '23:00',
+			events: data,
 			headerToolbar: {
 				start: 'timeGridWeek,dayGridMonth,listWeek', // will normally be on the left. if RTL, will be on the right
 				center: '',
@@ -524,9 +199,10 @@ const FullCalendar = ({ data = [] }) => {
 			},
 			titleFormat: { year: 'numeric', month: 'short' },
 			navLinks: true, // can click day/week names to navigate views
-			editable: false,
+			editable: true,
 			stickyHeaderDates: 'auto',
 			selectable: true,
+			select: selectTimeTeach,
 			nowIndicator: true,
 			allDaySlot: false,
 			dayMaxEvents: true, // allow "more" link when too many events
@@ -537,20 +213,34 @@ const FullCalendar = ({ data = [] }) => {
 			slotDuration: '00:30',
 			slotLabelInterval: '00:30',
 			slotEventOverlap: false,
+			eventClick: function (calEvent, jsEvent, view) {
+				let sourceId = calEvent.event._def.sourceId;
+				idCurrentItem = sourceId;
+				setModalDelShow(true);
+			},
+			eventDrop: function (info) {
+				let sourceId = info.event._def.sourceId;
+				let start = info.event.start;
+				let end = info.event.end;
+				changeRange(sourceId, start, end);
+				console.log('info: ', info);
+			},
 			viewDidMount: onViewChange,
 			eventAdd: afterEventAdded,
+			eventRemove: afterEventRemoved,
 			selectOverlap: function (event) {
 				return event.rendering === 'background';
 			},
-			select: emptyCellSelect,
+			// select: emptyCellSelect,
 			slotLabelContent: function (arg) {
 				//  console.log('slotLabelContent', arg);
+				const hour = arg.date.getHours();
 
 				let templateEl = document.createElement('div');
 				templateEl.setAttribute('class', 'slot-label');
 				const html = `
-                ${dayjs(arg.date).format('hh:mm A')}
-                `;
+			          ${dayjs(arg.date).format('hh:mm A')}
+			          `;
 				templateEl.innerHTML = html;
 				return { html };
 			},
@@ -576,11 +266,11 @@ const FullCalendar = ({ data = [] }) => {
 			slotLabelDidMount: function (args) {
 				// console.log('SlotLabelDidMount', args);
 			},
-			selectAllow: function (selectInfo) {
-				if (dayjs(selectInfo.startStr).isBefore(dayjs(new Date())))
-					return false;
-				return true;
-			},
+			// selectAllow: function (selectInfo) {
+			// 	if (dayjs(selectInfo.startStr).isBefore(dayjs(new Date())))
+			// 		return false;
+			// 	return true;
+			// },
 			eventClassNames: function (args) {
 				const { event, isPast, isStart } = args;
 				const {
@@ -597,120 +287,65 @@ const FullCalendar = ({ data = [] }) => {
 				classLists += loading ? ' is-loading' : '';
 				return classLists;
 			},
-			eventContent: function (args) {
-				let templateEl = document.createElement('div');
-				const { event, isPast, isStart } = args;
-				const {
-					bookInfo,
-					eventType,
-					bookStatus,
-					available,
-					isEmptySlot,
-					loading,
-				} = event.extendedProps;
-				const data = {
-					...event.extendedProps,
-					id: event.id,
-					start: event.start,
-					end: event.end,
-				};
-				const html = `
-                    ${
-											!isEmptySlot
-												? `
-                    <div class="inner-book-wrap ">
-												<div class="inner-content">
-												${
-													loading
-														? `Creating event...`
-														: `${
-																bookStatus
-																	? `
-																		<span class="label-book booked"><i class="fas ${
-																			isPast ? 'fa-check' : 'fa-user-graduate'
-																		}"></i> ${
-																			isPast ? 'FINISHED' : 'BOOKED'
-																	  }</span>
-																		`
-																	: `<span class="label-book"><i class="fas fa-copyright"></i>AVAILABLE</span>`
-														  }
-														${
-															available
-																? `
-																${
-																	// <a href="javascript:;" class="fix-btn close-schedule" data-schedule='${JSON.stringify(
-																	// 	data,
-																	// )}' data-events='${
-																	// 		calendar.getEventSources().length > 0
-																	// 			? calendar.getEventSources()[0]
-																	// 					.internalEventSource.meta
-																	// 			: {}
-																	//   }'>Close</a>  //close schedule btn
-																	''
-																}`
-																: ''
-														}
-														`
-												}
-                        
-                        </div>
-                    </div>`
-												: ''
-										}
-                `;
-				templateEl.innerHTML = html;
-				return { domNodes: [templateEl] };
-			},
-			eventClick: eventClick,
+
 			eventDidMount: eventDidMount,
-			nowIndicatorDidMount: function (args) {
-				//   console.log("nowIndicatorDidMount", args);
-			},
+			nowIndicatorDidMount: function (args) {},
 		});
 
 		calendar.render();
+	};
 
-		$('body').on('click', '.cancel-schedule', showCancelReasonModal);
+	const handleGetNote = () => {
+		let value = getText.current.value;
+		if (status === 'add-new') {
+			console.log('this is add-new');
+			setEventCal((eventCal[0].title = value));
+			calendar.addEventSource(eventCal);
+		}
+		if (status === 'fix-note') {
+			console.log('this is fix note');
+			let getEvent = calendar.getEventSources();
 
-		$('body').on('click', '.close-schedule', _closeSlot);
+			getEvent.forEach((item) => {
+				if (item.internalEventSource.sourceId === idCurrentItem) {
+					item.internalEventSource.meta[0].title = value;
 
-		$('body').on('click', '.join-class-skype', async function (e) {
-			e.preventDefault();
-			const eventData = JSON.parse(this.getAttribute('data-schedule'));
-			try {
-				addScheduleLog({ BookingID: eventData.BookingID });
-			} catch (error) {
-				console.log(error?.message ?? `Can't add schedule log !!`);
+					item.refetch();
+				}
+			});
+			// calendar.refetchEvents();
+		}
+
+		setModalShow(false);
+
+		console.log('After save: ', calendar.getEventSources());
+	};
+
+	const handleCancelNote = () => {
+		setEventCal([]);
+		setModalShow(false);
+	};
+
+	const handleDelNote = () => {
+		let getEvent = calendar.getEventSources();
+
+		getEvent.forEach((item) => {
+			if (item.internalEventSource.sourceId === idCurrentItem) {
+				item.remove();
 			}
-			window.location.href = `skype:${eventData?.bookInfo?.SkypeID ?? ''}?chat`;
 		});
 
-		$('body').on(
-			'click',
-			'#js-book-calendar .fc-next-button',
-			triggerNextCalendar,
-		);
-		$('body').on(
-			'click',
-			'#js-book-calendar .fc-prev-button',
-			triggerPrevCalendar,
-		);
-		$('body').on(
-			'click',
-			'#js-book-calendar .fc-today-button',
-			triggerTodayCalendar,
-		);
-		$toggleCheckbox = $('#student-toggle-checkbox');
+		setModalDelShow(false);
+	};
 
-		$('body').on('change', $toggleCheckbox, showStudentToggle);
+	const handleFixNote = () => {
+		setModalDelShow(false);
+		setModalShow(true);
+		status = 'fix-note';
+	};
 
-		function showStudentToggle() {
-			const value = $toggleCheckbox.prop('checked');
-			const nonBookedEvents = $('.fc-event:not(.booked-slot)');
-			value
-				? nonBookedEvents.addClass('hide-event')
-				: nonBookedEvents.removeClass('hide-event');
-		}
+	const handleCancelDelNote = () => {
+		setModalDelShow(false);
 	};
 
 	useEffect(() => {
@@ -742,48 +377,59 @@ const FullCalendar = ({ data = [] }) => {
 				<div id="js-book-calendar" className="fc fc-unthemed fc-ltr"></div>
 
 				<Modal
-					show={showErrorBook}
-					onHide={() => setShowErrorBook(false)}
-					size="sm"
+					show={modalShow}
+					onHide={handleCancelNote}
+					size="lg"
+					aria-labelledby="contained-modal-title-vcenter"
 					centered
-					bsPrefix="modal"
+					className="modal-note"
 				>
-					<Modal.Header bsPrefix="modal-header bg-danger tx-white pd-10">
-						<Modal.Title bsPrefix="modal-title tx-white">
-							Open slot failed !
+					<Modal.Header closeButton>
+						<Modal.Title id="contained-modal-title-vcenter">
+							Ghi chú
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<p className="mg-b-0">
-							Sorry, you cannot open this class. It is less than 60 mins to
-							starting time.
-						</p>
-						<div className="tx-right mg-t-15">
-							<Button
-								size="sm"
-								variant="light"
-								onClick={() => setShowErrorBook(false)}
-							>
-								Close
-							</Button>
-						</div>
+						<h6>Ghi chú về giờ học sẽ dạy</h6>
+						<textarea
+							ref={getText}
+							row="3"
+							type="text"
+							className="getNote"
+						></textarea>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button variant="primary" onClick={handleGetNote}>
+							Lưu
+						</Button>
+						<Button variant="secondary" onClick={handleCancelNote}>
+							Hủy
+						</Button>
+					</Modal.Footer>
+				</Modal>
+
+				<Modal
+					show={modalDelShow}
+					onHide={handleCancelDelNote}
+					size="lg"
+					aria-labelledby="contained-modal-title-vcenter"
+					centered
+					className="modal-note modal-remove"
+				>
+					<Modal.Header closeButton>
+						<Modal.Title id="contained-modal-title-vcenter">
+							Xóa hoặc sửa
+						</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<Button variant="primary" onClick={handleDelNote}>
+							Xóa
+						</Button>
+						<Button variant="secondary" onClick={handleFixNote}>
+							Sửa
+						</Button>
 					</Modal.Body>
 				</Modal>
-				<CancelSlotModal
-					showModal={showCancelModal}
-					closeModal={() => setShowCancelModal(false)}
-					handleCancelSlot={_cancelSlot}
-					loading={cancelLoading}
-				/>
-				<ActiveSlotModal
-					data={{
-						start: dayjs(modalData?.start).format('DD/MM/YYYY HH:mm A') ?? '',
-						end: dayjs(modalData?.end).format('DD/MM/YYYY HH:mm A') ?? '',
-					}}
-					showModal={showActiveModal}
-					closeModal={() => setShowActiveModal(false)}
-					handleOpenSlot={_openSlot}
-				/>
 			</div>
 		</>
 	);

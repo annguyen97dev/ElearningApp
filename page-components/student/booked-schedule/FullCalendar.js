@@ -343,7 +343,6 @@ const FullCalendar = ({ data = [] }) => {
                 <p class="mg-b-0"><span class="mg-r-5">VN time:</span><span class="tx-medium">${dayjs(
 									event.start,
 								).format('DD/MM/YYYY hh:mm A')}</span></p>
-
                 <div class="action mg-t-15">
                     <a href="#" data-schedule='${JSON.stringify(
 											data,
@@ -361,7 +360,6 @@ const FullCalendar = ({ data = [] }) => {
 												: '<p class="mg-b-0 tx-danger mg-t-10">Sorry, you cannot cancel the class</p>'
 										}
                 </div>
-
                 `,
 					})
 					.on('click', function () {
@@ -445,13 +443,12 @@ const FullCalendar = ({ data = [] }) => {
 			expandRows: true,
 			slotMinTime: '06:00',
 			slotMaxTime: '23:00',
-			events: data
-				.filter((x) => x.bookInfo !== null)
-				.map((y) => ({
-					...y,
-					id: randomId(),
-					loading: false,
-				})),
+			events: data, // })),
+			// .filter((x) => x.bookInfo !== null)
+			// .map((y) => ({
+			// 	...y,
+			// 	id: randomId(),
+			// 	loading: false,
 			// event: [],
 			headerToolbar: {
 				start: 'timeGridWeek,dayGridMonth,listWeek', // will normally be on the left. if RTL, will be on the right
@@ -696,9 +693,7 @@ const FullCalendar = ({ data = [] }) => {
 				</>
 				<div id="js-book-calendar" className="fc fc-unthemed fc-ltr"></div>
 				{/* <ActiveSlotModal data={activeModal} handleOpenSlot={_openSlot} />
-
 			<CloseSlotModal data={activeModal} handleCloseSlot={_closeSlot} />
-
 			<CancelSlotModal data={activeModal} handleCancelSlot={_cancelSlot} /> */}
 				{/* <Modal
 				show={showErrorBook}

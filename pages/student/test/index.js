@@ -1,21 +1,31 @@
+import dynamic from 'next/dynamic';
 import React from 'react';
-// import './App.css';
+import { getLayout, getStudentLayout } from '~/components/Layout';
+// import VideoComment from './components/VideoComment';
 
-import VerticalDragList from './components/vertical-dnd.component';
-import MultipleDragList from './components/multiple-list-dnd.component';
-import Quiz from './components/quiz';
+// import Quiz from './components/quiz';
+// import Selection from './components/selection3';
 
-function App() {
+// const Selection = dynamic(() => import('./components/selection3'), {
+// 	loading: () => <p>...</p>,
+// 	ssr: false,
+// });
+
+const VideoComment = dynamic(() => import('./components/VideoComment'), {
+	loading: () => <p>...</p>,
+	ssr: false,
+});
+
+const App = () => {
 	return (
-		<div className="App">
-			{/* <h3>Single Vertical List</h3>
-			<VerticalDragList /> */}
-
-			<h3>Quiz</h3>
-			{/* <MultipleDragList /> */}
-			<Quiz />
+		<div>
+			{/* <DynamicJqueryDiamonds />
+			<Selection />
+			<Quiz /> */}
+			<VideoComment />
 		</div>
 	);
-}
+};
 
+App.getLayout = getStudentLayout;
 export default App;

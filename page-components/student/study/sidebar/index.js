@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Accordion from '~/page-components/student/study/accordion/accordion';
 import './styles.module.scss';
 
-const SideBar = () => {
+const SideBar = (props) => {
 	// Caculator width and then do something when resize window
 	function useWindowSize() {
 		const [size, setSize] = useState([0, 0]);
@@ -24,10 +24,21 @@ const SideBar = () => {
 	// get Height from function
 	const getHeight = useWindowSize();
 
+	// Close and open siderbar
+	const [btnToggle, setBtnToggle] = useState(false);
+
+	function handleClick() {
+		setBtnToggle(true);
+		props.getStatus && props.getStatus();
+	}
+
 	return (
-		<div className="study__sidebar" style={{ height: getHeight + 'px' }}>
+		<div
+			className={`study__sidebar ${btnToggle ? 'active-close' : 'active-open'}`}
+			style={{ height: getHeight + 'px' }}
+		>
 			<div className="study__sidebar--header">
-				<button className="btn-toggle">
+				<button className="btn-toggle" onClick={handleClick}>
 					<FontAwesomeIcon icon="long-arrow-alt-right" />
 				</button>
 				<div className="status">

@@ -189,7 +189,7 @@ const AttendanceRecord = ({ t }) => {
 
 	return (
 		<>
-			<h1 className="main-title-page">Attendance Record</h1>
+			<h1 className="main-title-page">{t('attendance-record')}</h1>
 			<div className="d-flex align-items-center justify-content-between mg-b-15 flex-wrap">
 				<div className="wd-sm-250 mg-b-15 mg-md-b-0">
 					<div className="search-form">

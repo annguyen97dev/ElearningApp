@@ -212,33 +212,43 @@ const UpComingList = ({ itemShow, t }) => {
 												<tr key={`${index}`}>
 													<td className="clr-time">
 														<div className="mg-b-5">
-															<span className=" mg-r-5 tx-nowrap wd-80 d-inline-block">
+															<span className=" mg-r-5 tx-nowrap d-inline-block">
 																<FontAwesomeIcon
 																	icon="clock"
 																	className="fa fa-clock tx-primary"
 																/>{' '}
-																<span className="tx-medium">VN time</span>:
+																<span className="tx-medium">
+																	{t('vn-time')}
+																</span>
+																:
 															</span>
 															<span className="">{ls.ScheduleTimeVN}</span>
 														</div>
 														<div className="">
-															<span className=" mg-r-5 tx-nowrap wd-80 d-inline-block">
+															<span className=" mg-r-5 tx-nowrap d-inline-block">
 																<FontAwesomeIcon
 																	icon="clock"
 																	className="fa fa-clock tx-primary"
 																/>{' '}
-																<span className="tx-medium">Your time</span>:
+																<span className="tx-medium">
+																	{t('your-time')}
+																</span>
+																:
 															</span>
 															<span className="">{ls.ScheduleTimeUTC}</span>
 														</div>
 													</td>
 													<td className="clr-lesson">
 														<div className="mg-b-5">
-															<span className=" mg-r-5 tx-medium">Course:</span>
+															<span className=" mg-r-5 tx-medium">
+																{t('course')}:
+															</span>
 															<span className="">{ls.DocumentName}</span>
 														</div>
 														<div className="">
-															<span className=" mg-r-5 tx-medium">Lesson:</span>
+															<span className=" mg-r-5 tx-medium">
+																{t('lesson')}:
+															</span>
 															<span className="">{ls.LessionName}</span>
 														</div>
 													</td>
@@ -270,7 +280,7 @@ const UpComingList = ({ itemShow, t }) => {
 																icon={['fab', 'skype']}
 															/>{' '}
 															<span className="d-none d-xl-inline mg-l-5">
-																Join class
+																{t('join-class')}
 															</span>
 														</a>
 														{checkCancelTime(
@@ -289,7 +299,7 @@ const UpComingList = ({ itemShow, t }) => {
 																	class="fas fa-times"
 																/>
 																<span className="d-none d-xl-inline mg-l-5">
-																	Cancel
+																	{t('cancel')}
 																</span>
 															</a>
 														) : (
@@ -305,7 +315,7 @@ const UpComingList = ({ itemShow, t }) => {
 																	icon="times"
 																/>
 																<span className="d-none d-xl-inline mg-l-5">
-																	Cancel
+																	{t('cancel')}
 																</span>
 															</button>
 														)}

@@ -550,4 +550,7 @@ StudentFeedback.getLayout = getLayout;
 StudentFeedback.getInitialProps = async () => ({
 	namespacesRequired: ['common'],
 });
-export default withTranslation('common')(StudentFeedback);
+RenderSummary.getInitialProps = async () => ({
+	namespacesRequired: ['common'],
+});
+export default withTranslation('common')(StudentFeedback, RenderSummary);

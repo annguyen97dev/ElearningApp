@@ -3,7 +3,7 @@
 Clone repo:
 
 ```sh
-git clone https://github.com/chipcop106/etalk.git
+git clone https://github.com/annguyen97dev/ElearningApp.git
 cd e-talk.vn
 ```
 

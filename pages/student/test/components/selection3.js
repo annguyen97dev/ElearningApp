@@ -153,6 +153,9 @@ const Selection = () => {
 			let nodeNameStart = range.startContainer.parentNode.nodeName;
 			let nodeNameEnd = range.endContainer.parentNode.nodeName;
 
+			console.log('node Name Start: ', nodeNameStart);
+			console.log('node Name End: ', nodeNameEnd);
+
 			// Check the element is overlay or not? (Check coi có đang bị chồng hay không?)
 
 			if (nodeNameStart === 'P' && nodeNameEnd === 'P') {
@@ -165,6 +168,8 @@ const Selection = () => {
 						range.endContainer.previousSibling.nodeName === 'SPAN'
 					) {
 						var between_span = range.startContainer.nextSibling;
+						var between_span_next =
+							range.startContainer.nextSibling.nextSibling.nextSibling;
 						var between_span1 = range.startContainer.nextSibling.nodeName;
 						var between_span2 = range.endContainer.previousSibling.nodeName;
 					}
@@ -177,11 +182,16 @@ const Selection = () => {
 				let p = range.getBoundingClientRect();
 				let position = arrayPosition(p);
 
+				console.log('BETWEEN SPAN: ', between_span);
+
 				// Check
 				if (between_span1 === 'SPAN' && between_span2 === 'SPAN') {
 					let id_span = between_span.id;
+					let id_span_next = between_span_next.id;
 					between_span.outerHTML = between_span.innerHTML;
+					between_span_next.outerHTML = between_span_next.innerHTML;
 					removeInArray(id_span);
+					removeInArray(id_span_next);
 				}
 				$('.popover-an').hide();
 
@@ -198,6 +208,7 @@ const Selection = () => {
 				span.classList.add('highlight-text');
 
 				if (nodeNameStart === 'SPAN' && nodeNameEnd === 'SPAN') {
+					console.log('Run this');
 					// Set positon for new range
 					let newRange = document.createRange();
 					newRange.setStartBefore(beforeElement);

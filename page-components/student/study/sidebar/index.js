@@ -1,9 +1,14 @@
-import React, { useState, useLayoutEffect } from 'react';
+import React, { useState, useLayoutEffect, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Accordion from '~/page-components/student/study/accordion/accordion';
 import './styles.module.scss';
+import { useCourse } from '~/pages/student/my-course/[courseid]';
 
 const SideBar = (props) => {
+	const { dataSection } = props;
+	const { getActiveLesson, activeLesson } = useCourse();
+	// const [activeLesson, setActiveLesson] = useState();
+
 	// Caculator width and then do something when resize window
 	function useWindowSize() {
 		const [size, setSize] = useState([0, 0]);
@@ -32,6 +37,19 @@ const SideBar = (props) => {
 		props.getStatus && props.getStatus();
 	}
 
+	// useEffect(() => {
+	// 	let check = false;
+	// 	dataSection.forEach((section) => {
+	// 		if (!check) {
+	// 			if (section.DataLesson.length > 0) {
+	// 				setActiveLesson(section.DataLesson[0]);
+	// 				getActiveLesson(section.DataLesson[0]);
+	// 				check = true;
+	// 			}
+	// 		}
+	// 	});
+	// }, []);
+
 	return (
 		<div
 			className={`study__sidebar ${btnToggle ? 'active-close' : 'active-open'}`}
@@ -49,145 +67,17 @@ const SideBar = (props) => {
 				</div>
 			</div>
 			<div className="sidebar-content">
-				<Accordion
-					title="What is your return policy?"
-					info="145 vide | 30 hours 15 min
-				"
-					content='
-					<div class="accordion-box">
-					<div class="style-checkbox">
-						<input type="checkbox"></input>
-					</div>
-					<div class="topic">
-						<p class="topic-title"><a>1. This is a topic English</a></p>
-						<ul class="topic-list">
-							<li><i class="fas fa-bookmark"></i>Bài học</li>
-							<li><i class="fas fa-list-alt"></i>Bài quiz</li>
-						</ul>
-					</div>
-				</div>
-				<div class="accordion-box">
-					<div class="style-checkbox">
-						<input type="checkbox"></input>
-					</div>
-					<div class="topic">
-						<p class="topic-title"><a>1. This is a topic English</a></p>
-						<ul class="topic-list">
-							<li><i class="fas fa-bookmark"></i>Bài học</li>
-							<li><i class="fas fa-list-alt"></i>Bài quiz</li>
-						</ul>
-					</div>
-				</div>
-				<div class="accordion-box">
-					<div class="style-checkbox">
-						<input type="checkbox"></input>
-					</div>
-					<div class="topic">
-						<p class="topic-title"><a>1. This is a topic English</a></p>
-						<ul class="topic-list">
-							<li><i class="fas fa-bookmark"></i>Bài học</li>
-							<li><i class="fas fa-list-alt"></i>Bài quiz</li>
-						</ul>
-					</div>
-				</div>
-					'
-				/>
-				<Accordion
-					title="Which languages does you support?"
-					info="145 vide | 30 hours 15 min
-				"
-					content='
-					<div class="accordion-box">
-					<div class="style-checkbox">
-						<input type="checkbox"></input>
-					</div>
-					<div class="topic">
-						<p class="topic-title"><a>1. This is a topic English</a></p>
-						<ul class="topic-list">
-							<li><i class="fas fa-bookmark"></i>Bài học</li>
-							<li><i class="fas fa-list-alt"></i>Bài quiz</li>
-						</ul>
-					</div>
-				</div>
-				<div class="accordion-box">
-					<div class="style-checkbox">
-						<input type="checkbox"></input>
-					</div>
-					<div class="topic">
-						<p class="topic-title"><a>1. This is a topic English</a></p>
-						<ul class="topic-list">
-							<li><i class="fas fa-bookmark"></i>Bài học</li>
-							<li><i class="fas fa-list-alt"></i>Bài quiz</li>
-						</ul>
-					</div>
-				</div>'
-				/>
-				<Accordion
-					title="Can I use a custom domain?"
-					info="145 vide | 30 hours 15 min
-				"
-					content='<div class="accordion-box">
-					<div class="style-checkbox">
-						<input type="checkbox"></input>
-					</div>
-					<div class="topic">
-						<p class="topic-title"><a>1. This is a topic English</a></p>
-						<ul class="topic-list">
-							<li><i class="fas fa-bookmark"></i>Bài học</li>
-							<li><i class="fas fa-list-alt"></i>Bài quiz</li>
-						</ul>
-					</div>
-				</div>
-				<div class="accordion-box">
-					<div class="style-checkbox">
-						<input type="checkbox"></input>
-					</div>
-					<div class="topic">
-						<p class="topic-title"><a>1. This is a topic English</a></p>
-						<ul class="topic-list">
-							<li><i class="fas fa-bookmark"></i>Bài học</li>
-							<li><i class="fas fa-list-alt"></i>Bài quiz</li>
-						</ul>
-					</div>
-				</div>
-				<div class="accordion-box">
-					<div class="style-checkbox">
-						<input type="checkbox"></input>
-					</div>
-					<div class="topic">
-						<p class="topic-title"><a>1. This is a topic English</a></p>
-						<ul class="topic-list">
-							<li><i class="fas fa-bookmark"></i>Bài học</li>
-							<li><i class="fas fa-list-alt"></i>Bài quiz</li>
-						</ul>
-					</div>
-				</div>
-				<div class="accordion-box">
-					<div class="style-checkbox">
-						<input type="checkbox"></input>
-					</div>
-					<div class="topic">
-						<p class="topic-title"><a>1. This is a topic English</a></p>
-						<ul class="topic-list">
-							<li><i class="fas fa-bookmark"></i>Bài học</li>
-							<li><i class="fas fa-list-alt"></i>Bài quiz</li>
-						</ul>
-					</div>
-				</div>
-				<div class="accordion-box">
-					<div class="style-checkbox">
-						<input type="checkbox"></input>
-					</div>
-					<div class="topic">
-						<p class="topic-title"><a>1. This is a topic English</a></p>
-						<ul class="topic-list">
-							<li><i class="fas fa-bookmark"></i>Bài học</li>
-							<li><i class="fas fa-list-alt"></i>Bài quiz</li>
-						</ul>
-					</div>
-				</div>
-				'
-				/>
+				{dataSection &&
+					dataSection.map((section) => (
+						<Accordion
+							key={section.SectionID}
+							title={section.SectionName}
+							info={section.TotalTime}
+							content={section.DataLesson}
+							activeLesson={activeLesson}
+							section={section}
+						/>
+					))}
 			</div>
 		</div>
 	);

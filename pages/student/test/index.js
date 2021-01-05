@@ -11,7 +11,7 @@ import { getLayout, getStudentLayout } from '~/components/Layout';
 // 	ssr: false,
 // });
 
-const VideoComment = dynamic(() => import('./components/VideoComment'), {
+const VideoComment = dynamic(() => import('./components/selection3'), {
 	loading: () => <p>...</p>,
 	ssr: false,
 });

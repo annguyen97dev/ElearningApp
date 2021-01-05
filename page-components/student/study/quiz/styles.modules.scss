@@ -1,6 +1,6 @@
 .modal-quiz {
-	width: 93%;
-	height: 93%;
+	width: 98%;
+	height: 98%;
 	padding-right: 0;
 	background: white;
 	border-radius: 5px;
@@ -10,6 +10,11 @@
 	// top: 50%;
 	// left: 50%;
 	// transform: translate(-50%, -50%);
+
+	&:focus {
+		border: none;
+		outline: 0;
+	}
 
 	.modal-quiz-header {
 		position: relative;
@@ -62,21 +67,161 @@
 	}
 
 	.modal-quiz-footer {
-		height: 15px;
+		padding: 10px;
+		padding-left: 15px;
+		height: auto;
 		background: white;
 		box-shadow: 1px -2px 10px #00000014;
 		position: relative;
 		border-bottom-left-radius: 3px;
 		border-bottom-right-radius: 3px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.row-pagination {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			.pagi-btn {
+				width: 27px;
+				height: 27px;
+				border-radius: 50%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				transition: 0.1s;
+				cursor: pointer;
+
+				&:hover {
+					box-shadow: 0px 2px 6px #00000026;
+					background: #f50057;
+					transition: 0.1s;
+
+					svg {
+						opacity: 1;
+						color: white;
+					}
+				}
+
+				&.previous {
+					margin-right: 10px;
+				}
+
+				svg {
+					font-size: 20px;
+					opacity: 0.5;
+				}
+			}
+		}
+
+		.list-answer {
+			margin-bottom: 0;
+			padding-left: 0;
+			li.item {
+				display: inline-block;
+				margin-right: 10px;
+				list-style-type: none;
+				cursor: pointer;
+
+				&:hover {
+					span {
+						background: #f50057;
+						transition: 0.1s;
+						color: white;
+						border: 1px solid #f50057;
+					}
+				}
+
+				span {
+					width: 27px;
+					height: 27px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					background: white;
+					color: #000000cf;
+					border-radius: 3px;
+					font-size: 14px;
+					border: 1px solid #0c0c0c40;
+					font-weight: 400;
+					transition: 0.1s;
+				}
+
+				&.activeDone {
+				}
+				&.activeDoing {
+					span {
+						background: #f50057;
+						transition: 0.1s;
+						color: white;
+						border: 1px solid #f50057;
+					}
+				}
+				&.activePreview {
+				}
+			}
+		}
 	}
 }
 .quiz {
 	width: 100%;
-	height: calc(100% - 60px);
-	overflow: auto;
 	padding: 20px;
 	border-radius: 0px;
 	background: white;
+	height: calc(100% - 100px);
+	padding-top: 10px;
+
+	.quiz-inner {
+		width: 100%;
+		height: calc(100% - 40px);
+		padding: 10px 0;
+
+		&__container {
+			display: flex;
+			justify-content: space-between;
+			height: 100%;
+		}
+
+		.quiz-col {
+			width: 50%;
+			height: 100%;
+			overflow: auto;
+			padding-left: 15px;
+			padding-right: 15px;
+
+			&::-webkit-scrollbar {
+				width: 8px;
+			}
+
+			/* Track */
+			&::-webkit-scrollbar-track {
+				// -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+				-webkit-border-radius: 10px;
+				border-radius: 10px;
+			}
+
+			/* Handle */
+			&::-webkit-scrollbar-thumb {
+				-webkit-border-radius: 10px;
+				border-radius: 10px;
+				background: #f5005769;
+				// -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+			}
+			&::-webkit-scrollbar-thumb:window-inactive {
+				background: #f5005769;
+			}
+			&::-webkit-scrollbar-thumb:hover {
+				background: #f500578c;
+			}
+		}
+
+		&__content {
+			padding-top: 22px;
+		}
+	}
+
 	/* width */
 	&::-webkit-scrollbar {
 		width: 8px;
@@ -129,7 +274,7 @@
 	// border-bottom: 2px solid #0000002b;
 	border-radius: 0px;
 	background: #f9f9f9;
-	padding: 15px 10px;
+	padding: 10px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -138,7 +283,7 @@
 .quiz-title {
 	color: #008642;
 	font-weight: 500;
-	font-size: 18px;
+	font-size: 18px !important;
 	margin-bottom: 0;
 }
 
@@ -153,18 +298,36 @@
 	}
 }
 
-.row-button {
-	margin-top: 10px;
-}
+// .row-button {
+// 	margin-top: 10px;
+// }
 
 .quiz-section {
 	padding: 12px 0;
 	border-bottom: 1px solid #d8d8d8;
+
+	.MuiAccordionSummary-content.Mui-expanded,
+	.MuiAccordionSummary-content {
+		margin: 10px 0 !important;
+	}
+	.MuiAccordionSummary-root {
+		min-height: 40px !important;
+	}
+	.MuiAccordionSummary-root.Mui-expanded {
+		min-height: 48px;
+	}
 }
 .quiz-section-title {
 	font-size: 16px;
 	font-weight: 500;
 	margin-top: 8px;
+	margin-bottom: 5px;
+	display: inline-block;
+	border-bottom: 3px solid #f50057;
+	line-height: 18px;
+}
+.quiz-section-title-sub {
+	margin-bottom: 5px;
 }
 .MuiCheckbox-root {
 	padding: 5px 9px;
@@ -368,4 +531,32 @@
 	left: 0;
 	z-index: 9999;
 	background: #00000070;
+}
+
+// .preview {
+// 	svg {
+// 		font-size: 20px;
+// 	}
+// 	span.MuiFormControlLabel-label {
+// 		font-size: 14px;
+// 	}
+// 	span.MuiButtonBase-root {
+// 		padding: 9px;
+// 	}
+// }
+
+// p,
+// span,
+// label {
+// 	font-size: 15px !important;
+// }
+.quiz-section svg {
+	font-size: 20px;
+}
+
+.number-question {
+	margin-right: 10px;
+}
+.heading-accordion {
+	background: #00000012;
 }

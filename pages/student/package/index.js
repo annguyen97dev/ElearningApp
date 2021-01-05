@@ -4,9 +4,12 @@ import Skeleton from 'react-loading-skeleton';
 import { getPaymentHistoryAPI } from '~/api/studentAPI';
 import { getStudentLayout } from '~/components/Layout';
 import dayjs from 'dayjs';
+import Button from '@material-ui/core/Button';
+import Link from 'next/link';
 
 const fakeData = [
 	{
+		courseID: 1,
 		PlanName: 'Starter Immediately',
 		TotalLesson: 30,
 		BookedLesson: 15,
@@ -15,6 +18,7 @@ const fakeData = [
 		Status: 1,
 	},
 	{
+		courseID: 2,
 		PlanName: 'Starter Immediately',
 		TotalLesson: 30,
 		BookedLesson: 15,
@@ -23,6 +27,7 @@ const fakeData = [
 		Status: 1,
 	},
 	{
+		courseID: 3,
 		PlanName: 'Starter Immediately',
 		TotalLesson: 30,
 		BookedLesson: 15,
@@ -33,39 +38,39 @@ const fakeData = [
 ];
 
 const Package = () => {
-	const [state, setState] = useState([]);
+	const [state, setState] = useState(fakeData);
 	const [loading, setLoading] = useState(false);
 
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(0);
 	const [totalResult, setTotalResult] = useState(0);
 
-	const handlePageChange = (pageNumber) => {
-		if (page !== pageNumber) {
-			setPage(pageNumber);
-			getAPI({
-				Page: pageNumber,
-			});
-		}
-	};
+	// const handlePageChange = (pageNumber) => {
+	// 	if (page !== pageNumber) {
+	// 		setPage(pageNumber);
+	// 		getAPI({
+	// 			Page: pageNumber,
+	// 		});
+	// 	}
+	// };
 
-	const getAPI = async (params) => {
-		setLoading(true);
-		const res = await getPaymentHistoryAPI(params);
-		if (res.Code === 1) {
-			// setState(res.Data);
-			setState(fakeData);
-			setPageSize(res.PageSize);
-			setTotalResult(res.TotalResult);
-		} else setState(null);
-		setLoading(false);
-	};
+	// const getAPI = async (params) => {
+	// 	setLoading(true);
+	// 	const res = await getPaymentHistoryAPI(params);
+	// 	if (res.Code === 1) {
+	// 		// setState(res.Data);
+	// 		setState(fakeData);
+	// 		setPageSize(res.PageSize);
+	// 		setTotalResult(res.TotalResult);
+	// 	} else setState(null);
+	// 	setLoading(false);
+	// };
 
-	useEffect(() => {
-		getAPI({
-			Page: 1,
-		});
-	}, []);
+	// useEffect(() => {
+	// 	getAPI({
+	// 		Page: 1,
+	// 	});
+	// }, []);
 
 	return (
 		<>
@@ -247,6 +252,16 @@ const Package = () => {
 												<td>
 													<span className="badge badge-warning">Đang học</span>
 												</td>
+												<td>
+													<Link
+														href={'/student/my-course/[courseid]'}
+														as={`/student/my-course/${item.courseID}`}
+													>
+														<Button variant="contained" color="secondary">
+															Học ngay
+														</Button>
+													</Link>
+												</td>
 											</tr>
 										))
 									) : !state ? (
@@ -279,7 +294,7 @@ const Package = () => {
 								</tbody>
 							</table>
 						</div>
-						{pageSize < totalResult && (
+						{/* {pageSize < totalResult && (
 							<Pagination
 								innerClass="pagination justify-content-center mt-3"
 								activePage={page}
@@ -290,7 +305,7 @@ const Package = () => {
 								linkClass="page-link"
 								onChange={handlePageChange.bind(this)}
 							/>
-						)}
+						)} */}
 					</div>
 				</div>
 			</div>

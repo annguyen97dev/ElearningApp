@@ -10,29 +10,24 @@
 		transition: 0.5s linear 0s;
 		transform: translateX(430px);
 	}
+	/* width */
 	&::-webkit-scrollbar {
 		width: 8px;
 	}
 
 	/* Track */
 	&::-webkit-scrollbar-track {
-		// -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-		-webkit-border-radius: 10px;
-		border-radius: 10px;
+		background: #f1f1f1;
 	}
 
 	/* Handle */
 	&::-webkit-scrollbar-thumb {
-		-webkit-border-radius: 10px;
-		border-radius: 10px;
-		background: #f5005769;
-		// -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+		background: #ffc5da;
 	}
-	&::-webkit-scrollbar-thumb:window-inactive {
-		background: #f5005769;
-	}
+
+	/* Handle on hover */
 	&::-webkit-scrollbar-thumb:hover {
-		background: #f500578c;
+		background: #555;
 	}
 
 	.study__sidebar--header {

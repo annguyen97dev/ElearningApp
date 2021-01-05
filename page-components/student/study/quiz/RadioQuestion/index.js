@@ -7,6 +7,11 @@ import FormLabel from '@material-ui/core/FormLabel';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import Button from '@material-ui/core/Button';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Typography from '@material-ui/core/Typography';
 
 import './styles.module.scss';
 
@@ -23,13 +28,35 @@ const useStyles = makeStyles((theme) => ({
 	btnShow: {
 		marginLeft: '5px',
 	},
+	numberQuestion: {
+		marginRight: '10px',
+	},
+	accordionBox: {
+		marginBottom: ' 10px',
+	},
+	accordionHeader: {
+		background: '#00000012',
+	},
 }));
 
-const RadioQuestion = () => {
-	const [value, setValue] = React.useState('female');
+let savaActiveQuestion = 0;
+const RadioQuestion = ({ dataQuestion, activeQuestion }) => {
+	console.log('Active Question: ', activeQuestion);
+	const QuestionList = dataQuestion.QuestionList;
+	const [value, setValue] = React.useState();
+	const [expanded, setExpanded] = React.useState(activeQuestion);
+
+	if (activeQuestion !== savaActiveQuestion) {
+		savaActiveQuestion = activeQuestion;
+		setExpanded(activeQuestion);
+	}
 
 	const handleChange = (event) => {
 		setValue(event.target.value);
+	};
+
+	const handleChange_Accordion = (panel) => (event, newExpanded) => {
+		setExpanded(newExpanded ? panel : false);
 	};
 
 	const classes = useStyles();
@@ -48,58 +75,58 @@ const RadioQuestion = () => {
 	return (
 		<div className="quiz-section">
 			<p className="quiz-section-title">
-				Câu 1: Checkbox can be provided with a label thanks to the
-				FormControlLabel component.
+				Questions{' '}
+				{QuestionList[0].Stt === QuestionList[QuestionList.length - 1].Stt
+					? QuestionList[0].Stt
+					: `${QuestionList[0].Stt} - ${
+							QuestionList[QuestionList.length - 1].Stt
+					  }`}
 			</p>
-			<FormControl component="fieldset">
-				<div className="notification">
-					<Alert severity="error" className={classes.fixError}>
-						Đáp án sai! Mời bạn chọn lại
-					</Alert>
-					<Button
-						variant="outlined"
-						className={classes.btnShow}
-						color="secondary"
-						onClick={showResult}
+			<p className="quiz-section-title-sub">
+				{dataQuestion.QuestionTypeDetail}
+			</p>
+			{dataQuestion.QuestionList.map((question, index) => {
+				return (
+					<Accordion
+						key={question.QuestionID}
+						expanded={expanded === question.Stt}
+						onChange={handleChange_Accordion(question.Stt)}
+						className={classes.accordionBox}
 					>
-						Hiện kết quả
-					</Button>
-				</div>
-				<RadioGroup
-					aria-label="gender"
-					name="gender1"
-					value={value}
-					onChange={handleChange}
-				>
-					<FormControlLabel
-						value="Answer 1"
-						control={<Radio />}
-						label="Answer 1"
-						className={classes.answer}
-						style={show ? { color: 'red' } : {}}
-					/>
-					<FormControlLabel
-						value="Answer 2"
-						control={<Radio />}
-						label="Answer 2"
-						className={classes.answer}
-						style={show ? { color: 'green' } : {}}
-					/>
-					<FormControlLabel
-						value="Answer 3"
-						control={<Radio />}
-						label="Answer 3"
-						className={classes.answer}
-					/>
-					<FormControlLabel
-						value="Answer 4"
-						control={<Radio />}
-						label="Answer 4"
-						className={classes.answer}
-						s
-					/>
-				</RadioGroup>
-			</FormControl>
+						<AccordionSummary
+							expandIcon={<ExpandMoreIcon />}
+							aria-controls="panel1a-content"
+							id="panel1a-header"
+							className={classes.accordionHeader}
+						>
+							<Typography className={classes.heading}>
+								<b className={classes.numberQuestion}>{question.Stt}/</b>
+								{question.QuestionText}
+							</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+							<FormControl component="fieldset">
+								<RadioGroup
+									aria-label="gender"
+									name="gender1"
+									value={value}
+									onChange={handleChange}
+								>
+									{question.QuestionAnswer.map((ans) => (
+										<FormControlLabel
+											ket={ans.AnswerID}
+											value={ans.AnswerID}
+											control={<Radio />}
+											label={ans.AnswerText}
+											className={classes.answer}
+										/>
+									))}
+								</RadioGroup>
+							</FormControl>
+						</AccordionDetails>
+					</Accordion>
+				);
+			})}
 		</div>
 	);
 };

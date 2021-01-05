@@ -563,8 +563,7 @@ const Menu = ({ t, isStudent }) => {
 	const [isCollapse, setIsCollapse] = React.useState(false);
 	React.useEffect(() => {
 		// console.log(router.pathname);
-		if (router.pathname === '/student/study') {
-			console.log('isCollapse', isCollapse);
+		if (router.pathname === '/student/my-course/[courseid]') {
 			setIsCollapse(true);
 		} else {
 			setIsCollapse(false);

@@ -8,6 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Radio from '@material-ui/core/Radio';
+import Checkbox from '@material-ui/core/Checkbox';
+
 import { withStyles } from '@material-ui/core/styles';
 
 import './styles.module.scss';
@@ -37,7 +39,7 @@ function createData(name, calories, fat, carbs, protein) {
 
 const MapQuestion = () => {
 	const classes = useStyles();
-	const [selectedValue, setSelectedValue] = React.useState('a');
+	const [selectedValue, setSelectedValue] = React.useState();
 
 	const handleChange = (event) => {
 		setSelectedValue(event.target.value);
@@ -106,39 +108,23 @@ const MapQuestion = () => {
 									<b>1/</b>Question
 								</TableCell>
 								<TableCell align="right" className={classes.styleCol}>
-									<Radio
-										checked={selectedValue === 'a'}
-										onChange={handleChange}
-										value="a"
-										name="radio-button-demo"
-										inputProps={{ 'aria-label': 'A' }}
+									<Checkbox
+										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
 									/>
 								</TableCell>
 								<TableCell align="right" className={classes.styleCol}>
-									<Radio
-										checked={selectedValue === 'b'}
-										onChange={handleChange}
-										value="b"
-										name="radio-button-demo"
-										inputProps={{ 'aria-label': 'B' }}
+									<Checkbox
+										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
 									/>
 								</TableCell>
 								<TableCell align="right" className={classes.styleCol}>
-									<Radio
-										checked={selectedValue === 'c'}
-										onChange={handleChange}
-										value="c"
-										name="radio-button-demo"
-										inputProps={{ 'aria-label': 'C' }}
+									<Checkbox
+										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
 									/>
 								</TableCell>
 								<TableCell align="right" className={classes.styleCol}>
-									<Radio
-										checked={selectedValue === 'd'}
-										onChange={handleChange}
-										value="d"
-										name="radio-button-demo"
-										inputProps={{ 'aria-label': 'D' }}
+									<Checkbox
+										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
 									/>
 								</TableCell>
 							</TableRow>
@@ -147,39 +133,23 @@ const MapQuestion = () => {
 									<b>2/</b>Question
 								</TableCell>
 								<TableCell align="right" className={classes.styleCol}>
-									<Radio
-										checked={selectedValue === 'a'}
-										onChange={handleChange}
-										value="a"
-										name="radio-button-demo"
-										inputProps={{ 'aria-label': 'A' }}
+									<Checkbox
+										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
 									/>
 								</TableCell>
 								<TableCell align="right" className={classes.styleCol}>
-									<Radio
-										checked={selectedValue === 'b'}
-										onChange={handleChange}
-										value="b"
-										name="radio-button-demo"
-										inputProps={{ 'aria-label': 'B' }}
+									<Checkbox
+										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
 									/>
 								</TableCell>
 								<TableCell align="right" className={classes.styleCol}>
-									<Radio
-										checked={selectedValue === 'c'}
-										onChange={handleChange}
-										value="c"
-										name="radio-button-demo"
-										inputProps={{ 'aria-label': 'C' }}
+									<Checkbox
+										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
 									/>
 								</TableCell>
 								<TableCell align="right" className={classes.styleCol}>
-									<Radio
-										checked={selectedValue === 'd'}
-										onChange={handleChange}
-										value="d"
-										name="radio-button-demo"
-										inputProps={{ 'aria-label': 'D' }}
+									<Checkbox
+										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
 									/>
 								</TableCell>
 							</TableRow>
@@ -188,39 +158,23 @@ const MapQuestion = () => {
 									<b>3/</b>Question
 								</TableCell>
 								<TableCell align="right" className={classes.styleCol}>
-									<Radio
-										checked={selectedValue === 'a'}
-										onChange={handleChange}
-										value="a"
-										name="radio-button-demo"
-										inputProps={{ 'aria-label': 'A' }}
+									<Checkbox
+										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
 									/>
 								</TableCell>
 								<TableCell align="right" className={classes.styleCol}>
-									<Radio
-										checked={selectedValue === 'b'}
-										onChange={handleChange}
-										value="b"
-										name="radio-button-demo"
-										inputProps={{ 'aria-label': 'B' }}
+									<Checkbox
+										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
 									/>
 								</TableCell>
 								<TableCell align="right" className={classes.styleCol}>
-									<Radio
-										checked={selectedValue === 'c'}
-										onChange={handleChange}
-										value="c"
-										name="radio-button-demo"
-										inputProps={{ 'aria-label': 'C' }}
+									<Checkbox
+										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
 									/>
 								</TableCell>
 								<TableCell align="right" className={classes.styleCol}>
-									<Radio
-										checked={selectedValue === 'd'}
-										onChange={handleChange}
-										value="d"
-										name="radio-button-demo"
-										inputProps={{ 'aria-label': 'D' }}
+									<Checkbox
+										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
 									/>
 								</TableCell>
 							</TableRow>

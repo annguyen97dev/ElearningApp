@@ -25,8 +25,7 @@ const Layout = ({
 	const router = useRouter();
 	const [changePadding, setChangePadding] = React.useState(false);
 	React.useLayoutEffect(() => {
-		console.log('current router', router.pathname);
-		if (router.pathname === '/student/study') {
+		if (router.pathname === '/student/my-course/[courseid]') {
 			setChangePadding(true);
 		} else {
 			setChangePadding(false);

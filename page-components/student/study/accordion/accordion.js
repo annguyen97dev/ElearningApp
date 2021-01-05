@@ -3,23 +3,73 @@ import React, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './accordion.scss';
 import Chevron from './Chevron';
+import Link from 'next/link';
+import { useCourse } from '~/pages/student/my-course/[courseid]';
+import Checkbox from '@material-ui/core/Checkbox';
+
+const AccordionBox = ({ lesson, activeLesson, getActiveLesson }) => {
+	return (
+		<div
+			className={`accordion-box ${
+				lesson?.LessonID === activeLesson?.LessonID ? 'active' : ''
+			}`}
+		>
+			<Checkbox oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
+			<div className="topic">
+				<p className="topic-title">
+					<a
+						href="/#"
+						onClick={(e) => (e.preventDefault(), getActiveLesson(lesson))}
+					>
+						{lesson.LessonName}
+					</a>
+				</p>
+				<p className="topic-list"> {lesson.TypeName} </p>
+			</div>
+		</div>
+	);
+};
 
 function Accordion(props) {
-	const [setActive, setActiveState] = useState('');
-	const [setHeight, setHeightState] = useState('0px');
-	const [setRotate, setRotateState] = useState('accordion__icon');
+	const {
+		title = '',
+		info = '',
+		content = '',
+		activeLesson = [],
+		section = '',
+	} = props;
+	const { getActiveLesson } = useCourse();
+	const [setActive, setActiveState] = useState(
+		section.DataLesson.length > 0 && 'active',
+	);
+	const [setHeight, setHeightState] = useState(
+		section.DataLesson.length > 0 && `200px`,
+	);
+	const [setRotate, setRotateState] = useState(
+		section.DataLesson.length > 0 ? 'accordion__ico rotate' : 'accordion_icon',
+	);
+	const [checked, setChecked] = React.useState(true);
 
-	const content = useRef(null);
+	const handleChange = (event) => {
+		setChecked(event.target.checked);
+	};
+
+	const contentTab = useRef(null);
 
 	function toggleAccordion() {
 		setActiveState(setActive === '' ? 'active' : '');
 		setHeightState(
-			setActive === 'active' ? '0px' : `${content.current.scrollHeight}px`,
+			setActive === 'active' ? '0px' : `${contentTab.current.scrollHeight}px`,
 		);
 		setRotateState(
 			setActive === 'active' ? 'accordion__icon' : 'accordion__icon rotate',
 		);
 	}
+	// const handleClick_changeLesson = (e) => {
+	// 	e.preventDefault();
+	// 	let lesson = e.target.getAttribute('lesson');
+	// 	console.log('TEST GET LESSON ID: ', lesson);
+	// };
 
 	return (
 		<div className="sidebar-section accordion__section">
@@ -31,20 +81,27 @@ function Accordion(props) {
 						<FontAwesomeIcon icon="angle-down" />
 					</span> */}
 				<div className="accordion-title">
-					<p className="title accordion__title">{props.title}</p>
-					<span className="info">{props.info}</span>
+					<p className="title accordion__title">{title}</p>
+					<span className="info">{info}</span>
 				</div>
 				<Chevron className={`${setRotate}`} width={7} fill={'#777'} />
 			</button>
 			<div
-				ref={content}
+				ref={contentTab}
 				style={{ maxHeight: `${setHeight}` }}
 				className="accordion__content"
 			>
-				<div
-					className="accordion__text"
-					dangerouslySetInnerHTML={{ __html: props.content }}
-				/>
+				<div className="accordion__text">
+					{content.length > 0 &&
+						content.map((lesson) => (
+							<AccordionBox
+								key={lesson.LessonID}
+								lesson={lesson}
+								activeLesson={activeLesson}
+								getActiveLesson={getActiveLesson}
+							/>
+						))}
+				</div>
 			</div>
 		</div>
 	);

@@ -562,12 +562,40 @@ const Menu = ({ t, isStudent }) => {
 	const router = useRouter();
 	const [isCollapse, setIsCollapse] = React.useState(false);
 	React.useEffect(() => {
-		// console.log(router.pathname);
+		let aside = document.querySelector('.aside');
+
+		let scrWidth = window.screen.width;
+
 		if (router.pathname === '/student/my-course/[courseid]') {
-			setIsCollapse(true);
+			if (scrWidth < 992) {
+				aside.classList.remove('minimize');
+				aside.classList.remove('hey');
+				setIsCollapse(true);
+			} else {
+				aside.classList.add('minimize');
+				aside.classList.add('hey');
+			}
 		} else {
 			setIsCollapse(false);
 		}
+
+		window.addEventListener('resize', function () {
+			let scrWidth = window.innerWidth;
+
+			if (router.pathname === '/student/my-course/[courseid]') {
+				if (scrWidth < 992) {
+					aside.classList.remove('minimize');
+					aside.classList.remove('hey');
+					setIsCollapse(true);
+				} else {
+					aside.classList.add('minimize');
+					aside.classList.add('hey');
+				}
+			} else {
+				setIsCollapse(false);
+			}
+		});
+
 		return () => {};
 	}, [router]);
 

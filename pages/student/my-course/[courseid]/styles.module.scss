@@ -10,6 +10,7 @@ button {
 .study {
 	display: flex;
 	justify-content: space-between;
+
 	// Study Main
 	&__main {
 		width: calc(100% - 385px);

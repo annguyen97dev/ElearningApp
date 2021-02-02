@@ -5,5 +5,7 @@
 }
 
 .content-blog {
-	min-height: calc(var(--app-height) - (85px + 50px + 350px));
+	@media screen and (min-width: 992px) {
+		min-height: calc(var(--app-height) - (85px + 50px + 350px));
+	}
 }

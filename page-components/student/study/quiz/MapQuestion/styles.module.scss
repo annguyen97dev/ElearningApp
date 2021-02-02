@@ -4,17 +4,21 @@
 	}
 }
 
-.MuiTableContainer-root {
-	width: 45%;
-}
+// .MuiTableContainer-root {
+// 	width: 45%;
+// }
+
+// @media screen and (max-width: 1600px) {
+// 	.MuiTableContainer-root {
+// 		width: 70%;
+// 	}
+// }
 
 .map-question-img {
-	width: 45%;
+	width: 70%;
 	margin-bottom: 20px;
 }
 
-@media screen and (max-width: 1600px) {
-	.MuiTableContainer-root {
-		width: 70%;
-	}
+.quiz-section-content {
+	margin-top: 10px;
 }

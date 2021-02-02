@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -22,14 +22,17 @@ const useStyles = makeStyles({
 		paddingRight: '32px',
 	},
 	wrapTable: {
-		width: '45%',
+		width: '100%',
 		'@media (max-width: 1600px)': {
-			width: '65%',
+			width: '100%',
 		},
 	},
 	styleCol: {
 		padding: '7px 16px',
 		fontSize: '16px',
+	},
+	activeQuestion: {
+		background: ' #c1c1c11c',
 	},
 });
 
@@ -37,18 +40,94 @@ function createData(name, calories, fat, carbs, protein) {
 	return { name, calories, fat, carbs, protein };
 }
 
-const MapQuestion = () => {
-	const classes = useStyles();
-	const [selectedValue, setSelectedValue] = React.useState();
+let listChecked = [];
+const MapQuestion = ({
+	dataQuestion,
+	activeQuestion,
+	handleCheckedQuestion,
+	getActiveTab,
+	findActiveQuestion,
+}) => {
+	const questionList = dataQuestion.QuestionList;
 
-	const handleChange = (event) => {
-		setSelectedValue(event.target.value);
+	const classes = useStyles();
+	const [selectedValue, setSelectedValue] = useState();
+	const [check, setCheck] = useState(
+		(() => {
+			let result = [];
+			try {
+				questionList?.map((item) => {
+					result.push({
+						questionID: item.QuestionID,
+						listAnswer: [],
+						checked: null,
+					});
+				});
+			} catch {}
+			return result;
+		})(),
+	);
+
+	// const handleChange = (event) => {
+	// 	setSelectedValue(event.target.value);
+	// };
+
+	console.log('Check: ', check);
+
+	const handleChecked = (answerID, questionID) => {
+		let checked = null;
+
+		if (listChecked.length > 0) {
+			for (const [index, item] of listChecked.entries()) {
+				if (item.questionID === questionID) {
+					for (const [i, ans] of item.listAnswer.entries()) {
+						if (ans === answerID) {
+							checked = true;
+							break;
+						} else {
+							checked = false;
+						}
+					}
+				}
+			}
+		}
+
+		return checked;
 	};
+
+	const handleChange_Checkbox = (event) => {
+		let value = event.target.getAttribute('value');
+		let questionID = parseInt(
+			event.target.parentElement.parentElement.getAttribute('questionid'),
+		);
+
+		let arr = [...check];
+		for (const [index, item] of arr.entries()) {
+			if (item.questionID === questionID) {
+				item.listAnswer = [];
+				item.listAnswer.push(value);
+				item.checked = true;
+			}
+		}
+		listChecked = [...arr];
+		findActiveQuestion(questionID);
+		// getActiveTab(questionID);
+		setCheck(arr);
+		handleCheckedQuestion(arr);
+	};
+
 	return (
 		<div className="quiz-section">
 			<p className="quiz-section-title">
-				Câu 1 - 2: Checkbox can be provided with a label thanks to the
-				FormControlLabel component.
+				Questions{' '}
+				{questionList[0].Stt === questionList[questionList.length - 1].Stt
+					? questionList[0].Stt
+					: `${questionList[0].Stt} - ${
+							questionList[questionList.length - 1].Stt
+					  }`}
+			</p>
+			<p className="quiz-section-title-sub">
+				{dataQuestion.QuestionTypeDetail}
 			</p>
 			<div className="quiz-section-content">
 				<img
@@ -92,92 +171,41 @@ const MapQuestion = () => {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{/* {rows.map((row) => (
-								<TableRow key={row.name}>
-									<TableCell component="th" scope="row">
-										{row.name}
-									</TableCell>
-									<TableCell align="right" className={classes.styleCol}>{row.calories}</TableCell>
-									<TableCell align="right" className={classes.styleCol}>{row.fat}</TableCell>
-									<TableCell align="right" className={classes.styleCol}>{row.carbs}</TableCell>
-									<TableCell align="right" className={classes.styleCol}>{row.protein}</TableCell>
-								</TableRow>
-							))} */}
-							<TableRow>
-								<TableCell>
-									<b>1/</b>Question
-								</TableCell>
-								<TableCell align="right" className={classes.styleCol}>
-									<Checkbox
-										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-									/>
-								</TableCell>
-								<TableCell align="right" className={classes.styleCol}>
-									<Checkbox
-										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-									/>
-								</TableCell>
-								<TableCell align="right" className={classes.styleCol}>
-									<Checkbox
-										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-									/>
-								</TableCell>
-								<TableCell align="right" className={classes.styleCol}>
-									<Checkbox
-										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-									/>
-								</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell>
-									<b>2/</b>Question
-								</TableCell>
-								<TableCell align="right" className={classes.styleCol}>
-									<Checkbox
-										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-									/>
-								</TableCell>
-								<TableCell align="right" className={classes.styleCol}>
-									<Checkbox
-										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-									/>
-								</TableCell>
-								<TableCell align="right" className={classes.styleCol}>
-									<Checkbox
-										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-									/>
-								</TableCell>
-								<TableCell align="right" className={classes.styleCol}>
-									<Checkbox
-										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-									/>
-								</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell>
-									<b>3/</b>Question
-								</TableCell>
-								<TableCell align="right" className={classes.styleCol}>
-									<Checkbox
-										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-									/>
-								</TableCell>
-								<TableCell align="right" className={classes.styleCol}>
-									<Checkbox
-										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-									/>
-								</TableCell>
-								<TableCell align="right" className={classes.styleCol}>
-									<Checkbox
-										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-									/>
-								</TableCell>
-								<TableCell align="right" className={classes.styleCol}>
-									<Checkbox
-										oinputProps={{ 'aria-label': 'uncontrolled-checkbox' }}
-									/>
-								</TableCell>
-							</TableRow>
+							{questionList?.length > 0 &&
+								questionList.map((question) => (
+									<TableRow
+										key={question.QuestionID}
+										className={
+											question.QuestionID === activeQuestion.QuestionID &&
+											classes.activeQuestion
+										}
+									>
+										<TableCell>
+											<b>{question.Stt}/</b> {question.QuestionText}
+										</TableCell>
+										{question.QuestionAnswer?.length > 0 ? (
+											question.QuestionAnswer.map((item) => (
+												<TableCell
+													key={item.AnswerID}
+													align="right"
+													className={classes.styleCol}
+												>
+													<Checkbox
+														value={item.AnswerID}
+														questionid={question.QuestionID}
+														checked={handleChecked(
+															item.AnswerID,
+															question.QuestionID,
+														)}
+														onChange={handleChange_Checkbox}
+													/>
+												</TableCell>
+											))
+										) : (
+											<p>Chưa có dữ liệu</p>
+										)}
+									</TableRow>
+								))}
 						</TableBody>
 					</Table>
 				</TableContainer>

@@ -1,52 +1,108 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import './styles.module.scss';
 
-const DropQuestion = () => {
-	const SetUpListAnswer = [
-		{
-			id: '1',
-			text:
-				'Every chapter of The Jewel House charts the activities of a particular community',
-		},
-		{
-			id: '2',
-			text: 'Harkness leads us through the streets of London,',
-		},
-		{
-			id: '3',
-			text: 'she provides not traditional, static accounts of their theories',
-		},
-		{
-			id: '4',
-			text: 'In one crucial respect, Harkness argues',
-		},
-	];
+let listChecked = [];
+let listSaveAnswer = [];
+let cloneSaveData = [];
 
-	const setUpGetAnswer = [
-		{
-			id: 'ques-1',
-			idDrag: '5',
-			text: '',
-		},
-		{
-			id: 'ques-2',
-			idDrag: '6',
-			text: '',
-		},
-	];
+const DropQuestion = ({
+	dataQuestion,
+	activeQuestion,
+	handleCheckedQuestion,
+	getActiveTab,
+}) => {
+	const questionList = dataQuestion.QuestionList;
+	const setUpListAnswer = dataQuestion.QuestionAnswer;
+	const setUpGetAnswer = dataQuestion.QuestionList;
+	// const SetUpListAnswer = [
+	// 	{
+	// 		id: '1',
+	// 		text:
+	// 			'Every chapter of The Jewel House charts the activities of a particular community',
+	// 	},
+	// 	{
+	// 		id: '2',
+	// 		text: 'Harkness leads us through the streets of London,',
+	// 	},
+	// 	{
+	// 		id: '3',
+	// 		text: 'she provides not traditional, static accounts of their theories',
+	// 	},
+	// 	{
+	// 		id: '4',
+	// 		text: 'In one crucial respect, Harkness argues',
+	// 	},
+	// ];
+
+	// const setUpGetAnswer = [
+	// 	{
+	// 		id: 'ques-1',
+	// 		idDrag: '5',
+	// 		text: '',
+	// 	},
+	// 	{
+	// 		id: 'ques-2',
+	// 		idDrag: '6',
+	// 		text: '',
+	// 	},
+	// ];
+
+	const [listActive, setListActive] = useState(
+		(() => {
+			let result = [];
+			try {
+				questionList.map((question, index) => {
+					result.push({
+						questionID: question.QuestionID,
+						answerID: null,
+						checked: null,
+					});
+				});
+			} catch (error) {
+				console.log('error: ', error);
+			}
+			return result;
+		})(),
+	);
+
+	console.log('List checked: ', listChecked);
 
 	const getItemStyle = (isDragging) => ({
 		minWidth: isDragging ? '200px' : '200px',
 		width: 'auto',
 	});
 
-	const [listAnswer, updateListAnswer] = useState(SetUpListAnswer);
-	const [getAnswer, updateGetAnswer] = useState(setUpGetAnswer);
+	const [listAnswer, updateListAnswer] = useState(
+		(() => {
+			let result = null;
+			listSaveAnswer.length > 0
+				? (result = [...listSaveAnswer])
+				: (result = [...setUpListAnswer]);
+			return result;
+		})(),
+	);
+	const [getAnswer, updateGetAnswer] = useState(
+		(() => {
+			let result = null;
+			listChecked.length > 0
+				? (result = [...listChecked])
+				: (result = [...setUpGetAnswer]);
+			return result;
+		})(),
+	);
 
-	const [saveData, updateSaveData] = useState([]);
-	console.log('get Answer', getAnswer);
+	const [saveData, updateSaveData] = useState(cloneSaveData);
+
+	if (listChecked.length < 1 && listSaveAnswer.length < 1) {
+		listChecked = [...getAnswer];
+		listSaveAnswer = [...listAnswer];
+	}
+
+	// console.log('get Answer', getAnswer);
+	// console.log('List save Answer: ', listSaveAnswer);
+	// console.log('list Answer: ', listAnswer);
 
 	// Sort list answer (Sắp sếp lại list câu trả lời )
 	function sortArray(items) {
@@ -93,6 +149,7 @@ const DropQuestion = () => {
 
 		const items = Array.from(listAnswer);
 		let saveId = '';
+		let saveQuestionID = '';
 
 		if (!destination) {
 			if (checkArea(source.droppableId)) {
@@ -123,7 +180,6 @@ const DropQuestion = () => {
 			getAnswer.map((object) => {
 				if (destination.droppableId === object.id) {
 					saveId = object.id;
-					console.log('saveId: ', saveId);
 				}
 			});
 			if (source.droppableId !== destination.droppableId) {
@@ -161,6 +217,8 @@ const DropQuestion = () => {
 									(value) => value.area == saveId,
 								);
 
+								console.log('ArrayHasSaveID: ', arrayHasSaveId);
+
 								// Thao tác spilce and sort
 								items.splice(arrayHasSaveId.index, 0, arrayHasSaveId.data);
 								sortArray(items);
@@ -177,57 +235,129 @@ const DropQuestion = () => {
 					});
 
 					// Update
+
 					updateListAnswer(items);
 					updateGetAnswer(updateAnswer(reorderedItem.text, saveId));
+					checkAnswerActive(getAnswer);
+					listSaveAnswer = [...items];
+					listChecked = [...getAnswer];
 					updateSaveData(pushToArray(source.index, reorderedItem, saveId));
-					console.log('Save Data: ', saveData);
+					cloneSaveData = [...saveData];
 				}
 			}
 		}
 	}
 
+	const checkAnswerActive = (arrAnswer) => {
+		let cloneListActive = [...listActive];
+		cloneListActive.forEach((item, index) => {
+			if (item.questionID === arrAnswer[index].QuestionID) {
+				if (arrAnswer[index].text !== '') {
+					item.checked = true;
+				}
+			}
+		});
+		handleCheckedQuestion(cloneListActive);
+		setListActive(cloneListActive);
+	};
+
+	// useEffect(() => {
+	// 	console.log('Active Question: ', activeQuestion);
+
+	// 	let boxInclude = document.querySelectorAll('.box-include');
+
+	// 	function removeActive() {
+	// 		boxInclude.forEach((item) => {
+	// 			item.classList.remove('active-question');
+	// 		});
+	// 	}
+
+	// 	boxInclude.forEach((item) => {
+	// 		let questionID = parseInt(item.getAttribute('questionid'));
+
+	// 		if (questionID === activeQuestion.QuestionID) {
+	// 			removeActive();
+	// 			item.classList.add('active-question');
+	// 		}
+	// 	});
+	// }, [activeQuestion]);
+
+	// useEffect(() => {
+	// 	handleCheckedQuestion(getAnswer)
+	// }, [getAnswer]);
+
+	useEffect(() => {
+		let boxInclude = document.querySelectorAll('.box-include');
+		let textInclude = document.querySelectorAll('.box-include div');
+
+		textInclude.forEach((item, index) => {
+			if (item.innerText !== '') {
+				console.log('index: ', index);
+				item.parentElement.classList.add('active-text');
+				item.parentElement.classList.add('active-box');
+			} else {
+				item.classList.remove('active-text');
+				item.parentElement.classList.remove('active-text');
+				item.parentElement.classList.remove('active-box');
+			}
+		});
+	}, [getAnswer]);
+
 	return (
 		<div className="quiz-section quiz-drop">
-			<p className="quiz-section-title">Questions 1 – 3</p>
-			<p>
-				Complete each sentence with the correct ending. Choose the correct
-				ending and move it into the gap.
+			<p className="quiz-section-title">
+				Questions{' '}
+				{questionList[0].Stt === questionList[questionList.length - 1].Stt
+					? questionList[0].Stt
+					: `${questionList[0].Stt} - ${
+							questionList[questionList.length - 1].Stt
+					  }`}
+			</p>
+			<p className="quiz-section-title-sub">
+				{dataQuestion.QuestionTypeDetail}
 			</p>
 
 			<DragDropContext onDragEnd={handleOnDragEnd}>
-				{getAnswer.map(({ id, text, idDrag }, index) => {
-					return (
-						<div className="wrap-text">
-							<p>
-								Harkness’s research method was different to that of other
-								writers because
-							</p>
-							<Droppable droppableId={id}>
-								{(provided, snapshot) => (
-									<div
-										className="box-include"
-										{...provided.droppableProps}
-										ref={provided.innerRef}
-										style={getItemStyle(snapshot.isDraggingOver)}
-									>
-										<Draggable key={idDrag} draggableId={idDrag} index={index}>
-											{(provided) => (
-												<div
-													ref={provided.innerRef}
-													{...provided.draggableProps}
-													{...provided.dragHandleProps}
-												>
-													{text}
-												</div>
-											)}
-										</Draggable>
-										{provided.placeholder}
-									</div>
-								)}
-							</Droppable>
-						</div>
-					);
-				})}
+				{listChecked.map(
+					({ QuestionID, id, text, QuestionText, idDrag }, index) => {
+						return (
+							<div className="wrap-text ">
+								<p>{QuestionText}</p>
+								<Droppable droppableId={id}>
+									{(provided, snapshot) => (
+										<div
+											className={`box-include ${
+												activeQuestion.QuestionID === QuestionID &&
+												`active-question`
+											}`}
+											{...provided.droppableProps}
+											ref={provided.innerRef}
+											style={getItemStyle(snapshot.isDraggingOver)}
+											questionid={QuestionID}
+										>
+											<Draggable
+												key={idDrag}
+												draggableId={idDrag}
+												index={index}
+											>
+												{(provided) => (
+													<div
+														ref={provided.innerRef}
+														{...provided.draggableProps}
+														{...provided.dragHandleProps}
+													>
+														{text}
+													</div>
+												)}
+											</Draggable>
+											{provided.placeholder}
+										</div>
+									)}
+								</Droppable>
+							</div>
+						);
+					},
+				)}
 
 				<Droppable droppableId="listAnswer">
 					{(provided) => (
@@ -237,7 +367,7 @@ const DropQuestion = () => {
 							ref={provided.innerRef}
 						>
 							<div className="listAnswer">
-								{listAnswer.map(({ id, text }, index) => {
+								{listSaveAnswer.map(({ id, text }, index) => {
 									return (
 										<Draggable key={id} draggableId={id} index={index}>
 											{(provided) => (

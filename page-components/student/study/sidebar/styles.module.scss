@@ -6,9 +6,40 @@
 	border-left: 1px solid #00000026;
 	overflow: auto;
 
+	.titleCourse {
+		padding: 0 15px;
+		display: none;
+		svg {
+			margin-right: 5px;
+		}
+		.title {
+			color: #2f2f2f;
+			font-size: 20px;
+			margin-bottom: 0;
+		}
+		@media screen and (max-width: 991px) {
+			display: block;
+			margin-top: 20px;
+		}
+	}
+
+	@media screen and (max-width: 991px) {
+		width: 100%;
+		order: 1;
+	}
+
 	&.active-close {
-		transition: 0.5s linear 0s;
-		transform: translateX(430px);
+		width: 0;
+		transition: width 0.5s;
+		// transition: 0.5s linear 0s;
+		// transform: translateX(430px);
+	}
+	&.active-open {
+		width: 430px;
+		transition: width 0.5s;
+		@media screen and (max-width: 991px) {
+			width: 100%;
+		}
 	}
 	&::-webkit-scrollbar {
 		width: 8px;
@@ -52,6 +83,10 @@
 			justify-content: center;
 			align-items: center;
 			transition: 0.3s;
+			@media screen and (max-width: 991px) {
+				display: none;
+			}
+
 			&:hover {
 				background: #e71b64;
 				transition: 0.3s;
@@ -73,6 +108,7 @@
 
 			span {
 				font-size: 17px;
+				font-weight: 500;
 				background: #e71b6429;
 				padding: 2px 10px;
 			}
@@ -87,11 +123,5 @@
 				}
 			}
 		}
-	}
-}
-
-@media screen and (max-width: 991px) {
-	.study__sidebar {
-		display: none;
 	}
 }

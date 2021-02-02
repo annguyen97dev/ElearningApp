@@ -5,23 +5,28 @@ import './styles.module.scss';
 import { useCourse } from '~/pages/student/my-course/[courseid]';
 
 const SideBar = (props) => {
-	const { dataSection } = props;
+	const { dataSection, status } = props;
+
 	const { getActiveLesson, activeLesson } = useCourse();
 	// const [activeLesson, setActiveLesson] = useState();
 
 	// Caculator width and then do something when resize window
 	function useWindowSize() {
 		const [size, setSize] = useState([0, 0]);
-		const [heightSidebar, setHeightSidebar] = useState(0);
+		const [heightSidebar, setHeightSidebar] = useState('auto');
 
 		useLayoutEffect(() => {
-			function updateSize() {
-				setSize([window.innerWidth, window.innerHeight]);
-				setHeightSidebar(window.innerHeight - 105);
+			let scrWidth = window.screen.width;
+
+			if (scrWidth > 992) {
+				function updateSize() {
+					setSize([window.innerWidth, window.innerHeight]);
+					setHeightSidebar(window.innerHeight - 120);
+				}
+				window.addEventListener('resize', updateSize);
+				updateSize();
+				return () => window.removeEventListener('resize', updateSize);
 			}
-			window.addEventListener('resize', updateSize);
-			updateSize();
-			return () => window.removeEventListener('resize', updateSize);
 		}, []);
 		return heightSidebar;
 	}
@@ -30,7 +35,7 @@ const SideBar = (props) => {
 	const getHeight = useWindowSize();
 
 	// Close and open siderbar
-	const [btnToggle, setBtnToggle] = useState(false);
+	const [btnToggle, setBtnToggle] = useState(true);
 
 	function handleClick() {
 		setBtnToggle(true);
@@ -52,33 +57,47 @@ const SideBar = (props) => {
 
 	return (
 		<div
-			className={`study__sidebar ${btnToggle ? 'active-close' : 'active-open'}`}
+			className={`study__sidebar ${status ? 'active-open' : 'active-close'}`}
 			style={{ height: getHeight + 'px' }}
 		>
+			<div className="titleCourse">
+				<h5 className="title">
+					<FontAwesomeIcon icon="graduation-cap" /> This is a course that we
+					will learn
+				</h5>
+			</div>
 			<div className="study__sidebar--header">
-				<button className="btn-toggle" onClick={handleClick}>
-					<FontAwesomeIcon icon="long-arrow-alt-right" />
-				</button>
-				<div className="status">
-					<span>Đã hoàn thành</span>
-					<div className="status-info">
-						<p>24/25</p>
+				{status && (
+					<>
+						<button className="btn-toggle" onClick={handleClick}>
+							<FontAwesomeIcon icon="long-arrow-alt-right" />
+						</button>
+						<div className="status">
+							<span>Đã hoàn thành:</span>
+							<div className="status-info">
+								<p>24/25</p>
+							</div>
+						</div>
+					</>
+				)}
+			</div>
+			{status && (
+				<>
+					<div className="sidebar-content">
+						{dataSection &&
+							dataSection.map((section) => (
+								<Accordion
+									key={section.SectionID}
+									title={section.SectionName}
+									info={section.TotalTime}
+									content={section.DataLesson}
+									activeLesson={activeLesson}
+									section={section}
+								/>
+							))}
 					</div>
-				</div>
-			</div>
-			<div className="sidebar-content">
-				{dataSection &&
-					dataSection.map((section) => (
-						<Accordion
-							key={section.SectionID}
-							title={section.SectionName}
-							info={section.TotalTime}
-							content={section.DataLesson}
-							activeLesson={activeLesson}
-							section={section}
-						/>
-					))}
-			</div>
+				</>
+			)}
 		</div>
 	);
 };

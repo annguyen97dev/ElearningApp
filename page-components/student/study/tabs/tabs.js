@@ -4,6 +4,17 @@ import Tab from './Tab';
 
 import './tabs.module.scss';
 
+function calHeight() {
+	let height = null;
+	let scrWidth = window.screen.width;
+
+	if (scrWidth > 992) {
+		height = window.innerHeight - 200;
+	}
+
+	return height;
+}
+
 class Tabs extends Component {
 	static propTypes = {
 		children: PropTypes.instanceOf(Array).isRequired,
@@ -14,14 +25,19 @@ class Tabs extends Component {
 
 		this.state = {
 			activeTab: this.props.children[0].props.label,
-			heightContentTab: window.innerHeight - 200,
+
+			heightContentTab: calHeight(),
 		};
 	}
 
 	updateHeight = () => {
-		this.setState({
-			heightContentTab: window.innerHeight - 200,
-		});
+		let scrWidth = window.screen.width;
+
+		if (scrWidth > 992) {
+			this.setState({
+				heightContentTab: window.innerHeight - 200,
+			});
+		}
 	};
 
 	componentDidMount() {

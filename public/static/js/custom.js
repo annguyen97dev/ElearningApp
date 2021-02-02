@@ -1,4 +1,6 @@
 (function () {
+	let scrWidth = window.screen.width;
+
 	const updateCSSVariables = () => {
 		const root = document.documentElement;
 		if (root && typeof window !== 'undefined') {
@@ -9,6 +11,10 @@
 	updateCSSVariables();
 
 	window.addEventListener('resize', function () {
-		updateCSSVariables();
+		let scrWidth = window.innerWidth;
+
+		if (scrWidth > 992) {
+			updateCSSVariables();
+		}
 	});
 })();

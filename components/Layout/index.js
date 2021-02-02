@@ -25,11 +25,14 @@ const Layout = ({
 	const router = useRouter();
 	const [changePadding, setChangePadding] = React.useState(false);
 	React.useLayoutEffect(() => {
+		let scrWidth = window.screen.width;
+
 		if (router.pathname === '/student/my-course/[courseid]') {
 			setChangePadding(true);
 		} else {
 			setChangePadding(false);
 		}
+
 		return () => {};
 	}, [router]);
 
@@ -45,9 +48,9 @@ const Layout = ({
 			<main className="content ht-100vh pd-0-f">
 				<Header isStudent={isStudent} />
 				<div
-					className="content-body"
+					className={`content-body ${changePadding && 'changeStyleContent'}`}
 					id="body-content"
-					style={changePadding ? { padding: '0', overflow: 'hidden' } : {}}
+					// style={changePadding ? { padding: '0', overflow: 'hidden' } : {}}
 				>
 					{children}
 				</div>

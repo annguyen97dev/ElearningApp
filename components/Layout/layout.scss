@@ -122,6 +122,16 @@
 .content-header .navbar-right {
 	display: flex;
 	align-items: center;
+
+	@media screen and (max-width: 991px) {
+		margin-left: auto;
+	}
+
+	@media screen and (max-width: 320px) {
+		.wd-150 {
+			width: 125px;
+		}
+	}
 }
 .content-header .navbar-right .dropdown-notification {
 	margin-right: 15px;
@@ -152,15 +162,15 @@
 	border-color: $yellow;
 }
 
-@media screen and (min-width: 992px) {
-	.aside-fixed + .content {
-		margin-left: 60px;
-	}
-	.content-body {
-		height: auto;
-		padding: 25px;
-	}
-}
+// @media screen and (min-width: 992px) {
+// 	.aside-fixed + .content {
+// 		margin-left: 60px;
+// 	}
+// 	.content-body {
+// 		height: auto;
+// 		padding: 25px;
+// 	}
+// }
 @media screen and (min-width: 1200px) {
 	.aside-fixed + .content {
 		margin-left: 300px;
@@ -193,7 +203,9 @@
 }
 
 .ht-100vh {
-	height: var(--app-height);
+	@media screen and (min-width: 992px) {
+		height: var(--app-height);
+	}
 }
 
 .nav .nav-aside {
@@ -279,5 +291,46 @@
 				right: calc(100% + 13px);
 			}
 		}
+	}
+}
+
+// Header on mobile
+@media screen and (max-width: 600px) {
+	.font-10 {
+		font-size: 10px;
+	}
+	.justify-content {
+		justify-content: space-between;
+	}
+	.aside-logo img {
+		max-width: 100px;
+	}
+}
+@media screen and (max-width: 600px) {
+	.navbar-left {
+		display: none;
+	}
+	.justify-content {
+		width: 100%;
+	}
+}
+
+.changeStyleContent {
+	padding: 0;
+	overflow: hidden;
+
+	@media screen and (max-width: 992px) {
+		padding-top: 55px;
+	}
+
+	@media screen and (max-width: 600px) {
+		overflow: auto;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.content-header {
+		position: fixed;
+		width: 100%;
 	}
 }

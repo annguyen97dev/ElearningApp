@@ -31,6 +31,17 @@ const AccordionBox = ({ lesson, activeLesson, getActiveLesson }) => {
 };
 
 function Accordion(props) {
+	const calHeight = () => {
+		let height = 'auto';
+		let scrWidth = window.screen.width;
+
+		if (scrWidth > 992) {
+			height = '200px';
+		}
+
+		return height;
+	};
+
 	const {
 		title = '',
 		info = '',
@@ -43,8 +54,9 @@ function Accordion(props) {
 		section.DataLesson.length > 0 && 'active',
 	);
 	const [setHeight, setHeightState] = useState(
-		section.DataLesson.length > 0 && `200px`,
+		section.DataLesson.length > 0 && 'auto',
 	);
+
 	const [setRotate, setRotateState] = useState(
 		section.DataLesson.length > 0 ? 'accordion__ico rotate' : 'accordion_icon',
 	);

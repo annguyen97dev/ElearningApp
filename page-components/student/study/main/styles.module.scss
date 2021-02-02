@@ -9,15 +9,59 @@ button {
 .study {
 	display: flex;
 	justify-content: space-between;
+
+	@media screen and (max-width: 992px) {
+		flex-direction: column;
+	}
+
 	// Study Main
+
 	.study__main {
 		width: calc(100% - 430px);
 		position: relative;
 		z-index: 1;
 
+		@media screen and (max-width: 991px) {
+			margin-top: 30px;
+			width: 100%;
+			order: 2;
+		}
+
+		.btn-toggle {
+			position: absolute;
+			right: 19px;
+			border: none;
+			border-radius: 50%;
+			width: 37px;
+			height: 37px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transition: 0.3s;
+			&:hover {
+				background: #e71b64;
+				transition: 0.3s;
+
+				svg {
+					color: white;
+				}
+			}
+
+			svg {
+				font-size: 22px;
+			}
+		}
+
 		&.active {
 			width: 100%;
 			transition: width 0.5s;
+		}
+		&.non-active {
+			width: calc(100% - 430px);
+			transition: width 0.5s;
+			@media screen and (max-width: 991px) {
+				width: 100%;
+			}
 		}
 
 		.study__main--header {
@@ -30,6 +74,10 @@ button {
 				justify-content: flex-start;
 				align-items: center;
 				border-bottom: 1px solid #00000026;
+
+				@media screen and (max-width: 991px) {
+					display: none;
+				}
 
 				.course__box {
 					background: #e71b64;
@@ -66,9 +114,3 @@ button {
 // 		height: 100%;
 // 	}
 // }
-
-@media screen and (max-width: 991px) {
-	.study .study__main {
-		width: 100%;
-	}
-}

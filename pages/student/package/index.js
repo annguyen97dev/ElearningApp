@@ -6,6 +6,7 @@ import { getStudentLayout } from '~/components/Layout';
 import dayjs from 'dayjs';
 import Button from '@material-ui/core/Button';
 import Link from 'next/link';
+import './styles.module.scss';
 
 const fakeData = [
 	{

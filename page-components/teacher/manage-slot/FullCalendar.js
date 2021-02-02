@@ -124,6 +124,7 @@ const FullCalendar = ({ data = [] }) => {
 				start: event.start,
 				end: event.end,
 			};
+
 			el.setAttribute('tabindex', -1);
 			if (!args.isPast && ![...el.classList].includes('booked-slot')) {
 				// $(el).tooltip({
@@ -193,7 +194,7 @@ const FullCalendar = ({ data = [] }) => {
 			slotMaxTime: '23:00',
 			events: data,
 			headerToolbar: {
-				start: 'timeGridWeek,dayGridMonth,listWeek', // will normally be on the left. if RTL, will be on the right
+				start: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek', // will normally be on the left. if RTL, will be on the right
 				center: '',
 				end: 'today,prev,title,next', // will normally be on the right. if RTL, will be on the left
 			},

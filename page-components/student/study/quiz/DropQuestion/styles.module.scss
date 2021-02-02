@@ -3,8 +3,12 @@
 	border: 1px solid #a9a9a9;
 	width: 200px;
 	height: 25px;
-	padding: 0 3px;
 	margin-left: 10px;
+
+	div {
+		padding: 0 3px;
+		height: 100%;
+	}
 }
 .quiz-drop {
 	.listAnswer {
@@ -25,4 +29,18 @@
 .wrap-text {
 	display: flex;
 	justify-content: flex-start;
+	margin-bottom: 10px;
+	p {
+		margin-bottom: 0;
+	}
+}
+
+.active-question {
+	background: #f500571c !important;
+}
+.active-text {
+	height: auto !important;
+}
+.active-box {
+	background: #efefef;
 }

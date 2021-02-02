@@ -106,7 +106,7 @@ const sectionCourse = [
 ];
 
 const Study = ({ children }) => {
-	const [status, setStatus] = useState(false);
+	const [status, setStatus] = useState(true);
 	const [activeLesson, setActiveLesson] = useState();
 
 	const getActiveLesson = (DataLesson) => {
@@ -132,14 +132,16 @@ const Study = ({ children }) => {
 				activeLesson: activeLesson,
 			}}
 		>
-			<div className="study" style={status ? { display: 'block' } : {}}>
+			<div className="study">
 				<Main
 					status={status}
 					dataSection={sectionCourse}
 					activeLesson={activeLesson}
+					changeStatus={() => setStatus(true)}
 				></Main>
 				<SideBar
-					getStatus={() => setStatus(true)}
+					getStatus={() => setStatus(false)}
+					status={status}
 					dataSection={sectionCourse}
 				></SideBar>
 			</div>

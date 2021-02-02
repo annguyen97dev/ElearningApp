@@ -1,12 +1,17 @@
 @import 'variable';
 @import '../node_modules/nprogress/nprogress.css';
 body {
-	overflow: hidden;
+	@media screen and (min-width: 992px) {
+		overflow: hidden;
+	}
+
 	font-size: 16px;
 }
 :root {
 	--swiper-navigation-size: 16px;
-	--app-height: 100vh;
+	@media screen and (min-width: 992px) {
+		--app-height: 100vh;
+	}
 }
 a {
 	cursor: pointer;
@@ -1288,6 +1293,14 @@ a#scroll-to-top {
 	background: $primary-color;
 	color: #fff;
 	z-index: 999;
+
+	@media screen and (max-width: 992px) {
+		width: 40px;
+		height: 40px;
+		line-height: 40px;
+		right: 20px;
+		bottom: 20px;
+	}
 }
 
 a#scroll-to-top i {
@@ -6187,6 +6200,13 @@ footer.footer {
 	border-top: 0;
 	box-shadow: 0px -1px 5px #02020238;
 	z-index: 99;
+	display: block !important;
+
+	padding: 7px 25px;
+
+	div.flex-wrap {
+		margin-top: 0;
+	}
 
 	a {
 		color: $primary-color-dark;
